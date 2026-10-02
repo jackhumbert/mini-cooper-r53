@@ -188,7 +188,7 @@ Notes from phase 0:
 - [ ] **Verify on the car:** `doctor`, then `scan`, run with `--backend ediabaslib --trace`. Compare
       against the BMW-backend results from 2026-10-02.
 - [x] Fixed `--trace` on the BMW backend. BMW truncates `TracePath` to 64 characters, so traces
-      are now staged in `C:\EDIABAS\TRACE53`.
+      are now staged in `C:\EDIABAS\TRACE\r53`.
 
 ### Later / maybe
 - EdiabasLib backend for byte-level traces, if EDIABAS errors get opaque.

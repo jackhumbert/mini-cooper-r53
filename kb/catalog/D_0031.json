@@ -1,0 +1,61 @@
+{
+ "sgbd": "D_0031",
+ "file": "D_0031.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0031"
+  ],
+  "ORIGIN": [
+   "BMW TI-432 Helmich"
+  ],
+  "REVISION": [
+   "1.00"
+  ],
+  "AUTHOR": [
+   "Matthew Bennett TI-435"
+  ],
+  "ECUCOMMENT": [
+   "EHPSR50"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

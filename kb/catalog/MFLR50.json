@@ -1,0 +1,905 @@
+{
+ "sgbd": "MFLR50",
+ "file": "MFLR50.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "Multifunktionslenkrad R50"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Stadlhofer"
+  ],
+  "REVISION": [
+   "1.2"
+  ],
+  "AUTHOR": [
+   "Software-Style M.Rafferty"
+  ],
+  "ECUCOMMENT": [
+   "Version Spec 1.2"
+  ]
+ },
+ "jobs": {
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Diagnosemode aufrechterhalten",
+    "Continue Diagnostics - Send ping message"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnosemode des SG beenden",
+    "End diagnostics"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Read the ECU Identification data"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer",
+      "BMW Part Number"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW",
+      "Week of manufacture"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr",
+      "Year of manufacture"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer",
+      "Supplier code"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "Supplier Name"
+     ]
+    },
+    {
+     "name": "ID_AIF_VORHANDEN",
+     "type": "int",
+     "comment": [
+      "Ist ein AIF vorhanden (0 (nein)/ 1 (ja))",
+      "Is AIF data available 0=no 1=yes"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "IDENT_SCHREIBEN": {
+   "comment": [
+    "Write the ECU Ident"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer",
+      "BMW Part number",
+      "7 character string if BMW format, 9 character string if Rover encoded"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW",
+      "Week of manufacture"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr",
+      "Year of manufacture"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer",
+      "Supplier code"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "STATUS_LESEN": {
+   "comment": [
+    "alle Stati des MFL lesen",
+    "Read all input/outputs"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_AUXILIARY_VOLTAGE_WERT",
+     "type": "real",
+     "comment": [
+      "Voltage of auxiliary"
+     ]
+    },
+    {
+     "name": "STAT_AUXILIARY_VOLTAGE_EINH",
+     "type": "string",
+     "comment": [
+      "Unit = V"
+     ]
+    },
+    {
+     "name": "STAT_SEARCH_UP_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Search up switch"
+     ]
+    },
+    {
+     "name": "STAT_SEARCH_DOWN_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Search down switch"
+     ]
+    },
+    {
+     "name": "STAT_VOLUME_UP_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Volume up switch"
+     ]
+    },
+    {
+     "name": "STAT_VOLUME_DOWN_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Volume down switch"
+     ]
+    },
+    {
+     "name": "STAT_MODE_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Mode switch"
+     ]
+    },
+    {
+     "name": "STAT_PHONE_SEND_END_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Phone send/end switch"
+     ]
+    },
+    {
+     "name": "STAT_SPEED_UP_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Speed up switch"
+     ]
+    },
+    {
+     "name": "STAT_SPEED_DOWN_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Speed down switch"
+     ]
+    },
+    {
+     "name": "STAT_CRUISE_ON_OFF_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Cruise on/off switch"
+     ]
+    },
+    {
+     "name": "STAT_CRUISE_RESUME_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Cruise resume switch"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "STEUERN_IOSTATES": {
+   "comment": [
+    "Force Digital Output States"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "ORT",
+     "type": "string",
+     "comment": [
+      "gewuenschte Komponente",
+      "Control name",
+      "From NAME column in table \"Digital\""
+     ]
+    },
+    {
+     "name": "EIN",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten  0 wenn ausschalten",
+      "Forcing value: 1=on 0=off"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "0x00",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen / Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTPREFIX": [
+   {
+    "CODE": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "CODE": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "CODE": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "CODE": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "CODE": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "CODE": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "CODE": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "CODE": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "CODE": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "CODE": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "CODE": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "CODE": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "CODE": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "CODE": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "CODE": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "CODE": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "CODE": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "CODE": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "CODE": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "CODE": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "CODE": "0xB6",
+    "PREFIX": "YUW"
+   },
+   {
+    "CODE": "0xFF",
+    "PREFIX": "???"
+   }
+  ],
+  "DIGITAL": [
+   {
+    "NAME": "SEARCH_UP",
+    "BYTE": "3",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "ID_NR": "0x00"
+   },
+   {
+    "NAME": "SEARCH_DOWN",
+    "BYTE": "3",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "ID_NR": "0x01"
+   },
+   {
+    "NAME": "VOLUME_UP",
+    "BYTE": "3",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "ID_NR": "0x02"
+   },
+   {
+    "NAME": "VOLUME_DOWN",
+    "BYTE": "3",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "ID_NR": "0x03"
+   },
+   {
+    "NAME": "MODE",
+    "BYTE": "3",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "ID_NR": "0x04"
+   },
+   {
+    "NAME": "PHONE_SEND_END",
+    "BYTE": "3",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "ID_NR": "0x05"
+   },
+   {
+    "NAME": "SPEED_UP",
+    "BYTE": "3",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "ID_NR": "0x06"
+   },
+   {
+    "NAME": "SPEED_DOWN",
+    "BYTE": "3",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "ID_NR": "0x07"
+   },
+   {
+    "NAME": "CRUISE_ON_OFF",
+    "BYTE": "4",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "ID_NR": "0x08"
+   },
+   {
+    "NAME": "CRUISE_RESUME",
+    "BYTE": "4",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "ID_NR": "0x09"
+   },
+   {
+    "NAME": "??",
+    "BYTE": "FF",
+    "MASK": "0x00",
+    "VALUE": "0xFF",
+    "ID_NR": "0xFF"
+   }
+  ]
+ }
+}

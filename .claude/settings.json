@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m r53diag doctor:*)",
+      "Bash(python -m r53diag scan:*)",
+      "Bash(python -m r53diag ident:*)",
+      "Bash(python -m r53diag faults:*)",
+      "Bash(python -m r53diag status:*)",
+      "Bash(python -m r53diag live:*)",
+      "Bash(python -m r53diag jobs:*)",
+      "Bash(python -m r53diag tables:*)",
+      "Bash(python -m r53diag modules:*)",
+      "Bash(python -m r53diag classify:*)",
+      "Bash(python -m unittest:*)",
+      "Bash(python tools/build_kb.py:*)",
+      "PowerShell(python -m r53diag doctor:*)",
+      "PowerShell(python -m r53diag scan:*)",
+      "PowerShell(python -m r53diag ident:*)",
+      "PowerShell(python -m r53diag faults:*)",
+      "PowerShell(python -m r53diag status:*)",
+      "PowerShell(python -m r53diag live:*)",
+      "PowerShell(python -m r53diag jobs:*)",
+      "PowerShell(python -m r53diag tables:*)",
+      "PowerShell(python -m r53diag modules:*)",
+      "PowerShell(python -m r53diag classify:*)"
+    ],
+    "ask": [
+      "Bash(python -m r53diag clear:*)",
+      "Bash(python -m r53diag actuate:*)",
+      "Bash(python -m r53diag run:*)",
+      "Bash(python -m r53diag --:*)",
+      "PowerShell(python -m r53diag clear:*)",
+      "PowerShell(python -m r53diag actuate:*)",
+      "PowerShell(python -m r53diag run:*)",
+      "PowerShell(python -m r53diag --:*)"
+    ]
+  }
+}

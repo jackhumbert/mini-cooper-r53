@@ -1,0 +1,59 @@
+{
+ "sgbd": "D_0074",
+ "file": "D_0074.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "OC3"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Gall"
+  ],
+  "REVISION": [
+   "1.00"
+  ],
+  "AUTHOR": [
+   "BMW TI-430 Crichton"
+  ],
+  "ECUCOMMENT": [
+   "OC3"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    ""
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    ""
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

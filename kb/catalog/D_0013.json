@@ -1,0 +1,101 @@
+{
+ "sgbd": "D_0013",
+ "file": "D_0013.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0013"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Majerus"
+  ],
+  "REVISION": [
+   "1.13"
+  ],
+  "AUTHOR": [
+   "BMW TI-44 Weber, BMW TI-433 Teepe,  BMW TI-433 Spoljarec, BMW TI-433 Schiefer, BMW TI-433 Dennert"
+  ],
+  "ECUCOMMENT": [
+   "DM5212L5,DM5212L6,DDE41KL0,EMS2K"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    ""
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "HW7_TABELLE": [
+   {
+    "HARDWARENR": "9999999",
+    "VARIANTE": "ERROR"
+   }
+  ],
+  "HW2_TABELLE": [
+   {
+    "HW2": "09",
+    "VARIANTE": "DM5212L5"
+   },
+   {
+    "HW2": "0E",
+    "VARIANTE": "DM5212L6"
+   },
+   {
+    "HW2": "0H",
+    "VARIANTE": "DM5212L5"
+   },
+   {
+    "HW2": "55",
+    "VARIANTE": "DDE41KL0"
+   }
+  ],
+  "HW2_DIAG_TABELLE": [
+   {
+    "HW2_DIAG_INDEX": "0920",
+    "VARIANTE": "DM5212L5"
+   },
+   {
+    "HW2_DIAG_INDEX": "0E0",
+    "VARIANTE": "DM5212L5"
+   },
+   {
+    "HW2_DIAG_INDEX": "5410",
+    "VARIANTE": "DDE41KL0"
+   }
+  ]
+ }
+}

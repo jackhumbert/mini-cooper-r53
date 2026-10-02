@@ -1,0 +1,698 @@
+{
+ "sgbd": "ZCS_R50",
+ "file": "zcs_r50.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "Elektronische Wegfahrsperre - alle Typen"
+  ],
+  "ORIGIN": [
+   "VS-221 Waegner"
+  ],
+  "REVISION": [
+   "1.0"
+  ],
+  "AUTHOR": [
+   "TP-421 Huber, Drexel, VS-40 Hillebrand"
+  ],
+  "ECUCOMMENT": [
+   "SGBD zur Fahrzeugidentifikation R50/R53, zcs_r50.b2v"
+  ]
+ },
+ "jobs": {
+  "AIF_ZCS_LESEN": {
+   "comment": [
+    "Auslesen des Zentralen Codierschluessels aus KD-Daten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung"
+     ]
+    },
+    {
+     "name": "VM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnose beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_FORTSETZEN": {
+   "comment": [
+    "Diagnose mit EWS aufrecht erhalten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_FORTSETZEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "FGNR_LESEN": {
+   "comment": [
+    "Auslesen der Fahrgestellnummer aus der EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Ident-Daten fuer EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "table Lieferanten LIEF_TEXT"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Info fuer Anwender"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerat im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeraete-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch / english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Init-Job fuer EWS",
+    "automatischer Aufruf beim ersten Zugriff auf SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1 wenn Okay"
+     ]
+    }
+   ]
+  },
+  "KD_DATEN_LESEN": {
+   "comment": [
+    "Auslesen der Kundendienstdaten aus der EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "int",
+     "comment": [
+      "0 bis 11"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "KD_BLOCK",
+     "type": "int",
+     "comment": [
+      "0 bis 11"
+     ]
+    },
+    {
+     "name": "KD_DATEN",
+     "type": "binary",
+     "comment": [
+      "16 Byte"
+     ]
+    },
+    {
+     "name": "KD_DATEN_TEXT",
+     "type": "string",
+     "comment": [
+      "16 Byte"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "PROD_DATUM_LESEN": {
+   "comment": [
+    ""
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "TAG_TXT",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "TAG_DEC",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "MONAT_TXT",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "MONAT_DEC",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "JAHR_TXT",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "JAHR_DEC",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "ZCS_GM_LESEN": {
+   "comment": [
+    ""
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "TYP_TXT",
+     "type": "string",
+     "comment": [
+      "Typschluessel"
+     ]
+    },
+    {
+     "name": "BR_TXT",
+     "type": "string",
+     "comment": [
+      "Baureihe"
+     ]
+    },
+    {
+     "name": "MO_TXT",
+     "type": "string",
+     "comment": [
+      "Modell"
+     ]
+    },
+    {
+     "name": "LA_TXT",
+     "type": "string",
+     "comment": [
+      "Laenderausfuehrung mit Typschluessel"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_SG_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_SG_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_SG_FUNKTION"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_SG_NACK"
+   },
+   {
+    "SB": "0x00",
+    "STATUS_TEXT": "ERROR_SG_UNBEKANNTES_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0xXY",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ZCS_TEXTE": [
+   {
+    "GM": "B031",
+    "TYP": "RA31",
+    "BAUREIHE": "R50",
+    "MODELL": "Mini_W10_COUPE",
+    "LA": "EUR_LL",
+    "TAIS": "X",
+    "DESRS": "X"
+   },
+   {
+    "GM": "B032",
+    "TYP": "RA32",
+    "BAUREIHE": "R50",
+    "MODELL": "Mini_W10_COUPE",
+    "LA": "EUR_RL",
+    "TAIS": "X",
+    "DESRS": "X"
+   },
+   {
+    "GM": "B231",
+    "TYP": "RC31",
+    "BAUREIHE": "R50",
+    "MODELL": "Cooper_W10_COUPE",
+    "LA": "EUR_LL",
+    "TAIS": "X",
+    "DESRS": "X"
+   },
+   {
+    "GM": "B232",
+    "TYP": "RC32",
+    "BAUREIHE": "R50",
+    "MODELL": "Cooper_W10_COUPE",
+    "LA": "EUR_RL",
+    "TAIS": "X",
+    "DESRS": "X"
+   },
+   {
+    "GM": "B233",
+    "TYP": "RC33",
+    "BAUREIHE": "R50",
+    "MODELL": "Cooper_W10_COUPE",
+    "LA": "USA_LL",
+    "TAIS": "X",
+    "DESRS": "O"
+   },
+   {
+    "GM": "B431",
+    "TYP": "RE31",
+    "BAUREIHE": "R53",
+    "MODELL": "Cooper S_W11_COUPE",
+    "LA": "EUR_LL",
+    "TAIS": "X",
+    "DESRS": "X"
+   },
+   {
+    "GM": "B432",
+    "TYP": "RE32",
+    "BAUREIHE": "R53",
+    "MODELL": "Cooper S_W11_COUPE",
+    "LA": "EUR_RL",
+    "TAIS": "X",
+    "DESRS": "X"
+   },
+   {
+    "GM": "B433",
+    "TYP": "RE33",
+    "BAUREIHE": "R53",
+    "MODELL": "Cooper S_W11_COUPE",
+    "LA": "USA_LL",
+    "TAIS": "X",
+    "DESRS": "O"
+   },
+   {
+    "GM": "xxxx",
+    "TYP": "xxxx",
+    "BAUREIHE": "UNBEKANNT",
+    "MODELL": "UNBEKANNT",
+    "LA": "UNBEKANNT",
+    "TAIS": "-",
+    "DESRS": "-"
+   }
+  ]
+ }
+}

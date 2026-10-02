@@ -1,0 +1,2045 @@
+{
+ "sgbd": "DWS",
+ "file": "dws.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "Deflation Warning System DWS"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Stadlhofer"
+  ],
+  "REVISION": [
+   "1.7"
+  ],
+  "AUTHOR": [
+   "BMW TI-433 Krueger, BMW TI-433 Winkler, GTI Peter Gross-Grueber, BMW TI-433 Kuessel"
+  ],
+  "ECUCOMMENT": [
+   "Info_Kommentar"
+  ]
+ },
+ "jobs": {
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Diagnosemode aufrechterhalten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnose beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Hex-Fehlerdaten je Fehler"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "identisch Fehlerbytemaske"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten (hier: immer 8)"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "2. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "Index der 3. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "3. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "Index der 4. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "4. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "Index der 5. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "5. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "Index der 6. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "6. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART7_NR",
+     "type": "int",
+     "comment": [
+      "Index der 7. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART7_TEXT",
+     "type": "string",
+     "comment": [
+      "7. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART8_NR",
+     "type": "int",
+     "comment": [
+      "Index der 8. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART8_TEXT",
+     "type": "string",
+     "comment": [
+      "8. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen (hier: immer 3,6,9)"
+     ]
+    },
+    {
+     "name": "F_UW_SATZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltsaetze (hier: immer 1,2,3)"
+     ]
+    },
+    {
+     "name": "F_UW1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Umweltbedingung (hier: immer 1)"
+     ]
+    },
+    {
+     "name": "F_UW1_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW1_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW1_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Umweltbedingung (hier: immer 2)"
+     ]
+    },
+    {
+     "name": "F_UW2_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW3_NR",
+     "type": "int",
+     "comment": [
+      "Index der 3. Umweltbedingung (hier: immer 3)"
+     ]
+    },
+    {
+     "name": "F_UW3_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW3_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW3_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW4_NR",
+     "type": "int",
+     "comment": [
+      "Index der 4. Umweltbedingung (hier: immer 4)"
+     ]
+    },
+    {
+     "name": "F_UW4_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW4_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW4_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW5_NR",
+     "type": "int",
+     "comment": [
+      "Index der 5. Umweltbedingung (hier: immer 5)"
+     ]
+    },
+    {
+     "name": "F_UW5_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW5_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW5_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW6_NR",
+     "type": "int",
+     "comment": [
+      "Index der 6. Umweltbedingung (hier: immer 6)"
+     ]
+    },
+    {
+     "name": "F_UW6_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW6_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW6_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW7_NR",
+     "type": "int",
+     "comment": [
+      "Index der 7. Umweltbedingung (hier: immer 7)"
+     ]
+    },
+    {
+     "name": "F_UW7_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW7_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW7_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW8_NR",
+     "type": "int",
+     "comment": [
+      "Index der 8. Umweltbedingung (hier: immer 8)"
+     ]
+    },
+    {
+     "name": "F_UW8_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW8_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW8_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW9_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Umweltbedingung (hier: immer 1)"
+     ]
+    },
+    {
+     "name": "F_UW9_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW9_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW9_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW10_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Umweltbedingung (hier: immer 2)"
+     ]
+    },
+    {
+     "name": "F_UW10_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW10_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW10_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW11_NR",
+     "type": "int",
+     "comment": [
+      "Index der 3. Umweltbedingung (hier: immer 3)"
+     ]
+    },
+    {
+     "name": "F_UW11_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW11_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW11_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW12_NR",
+     "type": "int",
+     "comment": [
+      "Index der 4. Umweltbedingung (hier: immer 4)"
+     ]
+    },
+    {
+     "name": "F_UW12_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW12_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW12_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW13_NR",
+     "type": "int",
+     "comment": [
+      "Index der 5. Umweltbedingung (hier: immer 5)"
+     ]
+    },
+    {
+     "name": "F_UW13_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW13_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW13_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW14_NR",
+     "type": "int",
+     "comment": [
+      "Index der 6. Umweltbedingung (hier: immer 6)"
+     ]
+    },
+    {
+     "name": "F_UW14_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW14_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW14_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW15_NR",
+     "type": "int",
+     "comment": [
+      "Index der 7. Umweltbedingung (hier: immer 7)"
+     ]
+    },
+    {
+     "name": "F_UW15_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW15_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW15_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW16_NR",
+     "type": "int",
+     "comment": [
+      "Index der 8. Umweltbedingung (hier: immer 8)"
+     ]
+    },
+    {
+     "name": "F_UW16_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW16_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW16_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW17_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Umweltbedingung (hier: immer 1)"
+     ]
+    },
+    {
+     "name": "F_UW17_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW17_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW17_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW18_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Umweltbedingung (hier: immer 2)"
+     ]
+    },
+    {
+     "name": "F_UW18_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW18_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW18_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW19_NR",
+     "type": "int",
+     "comment": [
+      "Index der 3. Umweltbedingung (hier: immer 3)"
+     ]
+    },
+    {
+     "name": "F_UW19_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW19_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW19_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 3. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW20_NR",
+     "type": "int",
+     "comment": [
+      "Index der 4. Umweltbedingung (hier: immer 4)"
+     ]
+    },
+    {
+     "name": "F_UW20_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW20_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW20_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 4. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW21_NR",
+     "type": "int",
+     "comment": [
+      "Index der 5. Umweltbedingung (hier: immer 5)"
+     ]
+    },
+    {
+     "name": "F_UW21_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW21_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW21_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 5. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW22_NR",
+     "type": "int",
+     "comment": [
+      "Index der 6. Umweltbedingung (hier: immer 6)"
+     ]
+    },
+    {
+     "name": "F_UW22_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW22_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW22_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 6. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW23_NR",
+     "type": "int",
+     "comment": [
+      "Index der 7. Umweltbedingung (hier: immer 7)"
+     ]
+    },
+    {
+     "name": "F_UW23_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW23_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW23_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 7. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW24_NR",
+     "type": "int",
+     "comment": [
+      "Index der 8. Umweltbedingung (hier: immer 8)"
+     ]
+    },
+    {
+     "name": "F_UW24_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW24_WERT",
+     "type": "int",
+     "comment": [
+      "Wert der 8. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW24_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 8. Umweltbedingung"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "FS_QUICK_LESEN": {
+   "comment": [
+    "Quicktest",
+    "High-Konzept nach Lastenheft"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_QUICK_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "F_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl Fehler"
+     ]
+    }
+   ]
+  },
+  "HERSTELLDATEN_LESEN": {
+   "comment": [
+    "Auslesen der Herstelldaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE4",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Ident-Daten fuer DWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "table Lieferanten LIEF_TEXT"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "FZ_TYP",
+     "type": "string",
+     "comment": [
+      "DWS-Variante (FZ-Typ) anhand Diagnoseindex",
+      "Varianten: E38/2_PL, E39/3, E52 oder M5"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung / Kommunikationsparameter fuer Reifendruck-Control",
+    "automatischer Aufruf beim ersten Zugriff auf die SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels",
+    "Es muessen immer alle drei Argumente im Bereich",
+    "von 0-255 bzw. 0x00-0xFF uebergeben werden."
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Lesen des internen Speichers"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "SEGMENT",
+     "type": "int",
+     "comment": [
+      "Speichersegment",
+      "Bereich: 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "ADRESSE",
+     "type": "long",
+     "comment": [
+      "Speicheradresse",
+      "Bereich: 0x0000-0xFFFF"
+     ]
+    },
+    {
+     "name": "ANZAHL",
+     "type": "int",
+     "comment": [
+      "Anzahl der Daten",
+      "Bereich: 1 bis 16"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "ERROR_argumentname, wenn argument nicht",
+      "uebergeben oder ausser Bereich",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "ausgelesene Hex-Daten"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO": {
+   "comment": [
+    "Auslesen der Statusbytes"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "STAT_STANDARD",
+     "type": "int",
+     "comment": [
+      "Status Standardisierung (1=ein)"
+     ]
+    },
+    {
+     "name": "STAT_FEHLERKONZ",
+     "type": "int",
+     "comment": [
+      "Status Fehlerspeicherkonzept(1=disable)"
+     ]
+    },
+    {
+     "name": "STAT_FEHLERAUSW",
+     "type": "int",
+     "comment": [
+      "Status Fehlerauswirkung"
+     ]
+    },
+    {
+     "name": "STAT_PANNENMELD",
+     "type": "int",
+     "comment": [
+      "Status Pannenmeldung    (1=ein)"
+     ]
+    },
+    {
+     "name": "STAT_DB00_4",
+     "type": "int",
+     "comment": [
+      "Frei"
+     ]
+    },
+    {
+     "name": "STAT_DB00_5",
+     "type": "int",
+     "comment": [
+      "Frei"
+     ]
+    },
+    {
+     "name": "STAT_DB00_6",
+     "type": "int",
+     "comment": [
+      "Frei"
+     ]
+    },
+    {
+     "name": "STAT_DB00_7",
+     "type": "int",
+     "comment": [
+      "Frei"
+     ]
+    },
+    {
+     "name": "STAT_BANDMODE",
+     "type": "int",
+     "comment": [
+      "Bandmode"
+     ]
+    },
+    {
+     "name": "STAT_SYSAKTIV",
+     "type": "int",
+     "comment": [
+      "Systemfunktion aktiv"
+     ]
+    },
+    {
+     "name": "STAT_BLINDPH",
+     "type": "int",
+     "comment": [
+      "Blindphase"
+     ]
+    },
+    {
+     "name": "STAT_TASTER",
+     "type": "int",
+     "comment": [
+      "Taster"
+     ]
+    },
+    {
+     "name": "STAT_DB01_4",
+     "type": "int",
+     "comment": [
+      "Bildet Basis fuer STAT_BREMSE"
+     ]
+    },
+    {
+     "name": "STAT_DB01_5",
+     "type": "int",
+     "comment": [
+      "Bildet Basis fuer STAT_BREMSE"
+     ]
+    },
+    {
+     "name": "STAT_DB01_6",
+     "type": "int",
+     "comment": [
+      "Frei"
+     ]
+    },
+    {
+     "name": "STAT_DB01_7",
+     "type": "int",
+     "comment": [
+      "Frei"
+     ]
+    },
+    {
+     "name": "STAT_WEG",
+     "type": "unsigned long",
+     "comment": [
+      "Wegstrcke (seit letzter Standardisierung)"
+     ]
+    },
+    {
+     "name": "STAT_DSC_ABS_VL",
+     "type": "int",
+     "comment": [
+      "Rohsignal vom DSC/ABS VL (Impulse/sec)"
+     ]
+    },
+    {
+     "name": "STAT_DSC_ABS_VR",
+     "type": "int",
+     "comment": [
+      "Rohsignal vom DSC/ABS VR (Impulse/sec)"
+     ]
+    },
+    {
+     "name": "STAT_DSC_ABS_HL",
+     "type": "int",
+     "comment": [
+      "Rohsignal vom DSC/ABS HL (Impulse/sec)"
+     ]
+    },
+    {
+     "name": "STAT_DSC_ABS_HR",
+     "type": "int",
+     "comment": [
+      "Rohsignal vom DSC/ABS HR (Impulse/sec)"
+     ]
+    },
+    {
+     "name": "STAT_SI",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsunabh. Standardisierungsfortschritt fuer M5"
+     ]
+    },
+    {
+     "name": "STAT_SV1",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 1 fuer M5"
+     ]
+    },
+    {
+     "name": "STAT_SV2",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 2 fuer M5"
+     ]
+    },
+    {
+     "name": "STAT_7SI",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsunabh. Standardisierungsfortschritt fuer Exx"
+     ]
+    },
+    {
+     "name": "STAT_7SV1",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 1 fuer Exx"
+     ]
+    },
+    {
+     "name": "STAT_7SV2",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 2 fuer Exx"
+     ]
+    },
+    {
+     "name": "STAT_7SV3",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 3 fuer Exx"
+     ]
+    },
+    {
+     "name": "STAT_7SV4",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 4 fuer Exx"
+     ]
+    },
+    {
+     "name": "STAT_7SV5",
+     "type": "int",
+     "comment": [
+      "geschwindigkeitsabh. Standardisierungsfortschritt 5 fuer Exx"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "STAT_BREMSE",
+     "type": "int",
+     "comment": [
+      "Brems(lichtschalter)status (E46-relevant)",
+      "0=Bremse nicht betaetigt, 1=Bremse betaetigt",
+      "2=Keine Verbindung vorgesehen (alle ausser E46), 3=Status unplausibel"
+     ]
+    }
+   ]
+  },
+  "STEUERN_DIGITAL": {
+   "comment": [
+    "Ansteuern einiger Signale"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "START_STANDARD",
+     "type": "int",
+     "comment": [
+      "1 = Standardisierung starten"
+     ]
+    },
+    {
+     "name": "BANDMODE_CLR",
+     "type": "int",
+     "comment": [
+      "1 = Bandmode loeschen"
+     ]
+    },
+    {
+     "name": "BANDMODE_SET",
+     "type": "int",
+     "comment": [
+      "1 = Bandmode setzen"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNKTION"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NOT_ACKNOWLEDGE"
+   },
+   {
+    "SB": "0x00",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen / Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "ROM-Fehler"
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "RAM-Fehler"
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "EEPROM-Fehler (W/R,CHKSUM)"
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "System-Fehler (main loop)"
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "System-Fehler (stack)"
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "DWS-Taster Masseschluss (Plausibilitaet"
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "Geschwindigkeitsimpulse VL"
+   },
+   {
+    "ORT": "0x08",
+    "ORTTEXT": "Geschwindigkeitsimpulse VR"
+   },
+   {
+    "ORT": "0x09",
+    "ORTTEXT": "Geschwindigkeitsimpulse HL"
+   },
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "Geschwindigkeitsimpulse HR"
+   },
+   {
+    "ORT": "0x0B",
+    "ORTTEXT": "Kbus (60s kein Empfang bei KL15)"
+   },
+   {
+    "ORT": "0x0C",
+    "ORTTEXT": "EEPROM: write check (standard)"
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "FARTMATRIX": [
+   {
+    "ORT": "0xFF",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0xFF",
+    "A2_1": "0x01",
+    "A3_0": "0xFF",
+    "A3_1": "0x02",
+    "A4_0": "0xFF",
+    "A4_1": "0x03",
+    "A5_0": "0xFF",
+    "A5_1": "0x04",
+    "A6_0": "0xFF",
+    "A6_1": "0x05",
+    "A7_0": "0xFF",
+    "A7_1": "0x06",
+    "A8_0": "0xFF",
+    "A8_1": "0x07"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x00",
+    "ARTTEXT": "Batterieschluss"
+   },
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "Masseschluss"
+   },
+   {
+    "ARTNR": "0x02",
+    "ARTTEXT": "Leitungsunterbrechung"
+   },
+   {
+    "ARTNR": "0x03",
+    "ARTTEXT": "Wert unplausibel"
+   },
+   {
+    "ARTNR": "0x04",
+    "ARTTEXT": "--"
+   },
+   {
+    "ARTNR": "0x05",
+    "ARTTEXT": "--"
+   },
+   {
+    "ARTNR": "0x06",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ARTNR": "0x07",
+    "ARTTEXT": "Fehler sporadisch"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "--"
+   }
+  ],
+  "FUMWELTMATRIX": [
+   {
+    "ORT": "0xFF",
+    "UW_ANZ": "0x8",
+    "UW_SATZ": "0x3",
+    "UW1_NR": "0x01",
+    "UW2_NR": "0x02",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x04",
+    "UW5_NR": "0x05",
+    "UW6_NR": "0x06",
+    "UW7_NR": "0x07",
+    "UW8_NR": "0x08",
+    "UW9_NR": "0x01",
+    "UW10_NR": "0x02",
+    "UW11_NR": "0x03",
+    "UW12_NR": "0x04",
+    "UW13_NR": "0x05",
+    "UW14_NR": "0x06",
+    "UW15_NR": "0x07",
+    "UW16_NR": "0x08",
+    "UW17_NR": "0x01",
+    "UW18_NR": "0x02",
+    "UW19_NR": "0x03",
+    "UW20_NR": "0x04",
+    "UW21_NR": "0x05",
+    "UW22_NR": "0x06",
+    "UW23_NR": "0x07",
+    "UW24_NR": "0x08"
+   }
+  ],
+  "FUMWELTTEXTE": [
+   {
+    "UWNR": "0x01",
+    "UWTEXT": "Geschwindigkeit",
+    "UW_EINH": "km/h"
+   },
+   {
+    "UWNR": "0x02",
+    "UWTEXT": "Batteriespannung",
+    "UW_EINH": "Volt"
+   },
+   {
+    "UWNR": "0x03",
+    "UWTEXT": "Status Standardisierung",
+    "UW_EINH": "1=ein     / 0=aus   "
+   },
+   {
+    "UWNR": "0x04",
+    "UWTEXT": "Status Fehlerspeicherkonzept",
+    "UW_EINH": "1=disable / 0=enable"
+   },
+   {
+    "UWNR": "0x05",
+    "UWTEXT": "Status Fehlerauswirkung",
+    "UW_EINH": "1=disable / 0=enable"
+   },
+   {
+    "UWNR": "0x06",
+    "UWTEXT": "Bandmode",
+    "UW_EINH": "1=ja      / 0=nein  "
+   },
+   {
+    "UWNR": "0x07",
+    "UWTEXT": "Systemfunktion aktiv",
+    "UW_EINH": "1=ja      / 0=nein  "
+   },
+   {
+    "UWNR": "0x08",
+    "UWTEXT": "Blindphase",
+    "UW_EINH": "1=ja      / 0=nein  "
+   },
+   {
+    "UWNR": "0xFF",
+    "UWTEXT": "unbekannte Umweltbedingung",
+    "UW_EINH": ""
+   }
+  ],
+  "LN": [
+   {
+    "VEL": "0x00",
+    "ROH": "0x00"
+   },
+   {
+    "VEL": "0x19",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0x32",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0x4b",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0x5A",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0x6C",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0x7E",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0x69",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0xb0",
+    "ROH": "0xBB8"
+   },
+   {
+    "VEL": "0xbb",
+    "ROH": "0xBB8"
+   }
+  ]
+ }
+}

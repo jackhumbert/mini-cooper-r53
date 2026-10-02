@@ -1,0 +1,67 @@
+{
+ "sgbd": "D_ZKE_GM",
+ "file": "D_ZKE_GM.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_ZKE_GM"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Gerd Huber"
+  ],
+  "REVISION": [
+   "1.04"
+  ],
+  "AUTHOR": [
+   "BMW TI-430 Gerd Huber, BMW TI-431 Krueger, TI-430 Crichton"
+  ],
+  "ECUCOMMENT": [
+   "BC1, BC1RD, ZKE3_GM1, ZKE3_GM4, ZKE3_GM5, ZKE3_GM6, ZKE4, ZKE5, ZKE5_S12"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    "ZKE III (E38, E39) : Konzept 6/5 (DS2/DS1)",
+    "ZKE III (E53)      : Konzept 6   (DS2)",
+    "ZKE IV  (E36)      : Konzept 5   (DS1)",
+    "ZKE V   (E46)      : Konzept 6   (DS2)",
+    "BC1     (R50)      : Konzept 6   (DS2)",
+    "BC1RD   (R50)      : Konzept 6   (DS2)"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Init-Job fuer Grundmodule"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1 wenn Okay"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

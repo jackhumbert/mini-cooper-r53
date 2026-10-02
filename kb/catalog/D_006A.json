@@ -1,0 +1,62 @@
+{
+ "sgbd": "D_006A",
+ "file": "D_006A.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_006A"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Weber"
+  ],
+  "REVISION": [
+   "1.40"
+  ],
+  "AUTHOR": [
+   "BMW TI-431 Teepe, BMW TI-431 Spoljarec, BMW TI-431 Krueger, BMW TI-431 Rochal"
+  ],
+  "ECUCOMMENT": [
+   "DSP, DSP2, DSP_R50, DSP2_R, TOPDSP, TOPDSP2"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    "DSP : Konzept DS2 und DS1"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

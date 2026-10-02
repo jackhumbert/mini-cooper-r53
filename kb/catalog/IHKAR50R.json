@@ -1,0 +1,3309 @@
+{
+ "sgbd": "IHKAR50R",
+ "file": "IHKAR50R.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "IHKA R50 RD"
+  ],
+  "ORIGIN": [
+   "BMW EI-63 Schusser"
+  ],
+  "REVISION": [
+   "1.03"
+  ],
+  "AUTHOR": [
+   "BHTC T-E23 Dietmar Nolte"
+  ],
+  "ECUCOMMENT": [
+   ""
+  ]
+ },
+ "jobs": {
+  "CALIBRATE_MOTORS": {
+   "comment": [
+    "Send manual calibration of blend and distribution motors message",
+    "Job ist wegen Kompatibilitaet zur SGBD IHKAR50 integriert!",
+    "Job soll nur im Werk Oxford verwendet werden!",
+    "Fuer neue Anwendungen bitte den Job STEUERN_EICHLAUF verwenden!"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'CALIBRATE_MOTORS'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "CODIERUNG_LESEN": {
+   "comment": [
+    "Auslesen der Codierdaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "CODE",
+     "type": "string",
+     "comment": [
+      "4 Codierbytes in Hex"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "CODIERUNG_SCHREIBEN": {
+   "comment": [
+    "Codierdaten Schreiben fuer R50 IHKA/ATC RD",
+    "Es muessen immer alle vier Argumente im Bereich",
+    "von 0-255 bzw. 0x00-0xFF uebergeben werden."
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "CODE1",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF",
+      "Bit 0  1 = EEP-Kennlinine",
+      "Bit 1  1 = Standardanzeiger Grad F",
+      "Bit 2  1 = Klima Ein bei Auto Ein",
+      "Bit 3  1 = Zuschaltung HHS/HFS bei Defrost",
+      "Bit 4  1 = Verbau HFS",
+      "Bit 5  1 = reduzierbare Geblaesestufe bei Defrost",
+      "Bit 6  1 = Freigeben der internen BHTC-Diagnose",
+      "Bit 7  1 = manuelle LV Oben und Mitte verriegeln"
+     ]
+    },
+    {
+     "name": "CODE2",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF",
+      "Bit 0  1 = neuer Sonnensensor",
+      "Bit 1  1 = Sperren der Kompressortaste",
+      "Bit 2  1 = max Heizen bei Defrost mit T(aussen) ueber 0 Grad C",
+      "Bit 3  1 = Auto-Umluft",
+      "Bit 4  1 = Frischluft-Anteil",
+      "Bit 5  1 = noch nicht verwendet",
+      "Bit 6  1 = WT Fuehler intern 7K5 Pull-Up Widerstand",
+      "Bit 7  1 = WT Fuehler extern 1K2 Serienwiderstand"
+     ]
+    },
+    {
+     "name": "CODE3",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF",
+      "Bit 0  1 = Diagnosetestmode für 240s (anstatt 10s)",
+      "Bit 1  1 = zyklische Klemmenanforderung bei Kl.R abschalten",
+      "Bit 2  1 = kein Telegramm 8Bh bei Kl. 15 aus",
+      "Bit 3  1 = noch nicht verwendet",
+      "Bit 4  1 = noch nicht verwendet",
+      "Bit 5  1 = noch nicht verwendet",
+      "Bit 6  1 = noch nicht verwendet",
+      "Bit 7  1 = noch nicht verwendet"
+     ]
+    },
+    {
+     "name": "CODE4",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF",
+      "Bit 0  1 = noch nicht verwendet",
+      "Bit 1  1 = noch nicht verwendet",
+      "Bit 2  1 = noch nicht verwendet",
+      "Bit 3  1 = noch nicht verwendet",
+      "Bit 4  1 = noch nicht verwendet",
+      "Bit 5  1 = noch nicht verwendet",
+      "Bit 6  1 = noch nicht verwendet",
+      "Bit 7  1 = noch nicht verwendet"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Diagnosemode des SG aufrecht erhalten",
+    "Ping message"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnosemode des SG beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "ENERGIESPARMODE": {
+   "comment": [
+    "Einstellen des Energiesparmodes"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'ENERGIESPARMODE'",
+   "args": [
+    {
+     "name": "PRODUKTIONSMODE",
+     "type": "string",
+     "comment": [
+      "\"ein\" -> Produktions Mode ein",
+      "\"aus\" -> Produktions Mode aus",
+      "table DigitalArgument TEXT",
+      "Default: \"aus\""
+     ]
+    },
+    {
+     "name": "TRANSPORTMODE",
+     "type": "string",
+     "comment": [
+      "\"ein\" -> Transport Mode ein",
+      "\"aus\" -> Transport Mode aus",
+      "table DigitalArgument TEXT",
+      "Default: \"aus\""
+     ]
+    },
+    {
+     "name": "WERKSTATTMODE",
+     "type": "string",
+     "comment": [
+      "\"ein\" -> Werkstatt Mode ein",
+      "\"aus\" -> Werkstatt Mode aus",
+      "table DigitalArgument TEXT",
+      "Default: \"aus\""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode",
+      "Raw fault data from the ECU"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Fehlerort",
+      "Fault number"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Fault description"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Error frequency counter"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten = 6"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen = 0"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "1 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "'Kurzschluss gegen U-Batt' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "2 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "'Kurzschluss gegen Masse' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "4 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "'Leitungsunterbrechung' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "8 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "'unplausibler Wert, ungueltiger Arbeitsbereich' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "64 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "'Fehler momentan vorhanden' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "128 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "'sporadischer Fehler' oder '--'"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen",
+    "Clears all faults"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "HEX-Antwort vom SG",
+      "ECU responce packet"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Identdaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels",
+    "Es muessen immer alle drei Argumente im Bereich",
+    "von 0-255 bzw. 0x00-0xFF uebergeben werden.",
+    "Only the last 3 bytes can be written"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write teststamp telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read new teststamp response"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Speicher lesen mit Adresse",
+    "Read ECU memory by address"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ADRESSE",
+     "type": "unsigned long",
+     "comment": [
+      "Adresse im RAM",
+      "0x0000 - 0xFFFF"
+     ]
+    },
+    {
+     "name": "ANZAHL",
+     "type": "int",
+     "comment": [
+      "Anzahl speicher lesen",
+      "Length of memory to read",
+      "1 - 32"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "ausgelesene Daten",
+      "ECU data wich is read"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "HEX-Antwort vom SG",
+      "ECU responce packet"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des SG Speichers mit Adresse",
+    "Write memory to a specified address"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "SEGMENT",
+     "type": "int",
+     "comment": [
+      "Speichersegment",
+      "EEPROM = 3",
+      "RAM = 4"
+     ]
+    },
+    {
+     "name": "ADRESSE",
+     "type": "unsigned long",
+     "comment": [
+      "Adresse im RAM",
+      "0x0000 - 0xFFFF"
+     ]
+    },
+    {
+     "name": "ANZAHL",
+     "type": "int",
+     "comment": [
+      "Anzahl speicher schreiben",
+      "Length of memory to write",
+      "1 - 27"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "string",
+     "comment": [
+      "zu schreibende Daten",
+      "Data bytes to write",
+      "z.B. 1,2,03,0x04,0x05..."
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "HEX-Antwort vom SG",
+      "ECU responce packet"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_DIGITAL": {
+   "comment": [
+    "Read IO States for block 0 - Push Buttons, LEDs and Set Points",
+    "Job ist wegen Kompatibilitaet zur SGBD IHKAR50 integriert!",
+    "Job soll nur im Werk Oxford verwendet werden!",
+    "Fuer neue Anwendungen bitte die Jobs STATUS_SG_xx verwenden!"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "STAT_DISTRIB_SCREEN_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Distribution to screen",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_FEET_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Distribution to feet",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_FACE_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Distribution to face",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_BLOWER_AUTO_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Automatic Blower",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_RECIRC_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Recirculation mode",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_AC_ACTIVE",
+     "type": "int",
+     "comment": [
+      "AirCon mode",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_AUTO_ACTIVE",
+     "type": "int",
+     "comment": [
+      "Automatic Distribution",
+      "1=activ, 0=nicht"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_FACE_LED_ON",
+     "type": "int",
+     "comment": [
+      "Touch LED for face distributiuon on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_SCREEN_LED_ON",
+     "type": "int",
+     "comment": [
+      "Touch LED for screen distributiuon on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_FEET_LED_ON",
+     "type": "int",
+     "comment": [
+      "Touch LED for feet distributiuon on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_AUTO_LED_ON",
+     "type": "int",
+     "comment": [
+      "Touch LED Auto on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_AC_LED_ON",
+     "type": "int",
+     "comment": [
+      "Touch LED for AirCon on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_RECIRC_LED_ON",
+     "type": "int",
+     "comment": [
+      "Touch LED for recirculation on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_HRW_HFS_LED_ON",
+     "type": "int",
+     "comment": [
+      "LED for heated rear window and heated fromt screen on",
+      "1 wenn ein / 0 wenn aus"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_UNIT_FARENHEIT",
+     "type": "int",
+     "comment": [
+      "Temperature unit",
+      "1 wenn Farenheit / 0 wenn Celsius"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_PLUS_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Temperature+ button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_MINUS_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Temperature- button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_BLOWER_PLUS_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Blower+ button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_BLOWER_MINUS_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Blower- button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_FACE_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Distribution Face button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_SCREEN_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Distribution Screen button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_FEET_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Distribution Feet button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_AUTO_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Automatic button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_AC_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "AirCon button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_RECIRC_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Recirculation button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_HRW_HFS_BUTTON_PRESSED",
+     "type": "int",
+     "comment": [
+      "Heated rear window and heated front screen button pressed",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response as a hex string"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG": {
+   "comment": [
+    "Steuergeraet Mode, LED und LCD auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_SOLL_WERT",
+     "type": "real",
+     "comment": [
+      "Temperatursollwert"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_SOLL_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer Temperatursollwert"
+     ]
+    },
+    {
+     "name": "STAT_MAN_GEBL_STUFE",
+     "type": "int",
+     "comment": [
+      "Manuelle Geblaesestufe",
+      "1 bis 8"
+     ]
+    },
+    {
+     "name": "STAT_MODE",
+     "type": "int",
+     "comment": [
+      "Bedienteilmode auslesen",
+      "Bit 15: Temperatureinheit",
+      "Bit 14 .. 10: nicht verwendet",
+      "Bit 9: Geblaeseautomatik",
+      "Bit 8: Heizbare Heckscheibe"
+     ]
+    },
+    {
+     "name": "STAT_LED",
+     "type": "int",
+     "comment": [
+      "Funktionsbeleuchtung auslesen",
+      "Bit 7: Luftverteilung Oben",
+      "Bit 6: Luftverteilung Mitte",
+      "Bit 5: Luftverteilung Unten",
+      "Bit 4: HHS",
+      "Bit 3: Umluft",
+      "Bit 2: Kompressor",
+      "Bit 1: AUTO",
+      "Bit 0: Defrost"
+     ]
+    },
+    {
+     "name": "STAT_TASTER",
+     "type": "int",
+     "comment": [
+      "Drucktaster gedrueckt",
+      "Bit 15: Kompressor",
+      "Bit 14: HHS",
+      "Bit 13: TEMP+",
+      "Bit 12: TEMP-",
+      "Bit 11 .. 8: nicht verwendet",
+      "Bit 7: Luftverteilung Unten",
+      "Bit 6: Defrost",
+      "Bit 5: Geblaese Minus",
+      "Bit 4: Luftverteilung Mitte",
+      "Bit 3: Geblaese Plus",
+      "Bit 2: Auto",
+      "Bit 1: Umluft",
+      "Bit 0: Luftverteilung Oben"
+     ]
+    },
+    {
+     "name": "STAT_LCD_PWM_WERT",
+     "type": "int",
+     "comment": [
+      "Einschaltdauer fuer LCD PWM"
+     ]
+    },
+    {
+     "name": "STAT_LCD_PWM_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer LCD PWM"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response as a hex string"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG_LED_LCD": {
+   "comment": [
+    "Steuergeraet, Status LED und LCD auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_LED_AUT_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED AUTO-Mode",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_DEF_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED Defrost-Mode",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_KOM_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED Kompressor",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_UML_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED Umluft",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_HHS_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED heizbare Heckscheibe",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_LVO_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED manuelle Luftverteilung Oben",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_LVM_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED manuelle Luftverteilung Mitte",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LED_LVU_AKTIV",
+     "type": "int",
+     "comment": [
+      "LED manuelle Luftverteilung Unten",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LCD_PWM_WERT",
+     "type": "int",
+     "comment": [
+      "Einschaltdauer fuer LCD PWM"
+     ]
+    },
+    {
+     "name": "STAT_LCD_PWM_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer LCD PWM"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response as a hex string"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG_MODE": {
+   "comment": [
+    "Steuergeraet, Einstellung auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_SOLL_WERT",
+     "type": "real",
+     "comment": [
+      "Temperatursollwert"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_SOLL_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer Temperatursollwert"
+     ]
+    },
+    {
+     "name": "STAT_FAHRENH_AKTIV",
+     "type": "int",
+     "comment": [
+      "Einheit fuer Anzeige Temperatursollwert im Display",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_OFF_AKTIV",
+     "type": "int",
+     "comment": [
+      "OFF-Mode",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_DEFROST_AKTIV",
+     "type": "int",
+     "comment": [
+      "Defrost-Mode",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_GEBL_AUTO_AKTIV",
+     "type": "int",
+     "comment": [
+      "Geblaeseautomatik",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_MAN_GEBL_STUFE",
+     "type": "int",
+     "comment": [
+      "Manuelle Geblaesestufe",
+      "1 bis 8"
+     ]
+    },
+    {
+     "name": "STAT_LV_AUTO_AKTIV",
+     "type": "int",
+     "comment": [
+      "Luftverteilungsautomatik",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LV_OBEN_AKTIV",
+     "type": "int",
+     "comment": [
+      "manuelle Luftverteilung Oben",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LV_MITTE_AKTIV",
+     "type": "int",
+     "comment": [
+      "manuelle Luftverteilung Mitte",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_LV_UNTEN_AKTIV",
+     "type": "int",
+     "comment": [
+      "manuelle Luftverteilung Unten",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_KOMPR_AUS_AKTIV",
+     "type": "int",
+     "comment": [
+      "Kompressor",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_UMLUFT_AKTIV",
+     "type": "int",
+     "comment": [
+      "",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "STAT_HHS_AKTIV",
+     "type": "int",
+     "comment": [
+      "",
+      "1=aktiv, 0=nicht aktiv"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response as a hex string"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG_TASTER": {
+   "comment": [
+    "Steuergeraet, Status Taster auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_WTAST_AUT_AKTIV",
+     "type": "int",
+     "comment": [
+      "Wipp-Taster Auto-Mode",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_WTAST_DEF_AKTIV",
+     "type": "int",
+     "comment": [
+      "Wipp-Taster Defrost",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DTAST_KOM_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drucktaster Kompressor",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DTAST_UML_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drucktaster Umluft",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DTAST_HHS_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drucktaster heizbare Heckscheibe",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DRING_T_M_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drehring Temperatur minus",
+      "1=gedreht, 0=nicht gedreht"
+     ]
+    },
+    {
+     "name": "STAT_DRING_T_P_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drehring Temperatur plus",
+      "1=gedreht, 0=nicht gedreht"
+     ]
+    },
+    {
+     "name": "STAT_WTAST_G_M_AKTIV",
+     "type": "int",
+     "comment": [
+      "Wipp-Taster Geblaese minus",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_WTAST_G_P_AKTIV",
+     "type": "int",
+     "comment": [
+      "Wipp-Taster Geblaese plus",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DTAST_LVO_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drucktaster Luftverteilung oben",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DTAST_LVM_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drucktaster Luftverteilung mitte",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "STAT_DTAST_LVU_AKTIV",
+     "type": "int",
+     "comment": [
+      "Drucktaster Luftverteilung unten",
+      "1=gedrueckt, 0=nicht gedrueckt"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response as a hex string"
+     ]
+    }
+   ]
+  },
+  "STATUS_SYSTEMPARAMETER": {
+   "comment": [
+    "Systemparameter auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SOLARSEN_WERT",
+     "type": "real",
+     "comment": [
+      "Sonnenbelastung, Solarsensor, AD_05"
+     ]
+    },
+    {
+     "name": "STAT_SOLARSEN_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer Sonnenbelastung"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_INNEN_WERT",
+     "type": "real",
+     "comment": [
+      "Innenraumtemperatur, AD_08"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_WT_WERT",
+     "type": "real",
+     "comment": [
+      "Waermetauschertemperatur, AD_01"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer Temperatur"
+     ]
+    },
+    {
+     "name": "STAT_RM_TKLAPPE_WERT",
+     "type": "int",
+     "comment": [
+      "Rueckmeldung der Motors fuer die Temperatur-Mischklappe, AD_02"
+     ]
+    },
+    {
+     "name": "STAT_RM_LV_WERT",
+     "type": "int",
+     "comment": [
+      "Rueckmeldung des Motors fuer die Luftverteilungs, AD_07"
+     ]
+    },
+    {
+     "name": "STAT_RM_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer die Rueckmeldung"
+     ]
+    },
+    {
+     "name": "STAT_SPG_GEBL_WERT",
+     "type": "real",
+     "comment": [
+      "Geblaesespannung, AD_06"
+     ]
+    },
+    {
+     "name": "STAT_SPG_KLR_WERT",
+     "type": "real",
+     "comment": [
+      "Spannung Klemme R, AD_04"
+     ]
+    },
+    {
+     "name": "STAT_SPG_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer Spannung"
+     ]
+    },
+    {
+     "name": "STAT_FREQ_BEMO_WERT",
+     "type": "int",
+     "comment": [
+      "Frequenz des Belueftungsmotors fuer den Innentemperatursensor"
+     ]
+    },
+    {
+     "name": "STAT_FREQ_BEMO_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit fuer Frequenz"
+     ]
+    },
+    {
+     "name": "STAT_KF_MOTOREN_WERT",
+     "type": "string",
+     "comment": [
+      "Kalibrierungsflag fuer die Motoren Luftverteilung und Temperatur-Mischklappe"
+     ]
+    },
+    {
+     "name": "STAT_KF_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SW_VERSION",
+     "type": "string",
+     "comment": [
+      "Software version"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "STATUS_SYSTEM_PARAMETER": {
+   "comment": [
+    "Read the system parameters",
+    "Job ist wegen Kompatibilitaet zur SGBD IHKAR50 integriert!",
+    "Job soll nur im Werk Oxford verwendet werden!",
+    "Fuer neue Anwendungen bitte den Job STATUS_SYSTEMPARAMETER verwenden!"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_SUN_LOAD_WERT",
+     "type": "real",
+     "comment": [
+      "Sun load"
+     ]
+    },
+    {
+     "name": "STAT_SUN_LOAD_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_CABIN_TEMP_WERT",
+     "type": "real",
+     "comment": [
+      "Cabin temperature"
+     ]
+    },
+    {
+     "name": "STAT_CABIN_TEMP_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_HEATER_AIR_OFF_TEMP_WERT",
+     "type": "real",
+     "comment": [
+      "Heater air off temperature"
+     ]
+    },
+    {
+     "name": "STAT_HEATER_AIR_OFF_TEMP_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_BLENDDOOR_CURRENT_FDBK_WERT",
+     "type": "real",
+     "comment": [
+      "Blend door feedback"
+     ]
+    },
+    {
+     "name": "STAT_BLENDDOOR_CURRENT_FDBK_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_CURRENT_FDBK_WERT",
+     "type": "real",
+     "comment": [
+      "Distribution feedback"
+     ]
+    },
+    {
+     "name": "STAT_DISTRIB_CURRENT_FDBK_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_BLOWER_VOLTAGE_WERT",
+     "type": "real",
+     "comment": [
+      "Blower voltage"
+     ]
+    },
+    {
+     "name": "STAT_BLOWER_VOLTAGE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_BATTERY_VOLTAGE_WERT",
+     "type": "real",
+     "comment": [
+      "Battery Voltage"
+     ]
+    },
+    {
+     "name": "STAT_BATTERY_VOLTAGE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_ASPIRATOR_DIAG_FREQ_WERT",
+     "type": "real",
+     "comment": [
+      "Aspirator Distribution feedback"
+     ]
+    },
+    {
+     "name": "STAT_ASPIRATOR_DIAG_FREQ_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_CALIBRATION_DISTRI_MOTOR_WERT",
+     "type": "string",
+     "comment": [
+      "Calibration Done = AA"
+     ]
+    },
+    {
+     "name": "STAT_CALIBRATION_BLEND_MOTOR_WERT",
+     "type": "string",
+     "comment": [
+      "Calibration Done = AA"
+     ]
+    },
+    {
+     "name": "STAT_SOFTWARE_VERSION_WERT",
+     "type": "string",
+     "comment": [
+      "Software version"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_ACTUATORS": {
+   "comment": [
+    "Force the blend actuators IO block 0",
+    "Job ist wegen Kompatibilitaet zur SGBD IHKAR50 integriert!",
+    "Job soll nur im Werk Oxford verwendet werden!",
+    "Fuer neue Anwendungen bitte den Job STEUERN_MOTOREN verwenden!"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "FORCE_BLEND",
+     "type": "int",
+     "comment": [
+      "Force Blend (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "BLEND_PCT",
+     "type": "int",
+     "comment": [
+      "Blend percentage 0 - 100%"
+     ]
+    },
+    {
+     "name": "FORCE_DISTRIB",
+     "type": "int",
+     "comment": [
+      "Force Distrib (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "DISTRIB_PCT",
+     "type": "int",
+     "comment": [
+      "Distribution percentage 0 - 100%"
+     ]
+    },
+    {
+     "name": "FORCE_BLOWER",
+     "type": "int",
+     "comment": [
+      "Force Blower (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "BLOWER_LEVEL",
+     "type": "int",
+     "comment": [
+      "Blower level 0 - 31"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_AIRCON_RECIRC": {
+   "comment": [
+    "Force Air conditioning and recirculation IO block 2",
+    "Job ist wegen Kompatibilitaet zur SGBD IHKAR50 integriert!",
+    "Job soll nur im Werk Oxford verwendet werden!",
+    "Fuer neue Anwendungen bitte den Job STEUERN_KOMP_UMLUFT verwenden!"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "FORCE_AIRCON",
+     "type": "int",
+     "comment": [
+      "Force Aircon (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "AIRCON_ON",
+     "type": "int",
+     "comment": [
+      "Air conditioning  value (1 = ON, 0 = OFF)"
+     ]
+    },
+    {
+     "name": "FORCE_RECIRC",
+     "type": "int",
+     "comment": [
+      "Force Recirc (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "RECIRC_ON",
+     "type": "int",
+     "comment": [
+      "Recirculation value (1 - ON, 0 - OFF)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_EICHLAUF": {
+   "comment": [
+    "Motoren kalibrieren"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_KOMP_UMLUFT": {
+   "comment": [
+    "Steuern von Kompressor und Umluft"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "STEUERN_KOMP_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern des Kompressors vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben"
+     ]
+    },
+    {
+     "name": "STEUERN_KOMP",
+     "type": "int",
+     "comment": [
+      "Vorgeben des Kompressors",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_UMLUFT_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern des Umluft/Frischluft Motors vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben"
+     ]
+    },
+    {
+     "name": "STEUERN_UMLUFT",
+     "type": "int",
+     "comment": [
+      "Vorgeben des Umluft/Frischluft Motors",
+      "0 = aus, 1 = an"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_LCD": {
+   "comment": [
+    "Steuern des Bedienteil LCD"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "STEUERN_LCD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern des LCDs vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_ZEHNER",
+     "type": "int",
+     "comment": [
+      "7-Segment Sollwert Zehnerstelle",
+      "0 = aus, 1 = an",
+      "Bit 0 = oben",
+      "Bit 1 = links oben",
+      "Bit 2 = links unten",
+      "Bit 3 = unten",
+      "Bit 4 = rechts unten",
+      "Bit 5 = rechts oben",
+      "Bit 6 = mitte"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_EINER",
+     "type": "int",
+     "comment": [
+      "7-Segment Sollwert Einerstelle",
+      "Bit 0 = oben",
+      "Bit 1 = links oben",
+      "Bit 2 = links unten",
+      "Bit 3 = unten",
+      "Bit 4 = rechts unten",
+      "Bit 5 = rechts oben",
+      "Bit 6 = mitte"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_EINHEIT",
+     "type": "int",
+     "comment": [
+      "Segmente der Einheit",
+      "0 = aus, 1 = an",
+      "Bit 0=C1 , 1=C2 , 2=C3",
+      "Fahrenheit = C1 und C2 = 3",
+      "Celsius = C1 und C3 = 5"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_GEBL_BALKEN",
+     "type": "int",
+     "comment": [
+      "Geblaesebalken",
+      "0 = aus, 1 = an",
+      "Bit 0..7 = Balken 1 .. 8"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_LED": {
+   "comment": [
+    "Steuer der Bedienteil LED"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "STEUERN_LED_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern der LEDs vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_AUT",
+     "type": "int",
+     "comment": [
+      "AUTO LED",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_DEF",
+     "type": "int",
+     "comment": [
+      "Defrost LED",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_KOM",
+     "type": "int",
+     "comment": [
+      "Kompressor LED",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_UML",
+     "type": "int",
+     "comment": [
+      "Umluft LED",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_HHS",
+     "type": "int",
+     "comment": [
+      "Heizbare Heckscheibe",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_LVO",
+     "type": "int",
+     "comment": [
+      "Luftverteilung Oben",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_LVM",
+     "type": "int",
+     "comment": [
+      "Luftverteilung Mitte",
+      "0 = aus, 1 = an"
+     ]
+    },
+    {
+     "name": "STEUERN_LED_LVU",
+     "type": "int",
+     "comment": [
+      "Luftverteilung Unten",
+      "0 = aus, 1 = an"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_LED_LCD": {
+   "comment": [
+    "Steuern des Bedienteil LCD"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "STEUERN_LED_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern der LEDs vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben"
+     ]
+    },
+    {
+     "name": "STEUERN_LED",
+     "type": "int",
+     "comment": [
+      "Funktions-LEDs",
+      "0 = aus, 1 = an",
+      "Bit 0 = Defrost LED",
+      "Bit 1 = AUTO LED",
+      "Bit 2 = Kompressor LED",
+      "Bit 3 = Umluft LED",
+      "Bit 4 = HHS LED",
+      "Bit 5 = Luftverteilung Unten",
+      "Bit 6 = Luftverteilung Mitte",
+      "Bit 7 = Luftverteilung Oben"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern des LCDs vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_ZEHNER",
+     "type": "int",
+     "comment": [
+      "7-Segment Sollwert Zehnerstelle",
+      "0 = aus, 1 = an",
+      "Bit 0 = oben",
+      "Bit 1 = links oben",
+      "Bit 2 = links unten",
+      "Bit 3 = unten",
+      "Bit 4 = rechts unten",
+      "Bit 5 = rechts oben",
+      "Bit 6 = mitte"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_EINER",
+     "type": "int",
+     "comment": [
+      "7-Segment Sollwert Einerstelle",
+      "Bit 0 = oben",
+      "Bit 1 = links oben",
+      "Bit 2 = links unten",
+      "Bit 3 = unten",
+      "Bit 4 = rechts unten",
+      "Bit 5 = rechts oben",
+      "Bit 6 = mitte"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_EINHEIT",
+     "type": "int",
+     "comment": [
+      "Segmente der Einheit",
+      "0 = aus, 1 = an",
+      "Bit 0=C1 , 1=C2 , 2=C3",
+      "Fahrenheit = C1 und C2 = 3",
+      "Celsius = C1 und C3 = 5"
+     ]
+    },
+    {
+     "name": "STEUERN_LCD_GEBL_BALKEN",
+     "type": "int",
+     "comment": [
+      "Geblaesebalken",
+      "0 = aus, 1 = an",
+      "Bit 0..7 = Balken 1 .. 8"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_MOTOREN": {
+   "comment": [
+    "Steuern der Motoren Blocknummer 0",
+    "Force the blend actuators IO block 0"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "STEUERN_TM_MOTOR_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern des Temperatur-Mischklappen-Motors vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben",
+      "Force Blend (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "STEUERN_TM_MOTOR",
+     "type": "int",
+     "comment": [
+      "Vorgabe fuer Temperatur-Mischklappen-Motor",
+      "Blend percentage",
+      "0% - 100%"
+     ]
+    },
+    {
+     "name": "STEUERN_LV_MOTOR_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuer des Luftverteilungs-Klappen-Motors vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben",
+      "Force Distrib (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "STEUERN_LV_MOTOR",
+     "type": "int",
+     "comment": [
+      "Vorgabe fuer Luftverteilungs-Klappen-Motor",
+      "Distribution percentage",
+      "0% - 100%"
+     ]
+    },
+    {
+     "name": "STEUERN_GEBLAESE_AKTIV",
+     "type": "int",
+     "comment": [
+      "Steuern des Geblaeses vorgeben",
+      "0 = nicht vorgeben, 1 = vorgeben",
+      "Force Blower (1 = force, 0 = not force)"
+     ]
+    },
+    {
+     "name": "STEUERN_GEBLAESE",
+     "type": "int",
+     "comment": [
+      "Vorgabe fuer Geblase",
+      "Blower level",
+      "0% -  100%"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_SG_RESET": {
+   "comment": [
+    "SG Reset",
+    "Reset ECU"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'STEUERN_SG_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTNUMPREFIX": [
+   {
+    "ROVER_NR": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "ROVER_NR": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "ROVER_NR": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "ROVER_NR": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "ROVER_NR": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "ROVER_NR": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "ROVER_NR": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "ROVER_NR": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "ROVER_NR": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "ROVER_NR": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "ROVER_NR": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "ROVER_NR": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "ROVER_NR": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "ROVER_NR": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "ROVER_NR": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "ROVER_NR": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "ROVER_NR": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "ROVER_NR": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "ROVER_NR": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "ROVER_NR": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "ROVER_NR": "0xXY",
+    "PREFIX": "???"
+   }
+  ],
+  "DIGITALARGUMENT": [
+   {
+    "TEXT": "ein",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "aus",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "ja",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "nein",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "auf",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "ab",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "an",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "yes",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "no",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "on",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "off",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "up",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "down",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "true",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "false",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "1",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "0",
+    "WERT": "0"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "Waermetauscherfuehler"
+   },
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "RMP Motor Temperaturmischklappe"
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "Solarsensor"
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "RMP Motor Luftverteilungsklappe"
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "Innenraumtemperaturfuehler"
+   },
+   {
+    "ORT": "0x08",
+    "ORTTEXT": "Versorgungsspannung RMP"
+   },
+   {
+    "ORT": "0x09",
+    "ORTTEXT": "Geblaesesteuerspannung"
+   },
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "Innenfuehlergeblaese"
+   },
+   {
+    "ORT": "0x0B",
+    "ORTTEXT": "Motor Luftverteilungsklappe"
+   },
+   {
+    "ORT": "0x0C",
+    "ORTTEXT": "Motor Temperaturmischklappe"
+   },
+   {
+    "ORT": "0x63",
+    "ORTTEXT": "Energiesparmode aktiv"
+   },
+   {
+    "ORT": "0xXY",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ART": "0x00",
+    "ARTTEXT": "--"
+   },
+   {
+    "ART": "0x01",
+    "ARTTEXT": "Kurzschluss gegen U-Batt"
+   },
+   {
+    "ART": "0x02",
+    "ARTTEXT": "Kurzschluss gegen Masse"
+   },
+   {
+    "ART": "0x04",
+    "ARTTEXT": "Leitungsunterbrechung"
+   },
+   {
+    "ART": "0x08",
+    "ARTTEXT": "unplausibler Wert, ungueltiger Arbeitsbereich"
+   },
+   {
+    "ART": "0x40",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ART": "0x80",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ART": "0xFF",
+    "ARTTEXT": "unbekannte Fehlerart"
+   }
+  ],
+  "BEDIENTEILBITS": [
+   {
+    "NAME": "FAHRENHEIT",
+    "BYTE": "6",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "GEBL_AUTOMATIK",
+    "BYTE": "6",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "HHS",
+    "BYTE": "6",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "OFF",
+    "BYTE": "7",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "LV_OBEN",
+    "BYTE": "7",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "LV_AUTOMATIK",
+    "BYTE": "7",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "KOMPRESSOR_AUS",
+    "BYTE": "7",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "DEFROST_MODE",
+    "BYTE": "7",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "UMLUFT",
+    "BYTE": "7",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "LV_MITTE",
+    "BYTE": "7",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "LV_UNTEN",
+    "BYTE": "7",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "LED_LVO",
+    "BYTE": "8",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "LED_LVM",
+    "BYTE": "8",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "LED_LVU",
+    "BYTE": "8",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "LED_HHS",
+    "BYTE": "8",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "LED_UML",
+    "BYTE": "8",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "LED_KOM",
+    "BYTE": "8",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "LED_AUT",
+    "BYTE": "8",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "LED_DEF",
+    "BYTE": "8",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "DTASTER_KOM",
+    "BYTE": "9",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "DTASTER_HHS",
+    "BYTE": "9",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "DRING_TEMP_P",
+    "BYTE": "9",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "DRING_TEMP_M",
+    "BYTE": "9",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "DTASTER_LVU",
+    "BYTE": "10",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "WTASTER_DEF",
+    "BYTE": "10",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "WTASTER_GBL_M",
+    "BYTE": "10",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "DTASTER_LVM",
+    "BYTE": "10",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "WTASTER_GBL_P",
+    "BYTE": "10",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "WTASTER_AUT",
+    "BYTE": "10",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "DTASTER_UML",
+    "BYTE": "10",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "DTASTER_LVO",
+    "BYTE": "10",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   }
+  ]
+ }
+}

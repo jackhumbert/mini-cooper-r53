@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "r53diag"
+version = "0.1.0"
+description = "Diagnostics for the 2006 MINI Cooper S (R53) over BMW EDIABAS, built for agent use"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT (code); CC BY 4.0 (kb/ docs and data)" }
+authors = [{ name = "Jack Humbert" }]
+dependencies = []
+
+[project.scripts]
+r53 = "r53diag.cli:main"
+
+[tool.setuptools]
+packages = ["r53diag"]

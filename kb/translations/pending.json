@@ -1,0 +1,76 @@
+{
+ "Clear the RF receive and status buffers": [
+  "BC1.CLEAR_RF_BUFFERS",
+  "BC1RD.CLEAR_RF_BUFFERS"
+ ],
+ "Get the status of reprogramming after a mistake": [
+  "EHPSR50.REPORT_REPROG_STATUS",
+  "EMS2K.REPORT_REPROG_STATUS"
+ ],
+ "Hülsbeck & Fürst GmbH & Co KG": [
+  "MRS5K.LIEFERANTEN"
+ ],
+ "KÜSTER Automotive Control": [
+  "MRS5K.LIEFERANTEN"
+ ],
+ "Read 10 minute wake up status from port 2": [
+  "KOMBI50F.STATUS_IO_WAKE_UP",
+  "KOMBIR50.STATUS_IO_WAKE_UP"
+ ],
+ "Read Driving Stability control status": [
+  "EMS2K.STATUS_IO_DRIVING_STABILITY"
+ ],
+ "Read door status, dimmer position and LCD operation times": [
+  "BMBTR50.READ_SYSTEM_PARAMETERS"
+ ],
+ "Read lock byte status": [
+  "MRS4.VERRIEGELUNG_LESEN",
+  "MRS4RD.VERRIEGELUNG_LESEN"
+ ],
+ "Read status of CAN shutdown output from port 4": [
+  "KOMBI50F.STATUS_IO_CAN_SHUTDOWN",
+  "KOMBIR50.STATUS_IO_CAN_SHUTDOWN"
+ ],
+ "Read status of Kbus interrupt from port 2": [
+  "KOMBI50F.STATUS_IO_KBUS_INTERRUPT",
+  "KOMBIR50.STATUS_IO_KBUS_INTERRUPT"
+ ],
+ "Read status of MRS4": [
+  "MRS4.STATUS_LESEN"
+ ],
+ "Read status of MRS4 RD": [
+  "MRS4RD.STATUS_LESEN"
+ ],
+ "Read status of MRS5K": [
+  "MRS5K.STATUS_LESEN"
+ ],
+ "Read status of OC-3": [
+  "OC3.STATUS_LESEN"
+ ],
+ "Read status of battery monitor": [
+  "KOMBI50F.AIF_BATTMON_STATUS_LESEN"
+ ],
+ "Read status of the motor drivers from port 2": [
+  "KOMBI50F.STATUS_IO_MOTOR_DRIVERS",
+  "KOMBIR50.STATUS_IO_MOTOR_DRIVERS"
+ ],
+ "Read the RF status": [
+  "BC1.STATUS_RF",
+  "BC1RD.STATUS_RF"
+ ],
+ "Read the Tilt sensor status": [
+  "BC1.STATUS_TILT_SENSOR",
+  "BC1RD.STATUS_TILT_SENSOR"
+ ],
+ "Read the codes and status for a specified plip location": [
+  "BC1.READ_PLIP_CODES",
+  "BC1RD.READ_PLIP_CODES"
+ ],
+ "Status Unknown": [
+  "GSF21.TORQUE_CONVERTER_STATUS"
+ ],
+ "Write the codes and status for a specified plip location": [
+  "BC1.WRITE_PLIP_CODES",
+  "BC1RD.WRITE_PLIP_CODES"
+ ]
+}

@@ -1,0 +1,1991 @@
+{
+ "sgbd": "LWS5",
+ "file": "lws5.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "Lenkradwinkel mit CAN-Schnittstelle"
+  ],
+  "ORIGIN": [
+   "BMW EE-23 Schoenherr"
+  ],
+  "REVISION": [
+   "1.14"
+  ],
+  "AUTHOR": [
+   "BMW TP-421 Gerd Huber, Kostal AVC3 Hillebrand"
+  ],
+  "USES": [
+   "_LWS5"
+  ],
+  "ECUCOMMENT": [
+   ""
+  ]
+ },
+ "jobs": {
+  "ABGLEICH_LESEN": {
+   "comment": [
+    "Auslesen der Abgleich-Werte"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ABGL_LRW_OFFSET",
+     "type": "long",
+     "comment": [
+      "Abgleichwert: LRW-Offset",
+      "Bereich: 0000 bis FFFF [Digit]"
+     ]
+    },
+    {
+     "name": "ABGL_LWS_ID",
+     "type": "int",
+     "comment": [
+      "Abgleichwert: LWS-ID",
+      "Bereich: 0 bis 255 [Digit]"
+     ]
+    },
+    {
+     "name": "ABGL_FGSTNR",
+     "type": "string",
+     "comment": [
+      "Abgleichwert: Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "ABGLEICH_SCHREIBEN": {
+   "comment": [
+    "Programmieren der Abgleich-Werte"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "ABGLEICH_VORGEBEN": {
+   "comment": [
+    "Vorgeben der Abgleichwerte"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'ABGLEICH_VORGEBEN'",
+   "args": [
+    {
+     "name": "ABGL_LRW_OFFSET",
+     "type": "long",
+     "comment": [
+      "Abgleichwert: LRW-Offset",
+      "Bereich: 0x0000-0xFFFF"
+     ]
+    },
+    {
+     "name": "ABGL_LWS_ID",
+     "type": "int",
+     "comment": [
+      "Abgleichwert: LWS-ID",
+      "Bereich: 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "ABGL_FGSTNR",
+     "type": "string",
+     "comment": [
+      "Abgleichwert: Fahrgestellnummer",
+      "Bereich: ? String aus ? Zeichen / ACSII / rueckwaerts ?",
+      "z.B.: ?"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "CODIERUNG_CHECK": {
+   "comment": [
+    "Checksumme der Codierung des LWS5 auslesen"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'CODIERUNG_CHECK'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "COD_CHECK",
+     "type": "int",
+     "comment": [
+      "Checksumme ueber alle 112 Codierdaten"
+     ]
+    },
+    {
+     "name": "COD_CHECK_HIGH",
+     "type": "int",
+     "comment": [
+      "Checksumme ueber alle 112 Codierdaten (High-Byte)"
+     ]
+    },
+    {
+     "name": "COD_CHECK_LOW",
+     "type": "int",
+     "comment": [
+      "Checksumme ueber alle 112 Codierdaten (Low-Byte)"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "CODIERUNG_LESEN": {
+   "comment": [
+    "Fahrzeugcodierung des LWS5 auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "int",
+     "comment": [
+      "Block der Codierdaten",
+      "Bereich: derzeit 00 bis 06"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "COD_DATEN",
+     "type": "binary",
+     "comment": [
+      "16 Datenbytes"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "CODIERUNG_SCHREIBEN_DATEI": {
+   "comment": [
+    "Beschreiben der Codierdaten des LWS5 ueber Datei"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "DATEI",
+     "type": "string",
+     "comment": [
+      "Dateiname",
+      "z.B.: \"/EDIABAS/ECU/LWS5.cod\""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "ERROR_argumentname, wenn argument nicht",
+      "uebergeben oder ausser Bereich",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Beenden der Diagnose",
+    "Dummy-Job ohne Diagnosetelegramm (d.h. immer OKAY)"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "immer OKAY"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen",
+    "Low-Konzept nach Lastenheft Codierung/Diagnose"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Fehlerort",
+      "momentan identisch Fehlerbyte"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "table FOrtTexte ORTTEXT"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Bereich: 0 - 31"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten",
+      "Bereich: immer 1"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Bereich: immer 0"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "1. (einzige) Fehlerart",
+      "Bereich: 0, 1"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. (einzige) Fehlerart als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Loeschen des Fehlerspeichers"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "HERSTELLDATEN_LESEN": {
+   "comment": [
+    "Auslesen der Herstelldaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE4",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Ident-Daten fuer Lenkwinkelsensor 5"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "table Lieferanten LIEF_TEXT"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "int",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "IDENT_E": {
+   "comment": [
+    "Ident-Daten fuer Lenkwinkelsensor 5"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "table Lieferanten LIEF_TEXT"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "int",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung / Kommunikationsparameter fuer Lenkwinkelsensor 5 (CAN)",
+    "automatischer Aufruf beim ersten Zugriff auf die SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "FG_ZIFFERN",
+     "type": "string",
+     "comment": [
+      "die letzten vier Stellen der Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels",
+    "Es muessen immer alle drei Argumente im Bereich",
+    "von 0-255 bzw. 0x00-0xFF uebergeben werden."
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Lesen des ROM/RAM bzw. EEPROM-Speichers"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "SEGMENT",
+     "type": "int",
+     "comment": [
+      "Speichersegment",
+      "Bereich: 01, 03, 04, 05 oder 0B"
+     ]
+    },
+    {
+     "name": "ADRESSE",
+     "type": "long",
+     "comment": [
+      "Speicheradresse",
+      "Bereich: 0x0000-0xFFFF"
+     ]
+    },
+    {
+     "name": "ANZAHL",
+     "type": "int",
+     "comment": [
+      "Anzahl der Daten",
+      "Bereich: 1 bis 256"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "ausgelesene Hex-Daten"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_ANALOG": {
+   "comment": [
+    "Auslesen der Analogwerte"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SENSOR_U_SCHLEIFER_1_WERT",
+     "type": "long",
+     "comment": [
+      "Sensor-Schleiferspannung 1",
+      "Bereich: 0 bis 255 [Digit]"
+     ]
+    },
+    {
+     "name": "STAT_SENSOR_U_SCHLEIFER_2_WERT",
+     "type": "long",
+     "comment": [
+      "Sensor-Schleiferspannung 2",
+      "Bereich: 0 bis 255 [Digit]"
+     ]
+    },
+    {
+     "name": "STAT_SENSOR_I_WERT",
+     "type": "long",
+     "comment": [
+      "Sensor-Stromwert",
+      "Bereich: 0 bis 4 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_U_KLEMME_87_WERT",
+     "type": "long",
+     "comment": [
+      "Spannung an Klemme 87",
+      "Bereich: 0 bis 18 [V]"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_DIGITAL": {
+   "comment": [
+    "Auslesen der digitalen IO-Stati des Lenkwinkelsensors 5",
+    "Der Wertebereich ist bei allen Results gleich:",
+    "Bereich: 0, wenn FALSE / 1, wenn TRUE"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_U_CAN_TREIBER_AKTIV",
+     "type": "int",
+     "comment": [
+      "Statusbit fuer die CAN-Treiber Spannung"
+     ]
+    },
+    {
+     "name": "STAT_U_BASISSENSOR_AKTIV",
+     "type": "int",
+     "comment": [
+      "Statusbit fuer die Versorgungsspannung des Basissensors"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_KL30": {
+   "comment": [
+    "Lesen des Unterspannungszählers"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_KL30_ZAEHLER",
+     "type": "int",
+     "comment": [
+      "ausgelesener Unterspannungszähler"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG_DIGITAL": {
+   "comment": [
+    "Auslesen der digitalen SG-Stati des Lenkwinkelsensors 5",
+    "Der Wertebereich ist bei allen Results gleich:",
+    "Bereich: 0, wenn FALSE / 1, wenn TRUE"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_LWS_FABNEU_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Status fabrikneu"
+     ]
+    },
+    {
+     "name": "STAT_LWS_POR_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS hat einen Power on Reset erhalten"
+     ]
+    },
+    {
+     "name": "STAT_LWS_WDR_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS hat einen Watchdogreset erhalten"
+     ]
+    },
+    {
+     "name": "STAT_LWS_REL_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS gibt nur einen relativen Lenkwinkel aus"
+     ]
+    },
+    {
+     "name": "STAT_LWS_FILTER_INIT_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS Filter noch nicht initialisiert"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ABGL_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS im Abgleichmodus"
+     ]
+    },
+    {
+     "name": "STAT_CAN_INIT_AKTIV",
+     "type": "int",
+     "comment": [
+      "CAN Initialisierung"
+     ]
+    },
+    {
+     "name": "STAT_ASC2_RCV_AKTIV",
+     "type": "int",
+     "comment": [
+      "ASC2 Botschaft empfangen"
+     ]
+    },
+    {
+     "name": "STAT_DIAG_RCV_AKTIV",
+     "type": "int",
+     "comment": [
+      "ASC3 Botschaft mit Abgleichinformation empfangen"
+     ]
+    },
+    {
+     "name": "STAT_PSI_PKT_RCV_AKTIV",
+     "type": "int",
+     "comment": [
+      "ASC3 Botschaft mit Lenkwinkelgeschwindigkeitsinformation empfangen"
+     ]
+    },
+    {
+     "name": "STAT_CAN_STAND_RCV_AKTIV",
+     "type": "int",
+     "comment": [
+      "DME Botschaft mit CAN-Stand empfangen"
+     ]
+    },
+    {
+     "name": "STAT_CAN_STAND_OK_AKTIV",
+     "type": "int",
+     "comment": [
+      "CAN-Stand ist i.O."
+     ]
+    },
+    {
+     "name": "STAT_CAN_TX_OFF_AKTIV",
+     "type": "int",
+     "comment": [
+      "CAN-Bus fuer Senden gesperrt"
+     ]
+    },
+    {
+     "name": "STAT_CAN_OFF_AKTIV",
+     "type": "int",
+     "comment": [
+      "CAN-Bus gesperrt"
+     ]
+    },
+    {
+     "name": "STAT_SDL_ZYKL_SYC_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_ZYKL_SYC"
+     ]
+    },
+    {
+     "name": "STAT_SDL_ZYKL_START_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_ZYKL_START"
+     ]
+    },
+    {
+     "name": "STAT_SDL_LWR_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_LRW"
+     ]
+    },
+    {
+     "name": "STAT_SDL_ASC2_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_ASC2"
+     ]
+    },
+    {
+     "name": "STAT_SDL_PSI_PKT_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_PSI_PKT"
+     ]
+    },
+    {
+     "name": "STAT_SDL_VIR_SENS_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_VIR_SENS"
+     ]
+    },
+    {
+     "name": "STAT_SDL_KLASS_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_KLASS"
+     ]
+    },
+    {
+     "name": "STAT_SDL_STAT_ERR_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_STAT_ERR"
+     ]
+    },
+    {
+     "name": "STAT_SDL_LWS1_TR_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Status = SDL_LWS1_TR"
+     ]
+    },
+    {
+     "name": "STAT_SDL_INIT_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = SDL_INIT_MOD"
+     ]
+    },
+    {
+     "name": "STAT_ASC2_SYC1_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = ASC2_SYC1_MOD"
+     ]
+    },
+    {
+     "name": "STAT_ASC2_SYC2_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = ASC2_SYC2_MOD"
+     ]
+    },
+    {
+     "name": "STAT_ASC2_ASYC_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = ASC2_ASYC_MOD"
+     ]
+    },
+    {
+     "name": "STAT_SDL_SLOW_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = SDL_SLOW_MOD"
+     ]
+    },
+    {
+     "name": "STAT_SDL_NACHLF_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = SDL_NACHL_MOD"
+     ]
+    },
+    {
+     "name": "STAT_SDL_CAN_ERR_MOD_AKTIV",
+     "type": "int",
+     "comment": [
+      "Scheduler-Modus = SDL_CAN_ERR_MOD"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_USPG_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Kl.30 Fehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_I_SENS_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Sensorstrom ausserhalb der Toleranz"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_ABGL_90GR_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: 90 Grad-Fehler waehrend des Abgleichs"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_90GR_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: 90 Grad-Fehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_EEPROM_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: EEPROM-Fehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_AD_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: A/D-Wandler Fehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_ROM_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: ROM-Checksummenfehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_RAM_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: RAM-Check-Fehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_ASC_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Fehlende oder fehlerhafte ASC2 Botschaft"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_CAN_STAND_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Falscher CAN-Stand"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_ID_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Zuordnung zum Fahrzeug falsch"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_SW_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Ungueltiger Programmverlauf"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_LRWPKT_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Lenkradwinkelgradient zu gross"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_LRWMAX_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Max. Lenkradeinschlagsbereich ueberschritten"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_STACK_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Stackfehler"
+     ]
+    },
+    {
+     "name": "STAT_LWS_ERR_WDG_AKTIV",
+     "type": "int",
+     "comment": [
+      "LWS-Fehler: Watchdogreset"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG_ONLINE": {
+   "comment": [
+    "Auslesen der analogen Online-Werte des LWS5"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_INLRW_G_WERT",
+     "type": "long",
+     "comment": [
+      "Lenkwinkel",
+      "Bereich: -1000 bis +1000 [Grad]"
+     ]
+    },
+    {
+     "name": "STAT_INLRWPKT_G_WERT",
+     "type": "long",
+     "comment": [
+      "Lenkwinkelgeschwindigkeit",
+      "Bereich: -2500 bis +2500 [Grad/s]"
+     ]
+    },
+    {
+     "name": "STAT_WVREF_G_WERT",
+     "type": "long",
+     "comment": [
+      "Fahrzeuggeschwindigkeit",
+      "Bereich: 0 bis 350 [km/h]"
+     ]
+    },
+    {
+     "name": "STAT_PRGDLZ_G_WERT",
+     "type": "long",
+     "comment": [
+      "Programmdurchlaufzeit",
+      "Bereich: 0 bis 14000 [Mikro-Sekunden]"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SG_VIRTUELL": {
+   "comment": [
+    "Auslesen der analogen Online-Werte / virtuelle Sensorik"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_UVRDLVASC_GV_WERT",
+     "type": "long",
+     "comment": [
+      "Radgeschwindigkeit links vorne",
+      "Bereich: 0 bis 350 [km/h]"
+     ]
+    },
+    {
+     "name": "STAT_UVRDRVASC_GV_WERT",
+     "type": "long",
+     "comment": [
+      "Radgeschwindigkeit rechts vorne",
+      "Bereich: 0 bis 350 [km/h]"
+     ]
+    },
+    {
+     "name": "STAT_UVRDLHASC_GV_WERT",
+     "type": "long",
+     "comment": [
+      "Radgeschwindigkeit links hinten",
+      "Bereich: 0 bis 350 [km/h]"
+     ]
+    },
+    {
+     "name": "STAT_UVRDRHASC_GV_WERT",
+     "type": "long",
+     "comment": [
+      "Radgeschwindigkeit rechts hinten",
+      "Bereich: 0 bis 350 [km/h]"
+     ]
+    },
+    {
+     "name": "STAT_UPSIPKTSYN_G_WERT",
+     "type": "long",
+     "comment": [
+      "Giergeschwindigkeit",
+      "Bereich: -1 bis +1 [rad/s]"
+     ]
+    },
+    {
+     "name": "STAT_UAYSYN_G_WERT",
+     "type": "long",
+     "comment": [
+      "Querbeschleunigung",
+      "Bereich: -15 bis +15 [m/s*s]"
+     ]
+    },
+    {
+     "name": "STAT_ULRWSYN_G_WERT",
+     "type": "long",
+     "comment": [
+      "synthetische Lenkradwinkel",
+      "Bereich: -600 bis +600 [Grad]"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STEUERN_DIGITAL": {
+   "comment": [
+    "Ansteuern eines digitalen Ein- oder Ausgangs v. LWS5",
+    "! erlaubte Namen des Arguments 'FUNKTION' ueber Tool XTRACT.exe",
+    "! Aufruf 'XTRACT [-F] LWS5.prg'"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "FUNKTION",
+     "type": "string",
+     "comment": [
+      "gewuenschte Komponente",
+      "table Steuern_Digital SIGNAL"
+     ]
+    },
+    {
+     "name": "EIN",
+     "type": "int",
+     "comment": [
+      "\"1\", wenn einschalten / \"0\", wenn ausschalten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "0x00",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen / Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0xXY",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "Klemme 30 fehlerhaft"
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "Sensorstrom ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "90 Grad-Differenz der Schleifer zu gross (Normalbetrieb)"
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "90 Grad-Differenz der Schleifer zu gross (Abgleichbetrieb)"
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "EEPROM defekt"
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "AD-Wandler defekt"
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "ROM-Checkfehler"
+   },
+   {
+    "ORT": "0x08",
+    "ORTTEXT": "RAM-Checkfehler"
+   },
+   {
+    "ORT": "0x09",
+    "ORTTEXT": "keine ASC2-Botschaft"
+   },
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "CAN-Stand falsch"
+   },
+   {
+    "ORT": "0x0B",
+    "ORTTEXT": "LWS-ID falsch"
+   },
+   {
+    "ORT": "0x0C",
+    "ORTTEXT": "CAN-Bus off"
+   },
+   {
+    "ORT": "0x0D",
+    "ORTTEXT": "Lrw-Gradient zu gross"
+   },
+   {
+    "ORT": "0x0E",
+    "ORTTEXT": "Lrw-Maximum ueberschritten"
+   },
+   {
+    "ORT": "0x0F",
+    "ORTTEXT": "Stack-Fehler / Case-Fehler"
+   },
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "Watchdog"
+   },
+   {
+    "ORT": "0xXY",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ART": "0x00",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ART": "0x01",
+    "ARTTEXT": "statischer Fehler"
+   },
+   {
+    "ART": "0xXY",
+    "ARTTEXT": "unbekannte Fehlerart"
+   }
+  ],
+  "STEUERN_DIGITAL": [
+   {
+    "SIGNAL": "B0",
+    "BYTE": "0x01"
+   },
+   {
+    "SIGNAL": "KL87",
+    "BYTE": "0x02"
+   },
+   {
+    "SIGNAL": "U_CAN",
+    "BYTE": "0x04"
+   },
+   {
+    "SIGNAL": "U_BAS",
+    "BYTE": "0x08"
+   },
+   {
+    "SIGNAL": "B4",
+    "BYTE": "0x10"
+   },
+   {
+    "SIGNAL": "B5",
+    "BYTE": "0x20"
+   },
+   {
+    "SIGNAL": "B6",
+    "BYTE": "0x40"
+   },
+   {
+    "SIGNAL": "TAST",
+    "BYTE": "0x80"
+   },
+   {
+    "SIGNAL": "XY",
+    "BYTE": "0xFF"
+   }
+  ],
+  "ASCII": [
+   {
+    "ASCII_NR": "0x41",
+    "ASCII_ZCH": "A"
+   },
+   {
+    "ASCII_NR": "0x42",
+    "ASCII_ZCH": "B"
+   },
+   {
+    "ASCII_NR": "0x43",
+    "ASCII_ZCH": "C"
+   },
+   {
+    "ASCII_NR": "0x44",
+    "ASCII_ZCH": "D"
+   },
+   {
+    "ASCII_NR": "0x45",
+    "ASCII_ZCH": "E"
+   },
+   {
+    "ASCII_NR": "0x46",
+    "ASCII_ZCH": "F"
+   },
+   {
+    "ASCII_NR": "0x47",
+    "ASCII_ZCH": "G"
+   },
+   {
+    "ASCII_NR": "0x48",
+    "ASCII_ZCH": "H"
+   },
+   {
+    "ASCII_NR": "0x49",
+    "ASCII_ZCH": "I"
+   },
+   {
+    "ASCII_NR": "0x4A",
+    "ASCII_ZCH": "J"
+   },
+   {
+    "ASCII_NR": "0x4B",
+    "ASCII_ZCH": "K"
+   },
+   {
+    "ASCII_NR": "0x4C",
+    "ASCII_ZCH": "L"
+   },
+   {
+    "ASCII_NR": "0x4D",
+    "ASCII_ZCH": "M"
+   },
+   {
+    "ASCII_NR": "0x4E",
+    "ASCII_ZCH": "N"
+   },
+   {
+    "ASCII_NR": "0x4F",
+    "ASCII_ZCH": "O"
+   },
+   {
+    "ASCII_NR": "0x50",
+    "ASCII_ZCH": "P"
+   },
+   {
+    "ASCII_NR": "0x51",
+    "ASCII_ZCH": "Q"
+   },
+   {
+    "ASCII_NR": "0x52",
+    "ASCII_ZCH": "R"
+   },
+   {
+    "ASCII_NR": "0x53",
+    "ASCII_ZCH": "S"
+   },
+   {
+    "ASCII_NR": "0x54",
+    "ASCII_ZCH": "T"
+   },
+   {
+    "ASCII_NR": "0x55",
+    "ASCII_ZCH": "U"
+   },
+   {
+    "ASCII_NR": "0x56",
+    "ASCII_ZCH": "V"
+   },
+   {
+    "ASCII_NR": "0x57",
+    "ASCII_ZCH": "W"
+   },
+   {
+    "ASCII_NR": "0x58",
+    "ASCII_ZCH": "X"
+   },
+   {
+    "ASCII_NR": "0x59",
+    "ASCII_ZCH": "Y"
+   },
+   {
+    "ASCII_NR": "0x5A",
+    "ASCII_ZCH": "Z"
+   },
+   {
+    "ASCII_NR": "0xXY",
+    "ASCII_ZCH": "?"
+   }
+  ]
+ }
+}

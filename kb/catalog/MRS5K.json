@@ -1,0 +1,6033 @@
+{
+ "sgbd": "MRS5K",
+ "file": "MRS5K.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "MRS5K fuer Airbag SG R50/R52/R53 (auch das MRS5RD Steuergerät benutzt diese SGBD für:  E83, der Diagnoseindex lautet:0x12)"
+  ],
+  "ORIGIN": [
+   "BMW AG EI-62 I. Scherer"
+  ],
+  "REVISION": [
+   "4.01"
+  ],
+  "AUTHOR": [
+   "BERATA EngineeringConsulting Chafigoulline, BERATA EngineeringConsulting Schieferstein, BOSCH Kirchschlager"
+  ],
+  "ECUCOMMENT": [
+   "SGBD MRS5 fuer K-Bus Anwendungen"
+  ]
+ },
+ "jobs": {
+  "BARCODE_LESEN": {
+   "comment": [
+    "Lesen der MRSZ5K barcode infos",
+    "Read unique ECU barcode"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    },
+    {
+     "name": "DATEN_STRING",
+     "type": "string",
+     "comment": [
+      "Barcode, decodiert als String",
+      "Barcode, decoded as String"
+     ]
+    },
+    {
+     "name": "SACHNUMMER",
+     "type": "string",
+     "comment": [
+      "Sachnummer",
+      "Part number"
+     ]
+    },
+    {
+     "name": "AENDERUNGS_INDEX",
+     "type": "string",
+     "comment": [
+      "Aenderungs-Index",
+      "Change/version index"
+     ]
+    },
+    {
+     "name": "HERSTELLER_INFO",
+     "type": "string",
+     "comment": [
+      "Hersteller-Info",
+      "Production info"
+     ]
+    }
+   ]
+  },
+  "CONTROLLER_RESET": {
+   "comment": [
+    "Zuruecksetzen des Controllers",
+    "Reset ECU"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'CONTROLLER_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "C_C_AUFTRAG": {
+   "comment": [
+    "Codierdaten schreiben und verifizieren",
+    "Write and check codingdata"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_C_LESEN": {
+   "comment": [
+    "Codierdaten lesen",
+    "Read codingdata"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CODIER_DATEN",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_FG_LESEN": {
+   "comment": [
+    "Kodierte KFZ-Herstellerdaten lesen",
+    "Read coded productiondata"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Kurze Fahrgestellnummer",
+      "Short VIN"
+     ]
+    },
+    {
+     "name": "_TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "C_FS_LESEN": {
+   "comment": [
+    "24 Byte aus Crashtelegram lesen",
+    "Read 24 bytes from crashtelegram block stated"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'C_FS_LESEN'",
+   "args": [
+    {
+     "name": "BLOCKNR",
+     "type": "string",
+     "comment": [
+      "(1 <= BLOCKNR <= 6) --> 24 Parameterbytes ab",
+      "Between 1 and 6, 24 bytes returned"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Spezifizierte Crashdaten",
+      "Specified crashdata"
+     ]
+    }
+   ]
+  },
+  "C_FS_LOESCHEN": {
+   "comment": [
+    "Crashtelegram loeschen",
+    "Delete crash telegram"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation"
+     ]
+    },
+    {
+     "name": "ERROR_CODE",
+     "type": "string",
+     "comment": [
+      "Bei NIO Fehlertext, sonst Leerstring"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Diagnosemode aufrechterhalten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnose beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "EAM_FLAGS_LESEN": {
+   "comment": [
+    "Lesen der EAM (Ergebnis Ausloese Matrix) Flags",
+    "read EAM"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "BYTE_0",
+     "type": "int",
+     "comment": [
+      "Byte 0 der 1 EAM Flagsbytes"
+     ]
+    },
+    {
+     "name": "BYTE_1",
+     "type": "int",
+     "comment": [
+      "Byte 1 der 1 EAM Flagsbytes"
+     ]
+    },
+    {
+     "name": "LENKSEITE",
+     "type": "int",
+     "comment": [
+      "0 = Links-Lenker, 1 = Rechts-Lenker"
+     ]
+    },
+    {
+     "name": "US_SCHWELLEN",
+     "type": "int",
+     "comment": [
+      "0 = Flag ausgeschaltet, 1 = Flag eingeschaltet"
+     ]
+    },
+    {
+     "name": "CURTAIN_ITS_SCHRAEGCRASH",
+     "type": "int",
+     "comment": [
+      "0 = Flag ausgeschaltet, 1 = Flag eingeschaltet"
+     ]
+    },
+    {
+     "name": "GURTSTRAMMER_SEITENCRASH",
+     "type": "int",
+     "comment": [
+      "0 = Flag ausgeschaltet, 1 = Flag eingeschaltet"
+     ]
+    },
+    {
+     "name": "CURTAIN_ITS_GEGENUEBER",
+     "type": "int",
+     "comment": [
+      "0 = Flag ausgeschaltet, 1 = Flag eingeschaltet"
+     ]
+    },
+    {
+     "name": "LANGER_CURTAIN",
+     "type": "int",
+     "comment": [
+      "0 = ITS, 1 = Curtain"
+     ]
+    },
+    {
+     "name": "BYTE_1_0",
+     "type": "int",
+     "comment": [
+      "Byte 0 der 1 EAM Flagsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "BYTE_1_1",
+     "type": "int",
+     "comment": [
+      "Byte 1 der 1 EAM Flagsbytes (wiederholt)"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen",
+    "Read error memory"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Hex-Fehlerdaten je Fehler",
+      "Hex format errordata"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "identisch Fehlerbytemaske",
+      "Error location number"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Error location text"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Error frequency (occurences)"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten (hier: immer 8)",
+      "Number of errortypes (always 8 here)"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Fehlerart",
+      "Index of 1st errortype"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. Fehlerart als Text",
+      "Text of 1st errortype"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "2. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "Index der 3. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "3. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "Index der 4. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "4. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "Index der 5. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "5. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "Index der 6. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "6. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART7_NR",
+     "type": "int",
+     "comment": [
+      "Index der 7. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART7_TEXT",
+     "type": "string",
+     "comment": [
+      "7. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART8_NR",
+     "type": "int",
+     "comment": [
+      "Index der 8. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART8_TEXT",
+     "type": "string",
+     "comment": [
+      "8. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen (hier: immer 2)",
+      "Number of environment conditions (always 2 here)"
+     ]
+    },
+    {
+     "name": "F_UW_SATZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltsaetze (hier: immer 1)",
+      "Number of environment blocks (always 1 here)"
+     ]
+    },
+    {
+     "name": "F_UW1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Umweltbedingung (hier: immer 1)",
+      "Index of 1st environment condition (always 1 here)"
+     ]
+    },
+    {
+     "name": "F_UW1_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 1. Umweltbedingung (hier: immer Beginnfehleruhr)",
+      "Text of 1st environment condition"
+     ]
+    },
+    {
+     "name": "F_UW1_WERT",
+     "type": "long",
+     "comment": [
+      "Wert der 1. Umweltbedingung",
+      "Value of 1st environment condition"
+     ]
+    },
+    {
+     "name": "F_UW1_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 1. Umweltbedingung (hier: immer Sek.)",
+      "Unit of 1st environment condition"
+     ]
+    },
+    {
+     "name": "F_UW2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Umweltbedingung (hier: immer 2)"
+     ]
+    },
+    {
+     "name": "F_UW2_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 2. Umweltbedingung (hier: immer Endefehleruhr)"
+     ]
+    },
+    {
+     "name": "F_UW2_WERT",
+     "type": "long",
+     "comment": [
+      "Wert der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 2. Umweltbedingung (hier: immer Sek.)"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen",
+    "Clear error memory"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "FS_QUICK_LESEN": {
+   "comment": [
+    "Error memory quicktest",
+    "High-Konzept nach Lastenheft"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_QUICK_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "F_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl Fehler",
+      "Number of errors"
+     ]
+    }
+   ]
+  },
+  "HERSTELLERDATEN_LESEN": {
+   "comment": [
+    "Kodierte KFZ-Herstellerdaten lesen",
+    "Read coded productiondata"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "TYP",
+     "type": "string",
+     "comment": [
+      "Baureihe z.B: E31 / 03h , E34 / 01h ...",
+      "Vehicle e.g: L30, R50..."
+     ]
+    },
+    {
+     "name": "CODIERDATUM",
+     "type": "string",
+     "comment": [
+      "z.B: 21.4.93 ...",
+      "Coding date"
+     ]
+    },
+    {
+     "name": "WERKSKENNUNG",
+     "type": "string",
+     "comment": [
+      "4-stellige Dezimalzahl als String",
+      "4 character plant code (decimal)"
+     ]
+    },
+    {
+     "name": "HAENDLERKENNUNG",
+     "type": "string",
+     "comment": [
+      "5-stellige Dezimalzahl als String",
+      "5 character supplier code (decimal)"
+     ]
+    },
+    {
+     "name": "FGNUMMER",
+     "type": "string",
+     "comment": [
+      "Kurze Fahrgestellnummer",
+      "Short VIN"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    },
+    {
+     "name": "DATEN1",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "HERSTELLER_SPEZDATEN": {
+   "comment": [
+    "Herstellerspezifische Daten",
+    "X = Gruppe",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'HERSTELLER_SPEZDATEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT",
+      "Hex-Auftrag an SG",
+      "Fkt. NR. = 0C",
+      "Gruppe = Freigabestatus Zuendkreiswiderstaende"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Fkt. Nr. = 0C",
+      "Gruppe = Freigabestatus Zuendkreiswiderstaende"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index",
+      "Diagnostic index"
+     ]
+    },
+    {
+     "name": "SG_TYP",
+     "type": "int",
+     "comment": [
+      "1 : MRS5K Steuergerät, d.h. Baureihe R50,R52,R53",
+      "2 : MRS5RD Steuergerät, d.h. Baureihe E83",
+      "3 : MRS5RD_RO Steuergerät",
+      "4 : Diagnoseindex unbekannt"
+     ]
+    },
+    {
+     "name": "STAT_ABF1_ZK0_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "ABF1 = Airbag Fahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_GSF_ZK1_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "GSF = Gurtstrammer Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GSBF_ZK2_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "GSBF = Gurtstrammer Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_ABBF1_ZK3_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "ABBF1 = Airbag Beifahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_SAVL_ZK4_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "SAVL = Seitenairbag vorne links"
+     ]
+    },
+    {
+     "name": "STAT_SAVR_ZK5_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "SAVR = Seitenairbag vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_SAHL_ZK6_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "SAHL = Seitenairbag hinten links"
+     ]
+    },
+    {
+     "name": "STAT_SAHR_ZK7_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "SAHR = Seitenairbag vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_CURTAIN_L_ZK8_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "Curtain links / Knieairbag Fahrer nur R50,R52,R53"
+     ]
+    },
+    {
+     "name": "STAT_CURTAIN_R_ZK9_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "Curtain rechts / Knieairbag Beifahrer nur R50,R52,R53"
+     ]
+    },
+    {
+     "name": "STAT_SBK_1_ZK10_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "SBK = Sicheheitsbatterieklemme"
+     ]
+    },
+    {
+     "name": "STAT_ABBF2_ZK11_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "ABBF2 = Airbag Beifahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_ABF2_ZK12_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben",
+      "ZK = ignition circuit",
+      "ABF2 = Airbag Fahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_AKSL_ZK13_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "ZK = ignition circuit",
+      "AKSL=Aktive Kopstütze Links"
+     ]
+    },
+    {
+     "name": "STAT_AKSR_ZK14_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 = gesperrt, 1 = freigegeben, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "ZK = ignition circuit",
+      "AKSR=Aktive Kopstütze Rechts"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Ident-Daten fuer AIRBAG MRS5K"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer",
+      "BMW part number"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer",
+      "BMW hardware number"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index",
+      "Coding index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index",
+      "Diagnostic index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW",
+      "Production week"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr",
+      "Production year"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer",
+      "Supplier number"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferant",
+      "Supplier text"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter DS2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "MRSA_LESEN": {
+   "comment": [
+    "Lesen Seriennummer fuer jeden Satellit",
+    "Read seriell number of all satellits",
+    "Job MRSA_LESEN unterscheidet MRS5K und MRS5RD Airbagsteuergerät über den Diagnoseindex",
+    "Diagnoseindex: 0x11 für MRS5K  Airbagsteuergerät",
+    "Diagnoseindex: 0x12 für MRS5RD Airbagsteuergerät",
+    "Diagnoseindex: 0x13 für MRS5K  Airbagsteuergerät (ab SOP 09 05)",
+    "SGBD liest bei MRS5K Airbagsteuergerät die Seriennummer für jeden Satelliten über den job SPEICHER_LESEN aus",
+    "SGBD liest bei MRS5K Airbagsteuergerät die Seriennummer für jeden Satelliten über Services aus",
+    "Ab SOP 09 05: SGBD liest bei MRS5K Airbagsteuergerät die Seriennummer für jeden Satelliten über Services aus"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index",
+      "Diagnostic index"
+     ]
+    },
+    {
+     "name": "UFR_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA1=Upfront rechts"
+     ]
+    },
+    {
+     "name": "DOM_DATA_UFR",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "SSTR_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA2=MRSA Tuere rechts"
+     ]
+    },
+    {
+     "name": "DOM_DATA_SSTR",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "SSBRX_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA3=MRSA B-Saeule x rechts"
+     ]
+    },
+    {
+     "name": "DOM_DATA_SSBRX",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "SSBRY_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA4=MRSA B-Saeule y rechts"
+     ]
+    },
+    {
+     "name": "DOM_DATA_SSBRY",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "SSBLX_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA5=MRSA B-Saeule x links"
+     ]
+    },
+    {
+     "name": "DOM_DATA_SSBLX",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "SSBLY_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA6=MRSA B-Saeule y links"
+     ]
+    },
+    {
+     "name": "DOM_DATA_SSBLY",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "UFL_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA7=Upfront links"
+     ]
+    },
+    {
+     "name": "DOM_DATA_UFL",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    },
+    {
+     "name": "SSTL_DATA",
+     "type": "binary",
+     "comment": [
+      "MRSA8=MRSA Tuere links"
+     ]
+    },
+    {
+     "name": "DOM_DATA_SSTL",
+     "type": "binary",
+     "comment": [
+      "Ergebnis fuer DOM-Datenbank"
+     ]
+    }
+   ]
+  },
+  "PARAMETER_LESEN": {
+   "comment": [
+    "16 Byte aus Parametersatz 1 lesen",
+    "Read 16 bytes from block stated"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCKNR",
+     "type": "string",
+     "comment": [
+      "(0 <= BLOCKNR <= 43) --> 16 Parameterbytes ab",
+      "Byte (16*BLOCKNR) werden angefordert",
+      "Between 0 and 43, byte 16*BLOCKNR returned"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Spezifizierte Parameterdaten",
+      "Specified parameterdata"
+     ]
+    }
+   ]
+  },
+  "PRUEFCODE_LESEN": {
+   "comment": [
+    "Lesen des Pruefcodes, besteht aus Identifikationsdaten,",
+    "Ausstattungsdaten, Systemzeit, System Zeit der letzten",
+    "Fehlerloeschung, Barcode Daten und dem FS-Inhalt,",
+    "jedes Telegrammpaket ist durch ein 0x00 abgeschlossen",
+    "Read test codes (identdata, equipdata, system time,",
+    "last error system time, barcode, errordata)",
+    "Returned as strings separated by 0x00"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation (z.B. ACK)"
+     ]
+    },
+    {
+     "name": "PRUEFCODE",
+     "type": "binary",
+     "comment": [
+      "Daten in Hex-Format"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "FG_ZIFFERN",
+     "type": "string",
+     "comment": [
+      "die letzten vier Stellen der Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels",
+    "Es muessen immer alle drei Argumente im Bereich",
+    "von 0-255 bzw. 0x00-0xFF uebergeben werden."
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "0-255 bzw. 0x00-0xFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "ERROR_ARGUMENT, wenn Argumente nicht",
+      "uebergeben oder ausser Bereich"
+     ]
+    }
+   ]
+  },
+  "SECURITY_CHANGE": {
+   "comment": [
+    "Wechseln zum Sicherheitslevel 2",
+    "Change to security level 2"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SECURITY_CHANGE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation"
+     ]
+    }
+   ]
+  },
+  "SG_LOGIN": {
+   "comment": [
+    "Berechtigung fuer EEPROM-Zugriffe",
+    "Login to ECU"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SG_LOGIN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Speicher lesen",
+    "Read memory"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "SEGMENT",
+     "type": "string",
+     "comment": [
+      "Speicher Segment"
+     ]
+    },
+    {
+     "name": "H_ADR",
+     "type": "string",
+     "comment": [
+      "Startadresse High-Byte"
+     ]
+    },
+    {
+     "name": "M_ADR",
+     "type": "string",
+     "comment": [
+      "Startadresse Mitte-Byte"
+     ]
+    },
+    {
+     "name": "L_ADR",
+     "type": "string",
+     "comment": [
+      "Startadresse Low-Byte"
+     ]
+    },
+    {
+     "name": "ANZ_BYTE",
+     "type": "string",
+     "comment": [
+      "Anzahl der zu lesenden Bytes (1 - 16)",
+      "Number of bytes to read (1 - 16)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Speicherinhalt"
+     ]
+    }
+   ]
+  },
+  "STATUS_AUSSTATTUNG": {
+   "comment": [
+    "Ausstattung lesen",
+    "Read equipment configuration"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index",
+      "Diagnostic index"
+     ]
+    },
+    {
+     "name": "SG_TYP",
+     "type": "int",
+     "comment": [
+      "1 : MRS5K Steuergerät, d.h. Baureihe R50,R52,R53",
+      "2 : MRS5RD Steuergerät, d.h. Baureihe E83",
+      "3 : MRS5RD_RO Steuergerät",
+      "4 : Diagnoseindex unbekannt"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_0",
+     "type": "int",
+     "comment": [
+      "Byte 0 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1",
+     "type": "int",
+     "comment": [
+      "Byte 1 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_2",
+     "type": "int",
+     "comment": [
+      "Byte 2 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_3",
+     "type": "int",
+     "comment": [
+      "Byte 3 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_4",
+     "type": "int",
+     "comment": [
+      "Byte 4 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_5",
+     "type": "int",
+     "comment": [
+      "Byte 5 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_6",
+     "type": "int",
+     "comment": [
+      "Byte 6 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_7",
+     "type": "int",
+     "comment": [
+      "Byte 7 der 7 Ausstattungsbytes"
+     ]
+    },
+    {
+     "name": "STAT_ABF1_ZK0_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "0 = not included,  1 = included",
+      "ZK = ignition circuit",
+      "ABF1 = Airbag Fahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_GSF_ZK1_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "GSF = Gurtstrammer Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GSBF_ZK2_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "GSBF = Gurtstrammer Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_ABBF1_ZK3_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "ABBF1 = Airbag Beifahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_SAVL_ZK4_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "SAVL = Seitenairbag vorne links"
+     ]
+    },
+    {
+     "name": "STAT_SAVR_ZK5_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "SAVR = Seitenairbag vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_SAHL_ZK6_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "SAHL = Seitenairbag hinten links"
+     ]
+    },
+    {
+     "name": "STAT_SAHR_ZK7_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "SAHR = Seitenairbag hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_CURTAIN_L_ZK8_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "Curtain links"
+     ]
+    },
+    {
+     "name": "STAT_KNAF_ZK8_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "ZK = ignition circuit",
+      "KNAF = Knieairbag Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_CURTAIN_R_ZK9_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "Curtain rechts"
+     ]
+    },
+    {
+     "name": "STAT_KNABF_ZK9_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "ZK = ignition circuit",
+      "KNABF = Knieairbag Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_SBK_1_ZK10_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "SBK = Sicherheitsbatterieklemme"
+     ]
+    },
+    {
+     "name": "STAT_ABBF2_ZK11_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "ABBF2 = Airbag Beifahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_ABF2_ZK12_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "ZK = ignition circuit",
+      "ABF2 = Airbag Fahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_KOSL_ZK13_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihen R50,R52,R53",
+      "ZK = ignition circuit",
+      "KOSL = Kopfstuetze vorne links"
+     ]
+    },
+    {
+     "name": "STAT_KOSR_ZK14_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihen R50,R52,R53",
+      "ZK = ignition circuit",
+      "KOSR = Kopfstuetze vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_UPFRONT_L_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "UPFRONT-Sensor links"
+     ]
+    },
+    {
+     "name": "STAT_UPFRONT_R_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "UPFRONT-Sensor rechts"
+     ]
+    },
+    {
+     "name": "STAT_MRSA_TUERE_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Seitensensor Tür"
+     ]
+    },
+    {
+     "name": "STAT_GKF_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Buckle - driver",
+      "Gurtkontakt Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKBF_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Buckle - passenger",
+      "Gurtkontakt Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKHL_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Gurtkontakt hinten links"
+     ]
+    },
+    {
+     "name": "STAT_GKHR_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Gurtkontakt hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_POS_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Passenger Airbag Off Schalter"
+     ]
+    },
+    {
+     "name": "STAT_POSI_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Passenger Airbag Off Schalter Inverse"
+     ]
+    },
+    {
+     "name": "STAT_SBE_1_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Seat occupancy recognition 1"
+     ]
+    },
+    {
+     "name": "STAT_OC3_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_SBE_1_STATUS",
+     "type": "int",
+     "comment": [
+      "0 = keine Verzoegerung, 1 = Verzoegerung",
+      "Seat occupancy recognition status delay"
+     ]
+    },
+    {
+     "name": "STAT_SLVF_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "SLV Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_SLVBF_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "SLV Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_AKT_ROSE_I",
+     "type": "int",
+     "comment": [
+      "AKT_ROSE_I_VERBAUT = Aktivierung ROSE I, 0=nicht Aktiviert,1= Aktiviert",
+      "Ausgabe nur gültig für die Baureihe E83",
+      "Bemerkung: RoSE = Rollover Sensierung",
+      "Über die Auswertung interner Sensorik wird, im Rollover-Crash, der Kopfairbag und Gurtstrammer ausgelöst"
+     ]
+    },
+    {
+     "name": "STAT_POL_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut"
+     ]
+    },
+    {
+     "name": "STAT_AWL_DIREKT_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "AWL direkt"
+     ]
+    },
+    {
+     "name": "STAT_AGW_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut, -1 = Ausgabe nicht gültig für die Baureihe E83",
+      "AGW = Akustische Gurtwarnung"
+     ]
+    },
+    {
+     "name": "STAT_SBR_FA_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "SeatBeltreminder Funktion Fahrer, -1 = Ausgabe nicht gültig für die Baureihe E83"
+     ]
+    },
+    {
+     "name": "STAT_SBR_BF_VERBAUT",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "SeatBeltreminder Funktion Beifahrer, -1 = Ausgabe nicht gültig für die Baureihe E83"
+     ]
+    },
+    {
+     "name": "STAT_GK_OC3_POL",
+     "type": "int",
+     "comment": [
+      "0 = nicht verbaut, 1 = verbaut",
+      "GK_OC3_POL = Aktivierung der Abhängigkeit vom Gurtschloss (gesteckt / Fehler /nicht gesteckt) zur OC3 sowie POL Anzeigen-Logik"
+     ]
+    },
+    {
+     "name": "STAT_AKT_ROSE_II",
+     "type": "int",
+     "comment": [
+      "STAT_AKT_ROSE_II = AKT_ROSE_II_VERBAUT = Aktivierung ROSE II, 0=nicht Aktiviert,1= Aktiviert",
+      "Ausgabe nur gültig für die Baureihe E83",
+      "Bemerkung: RoSE = Rollover Sensierung",
+      "Das MRS5rd empfängt die Telegramme Eingangsdaten ROSE (ID = $12C) und CLU2 VDA (ID = $E3) über den F-CAN",
+      "Zusaetzlich fliessen ueber den F-CAN empfangene Daten in den Auswerte - Algorithmus mit ein"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_0",
+     "type": "int",
+     "comment": [
+      "Byte 0 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_1",
+     "type": "int",
+     "comment": [
+      "Byte 1 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_2",
+     "type": "int",
+     "comment": [
+      "Byte 2 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_3",
+     "type": "int",
+     "comment": [
+      "Byte 3 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_4",
+     "type": "int",
+     "comment": [
+      "Byte 4 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_5",
+     "type": "int",
+     "comment": [
+      "Byte 5 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_6",
+     "type": "int",
+     "comment": [
+      "Byte 6 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    },
+    {
+     "name": "STAT_BYTE_1_7",
+     "type": "int",
+     "comment": [
+      "Byte 7 der 7 Ausstattungsbytes (wiederholt)"
+     ]
+    }
+   ]
+  },
+  "STATUS_AUSSTATTUNG_EWS": {
+   "comment": [
+    "Ausstattung lesen",
+    "Read equipment for EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "STAT_AUSSTATTUNG_EWS",
+     "type": "string",
+     "comment": [
+      "x Ausstattungsbytes als String",
+      "Equipment bytes as String"
+     ]
+    }
+   ]
+  },
+  "STATUS_GURTKONTAKTE": {
+   "comment": [
+    "Herstellerspezifische Daten lesen (Funktionsnummer 0B)"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_GKF",
+     "type": "real",
+     "comment": [
+      "Gurtkontakt Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKF_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_GKBF",
+     "type": "real",
+     "comment": [
+      "Gurtkontakt Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKBF_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_POS",
+     "type": "real",
+     "comment": [
+      "Passenger Airbag Off Schalter"
+     ]
+    },
+    {
+     "name": "STAT_POS_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_POSI",
+     "type": "real",
+     "comment": [
+      "Passenger Airbag Off Schalter inverse"
+     ]
+    },
+    {
+     "name": "STAT_POSI_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit:"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Wert = 02",
+      "Gruppe = Gurtkontakte"
+     ]
+    },
+    {
+     "name": "STAT_DATEN",
+     "type": "binary",
+     "comment": [
+      "Gurtkontakte"
+     ]
+    }
+   ]
+  },
+  "STATUS_LESEN": {
+   "comment": [
+    "Status des MRS5K lesen",
+    "Read status of MRS5K"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Hex answer from ECU"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index",
+      "Diagnostic index"
+     ]
+    },
+    {
+     "name": "SG_TYP",
+     "type": "int",
+     "comment": [
+      "1 : MRS5K Steuergerät, d.h. Baureihe R50,R52,R53",
+      "2 : MRS5RD Steuergerät, d.h. Baureihe E83",
+      "3 : MRS5RD_RO Steuergerät",
+      "4 : Diagnoseindex unbekannt"
+     ]
+    },
+    {
+     "name": "STAT_ZK0",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Airbag Fahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_ZK1",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Gurtstrammer Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_ZK2",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Gurtstrammer Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_ZK3",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Airbag Beifahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_ZK4",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Seitenairbag vorne links"
+     ]
+    },
+    {
+     "name": "STAT_ZK5",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Seitenairbag vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_ZK6",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Seitenairbag hinten links"
+     ]
+    },
+    {
+     "name": "STAT_ZK7",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Seitenairbag hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_ZK8",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Curtain links / Knieairbag Fahrer nur R50,R52,R53"
+     ]
+    },
+    {
+     "name": "STAT_ZK9",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Curtain rechts / Knieairbag Beifahrer nur R50,R52,R53"
+     ]
+    },
+    {
+     "name": "STAT_ZK10",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Sicherheitsbatterieklemme"
+     ]
+    },
+    {
+     "name": "STAT_ZK11",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Airbag Beifahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_ZK12",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Airbag Fahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_ZK13",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Gurtstrammer hinten links nur fuer die Baureihen R50,R52,R53 / Kopfstuetze vorne links nur für die Baureihe E83"
+     ]
+    },
+    {
+     "name": "STAT_ZK14",
+     "type": "int",
+     "comment": [
+      "0 = n.i.O. (externer Fehler), 1 = i.O.",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "Gurtstrammer hinten rechts nur fuer die Baureihen R50,R52,R53 / Kopfstuetze vorne rechts nur für die Baureihe E83"
+     ]
+    },
+    {
+     "name": "STAT_GKF_1",
+     "type": "int",
+     "comment": [
+      "0 = nicht gesteckt, 1 = i.0",
+      "Buckle - driver, 0 = not plugged in",
+      "Gurtkontakt Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKF_2",
+     "type": "int",
+     "comment": [
+      "0 = gesteckt, 1 = i.0",
+      "Buckle - driver, 0 = plugged in",
+      "Gurtkontakt Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKF_3",
+     "type": "int",
+     "comment": [
+      "0 = Fehler, 1 = i.0",
+      "Buckle - driver, 0 = error",
+      "Gurtkontakt Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKBF_1",
+     "type": "int",
+     "comment": [
+      "0 = nicht gesteckt, 1 = i.0",
+      "Buckle - passenger",
+      "Gurtkontakt Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKBF_2",
+     "type": "int",
+     "comment": [
+      "0 = gesteckt, 1 = i.0",
+      "Gurtkontakt Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKBF_3",
+     "type": "int",
+     "comment": [
+      "0 = Fehler, 1 = i.0",
+      "Gurtkontakt Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_GKHL_1",
+     "type": "int",
+     "comment": [
+      "0 = nicht gesteckt, 1 = i.0",
+      "Gurtkontakt hinten links"
+     ]
+    },
+    {
+     "name": "STAT_GKHL_2",
+     "type": "int",
+     "comment": [
+      "0 = gesteckt, 1 = i.0",
+      "Gurtkontakt hinten links"
+     ]
+    },
+    {
+     "name": "STAT_GKHL_3",
+     "type": "int",
+     "comment": [
+      "0 = Fehler, 1 = i.0",
+      "Gurtkontakt hinten links"
+     ]
+    },
+    {
+     "name": "STAT_GKHR_1",
+     "type": "int",
+     "comment": [
+      "0 = nicht gesteckt, 1 = i.0",
+      "Gurtkontakt hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_GKHR_2",
+     "type": "int",
+     "comment": [
+      "0 = gesteckt, 1 = i.0",
+      "Gurtkontakt hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_GKHR_3",
+     "type": "int",
+     "comment": [
+      "0 = Fehler, 1 = i.0",
+      "Gurtkontakt hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_POS_1",
+     "type": "int",
+     "comment": [
+      "0 = nicht geschaltet, 1 = i.0",
+      "Passenger Airbag Off Schalter"
+     ]
+    },
+    {
+     "name": "STAT_POS_2",
+     "type": "int",
+     "comment": [
+      "0 = geschaltet, 1 = i.0",
+      "Passenger Airbag Off Schalter"
+     ]
+    },
+    {
+     "name": "STAT_POS_3",
+     "type": "int",
+     "comment": [
+      "0 = Fehler, 1 = i.0",
+      "Passenger Airbag Off Schalter"
+     ]
+    },
+    {
+     "name": "STAT_SBE_OC3_1",
+     "type": "int",
+     "comment": [
+      "0 = Beifahrer Sitz belegt, 1 = i.0"
+     ]
+    },
+    {
+     "name": "STAT_SBE_OC3_2",
+     "type": "int",
+     "comment": [
+      "0 = Beifahrer Sitz nicht belegt, 1 = i.0"
+     ]
+    },
+    {
+     "name": "STAT_SBE_OC3_3",
+     "type": "int",
+     "comment": [
+      "0 = Fehler, 1 = i.0"
+     ]
+    },
+    {
+     "name": "STAT_SITZBELEGUNG",
+     "type": "int",
+     "comment": [
+      "SBE/OC3 Sitzbelegung",
+      "0: Sitz unbelegt",
+      "1: Sitz belegt",
+      "-1: SBE(OC3) nicht verbaut / Fehler SBE(OC3)"
+     ]
+    },
+    {
+     "name": "STAT_FEHLER",
+     "type": "int",
+     "comment": [
+      "SBE/OC3 Sitzbelegung",
+      "SBE/OC3 Fehler-Status",
+      "0: kein Fehler",
+      "1: SBE/OC3-Fehler"
+     ]
+    },
+    {
+     "name": "STAT_SBE_BEIFAHRER_BELEGT_AIRBAG_ON",
+     "type": "int",
+     "comment": [
+      "SBE Beifahrersitz belegt (Airbag On) ab 09/05",
+      "Airbag_ON aktiv = 1, deaktiviert = 0"
+     ]
+    },
+    {
+     "name": "STAT_SBE_BEIFAHRER_BELEGT_AIRBAG_ON_SBR",
+     "type": "int",
+     "comment": [
+      "SBE Beifahrersitz belegt (Airbag On + SBR) ab 09-05",
+      "Airbag_ON + SBR aktiv = 1, deaktiviert = 0"
+     ]
+    },
+    {
+     "name": "STAT_SBE_VERBAUT",
+     "type": "int",
+     "comment": [
+      "SBE Sitzbelegung",
+      "0: System nicht verbaut",
+      "1: System verbaut"
+     ]
+    },
+    {
+     "name": "STAT_OC3_VERBAUT",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "0: kein Fehler",
+      "1: System verbaut"
+     ]
+    },
+    {
+     "name": "STAT_FREIGABE",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "0: kein Fehler",
+      "1: System nicht freigegeben"
+     ]
+    },
+    {
+     "name": "STAT_DATENSPEICHER",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "OC3 Datenspeicher-Status",
+      "0: kein Fehler",
+      "1: Datenspeicher voll"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "OC3 Gewichtsklasse US",
+      "0: Gewichtsklasse \"0\" (Leerer Sitz)",
+      "1: Gewichtsklasse \"1\" (Kindersitz)",
+      "2: Gewichtsklasse \"2\" (>=5% Frau / 45kg)",
+      "3: Gewichtsklasse \"3\" (95% Mann) Vorgehalten",
+      "4: Gewichtsklasse \"4\"",
+      "-1: OC3 nicht verbaut / Fehler OC3",
+      "",
+      "Hinweis:",
+      "Switch von Klasse 0 auf Belegungsstatus erfolgt sofort",
+      "Switch von Belegungsstatus auf Klasse 0 erfolgt mit einer Verzoegerung von 6 Sekunden."
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_KINDERSITZ",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "0: kein Fehler",
+      "1: OC3 Gewichtsklasse 1: (Kindersitz)",
+      "siehe Hinweis bei Result \"STAT_GEWICHTSKLASSE\"!"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_SITZ_BELEGT",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "0: kein Fehler",
+      "OC3 Gewichtsklasse 2: (>=5% Frau / 45kg)",
+      "siehe Hinweis bei Result \"STAT_GEWICHTSKLASSE\"!"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_UNDEFINIERT",
+     "type": "int",
+     "comment": [
+      "OC3 Sitzbelegung",
+      "0: OC3 Gewichtsklasse definiert",
+      "1: OC3 Gewichtsklasse nicht definiert"
+     ]
+    },
+    {
+     "name": "STAT_OC3_1",
+     "type": "int",
+     "comment": [
+      "0 = System verbaut, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_2",
+     "type": "int",
+     "comment": [
+      "0 = noch nicht freigegeben, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_3",
+     "type": "int",
+     "comment": [
+      "0 = Datenspeicher voll, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_KLASSE0",
+     "type": "int",
+     "comment": [
+      "0 = OC3 Klasse 0, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_KLASSE1",
+     "type": "int",
+     "comment": [
+      "0 = OC3 Klasse 1, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_KLASSE2",
+     "type": "int",
+     "comment": [
+      "0 = OC3 Klasse 2, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_KLASSE3",
+     "type": "int",
+     "comment": [
+      "0 = OC3 Klasse 3, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_OC3_KLASSE4",
+     "type": "int",
+     "comment": [
+      "0 = OC3 Klasse 4, 1 = i.0",
+      "Occupant Clasification System"
+     ]
+    },
+    {
+     "name": "STAT_UFL_1",
+     "type": "int",
+     "comment": [
+      "0 = sendet Fehler, 1 = i.0",
+      "UPFRONT-Sensor links"
+     ]
+    },
+    {
+     "name": "STAT_UFL_2",
+     "type": "int",
+     "comment": [
+      "0 = Kommunikationsfehler, 1 = i.0",
+      "UPFRONT-Sensor links"
+     ]
+    },
+    {
+     "name": "STAT_UFL_3",
+     "type": "int",
+     "comment": [
+      "0 = Leitungsfehler, 1 = i.0",
+      "UPFRONT-Sensor links"
+     ]
+    },
+    {
+     "name": "STAT_UFL_4",
+     "type": "int",
+     "comment": [
+      "0 = falscher Typ, 1 = i.0",
+      "UPFRONT-Sensor links"
+     ]
+    },
+    {
+     "name": "STAT_UFR_1",
+     "type": "int",
+     "comment": [
+      "0 = sendet Fehler, 1 = i.0",
+      "UPFRONT-Sensor rechts"
+     ]
+    },
+    {
+     "name": "STAT_UFR_2",
+     "type": "int",
+     "comment": [
+      "0 = Kommunikationsfehler, 1 = i.0",
+      "UPFRONT-Sensor rechts"
+     ]
+    },
+    {
+     "name": "STAT_UFR_3",
+     "type": "int",
+     "comment": [
+      "0 = Leitungsfehler, 1 = i.0",
+      "UPFRONT-Sensor rechts"
+     ]
+    },
+    {
+     "name": "STAT_UFR_4",
+     "type": "int",
+     "comment": [
+      "0 = falscher Typ, 1 = i.0",
+      "UPFRONT-Sensor rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSTL_1",
+     "type": "int",
+     "comment": [
+      "0 = sendet Fehler, 1 = i.0",
+      "Seitensensor Tür links"
+     ]
+    },
+    {
+     "name": "STAT_SSTL_2",
+     "type": "int",
+     "comment": [
+      "0 = Kommunikationsfehler, 1 = i.0",
+      "Seitensensor Tür links"
+     ]
+    },
+    {
+     "name": "STAT_SSTL_3",
+     "type": "int",
+     "comment": [
+      "0 = Leitungsfehler, 1 = i.0",
+      "Seitensensor Tür links"
+     ]
+    },
+    {
+     "name": "STAT_SSTL_4",
+     "type": "int",
+     "comment": [
+      "0 = falscher Typ, 1 = i.0",
+      "Seitensensor Tür links"
+     ]
+    },
+    {
+     "name": "STAT_SSTR_1",
+     "type": "int",
+     "comment": [
+      "0 = sendet Fehler, 1 = i.0",
+      "Seitensensor Tür rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSTR_2",
+     "type": "int",
+     "comment": [
+      "0 = Kommunikationsfehler, 1 = i.0",
+      "Seitensensor Tür rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSTR_3",
+     "type": "int",
+     "comment": [
+      "0 = Leitungsfehler, 1 = i.0",
+      "Seitensensor Tür rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSTR_4",
+     "type": "int",
+     "comment": [
+      "0 = falscher Typ, 1 = i.0",
+      "Seitensensor Tür rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSBL_1",
+     "type": "int",
+     "comment": [
+      "0 = sendet Fehler, 1 = i.0",
+      "Seitensensor B-Saeule links"
+     ]
+    },
+    {
+     "name": "STAT_SSBL_2",
+     "type": "int",
+     "comment": [
+      "0 = Kommunikationsfehler, 1 = i.0",
+      "Seitensensor B-Saeule links"
+     ]
+    },
+    {
+     "name": "STAT_SSBL_3",
+     "type": "int",
+     "comment": [
+      "0 = Leitungsfehler, 1 = i.0",
+      "Seitensensor B-Saeule links"
+     ]
+    },
+    {
+     "name": "STAT_SSBL_4",
+     "type": "int",
+     "comment": [
+      "0 = falscher Typ, 1 = i.0",
+      "Seitensensor B-Saeule links"
+     ]
+    },
+    {
+     "name": "STAT_SSBR_1",
+     "type": "int",
+     "comment": [
+      "0 = sendet Fehler, 1 = i.0",
+      "Seitensensor B-Saeule links"
+     ]
+    },
+    {
+     "name": "STAT_SSBR_2",
+     "type": "int",
+     "comment": [
+      "0 = Kommunikationsfehler, 1 = i.0",
+      "Seitensensor B-Saeule rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSBR_3",
+     "type": "int",
+     "comment": [
+      "0 = Leitungsfehler, 1 = i.0",
+      "Seitensensor B-Saeule rechts"
+     ]
+    },
+    {
+     "name": "STAT_SSBR_4",
+     "type": "int",
+     "comment": [
+      "0 = falscher Typ, 1 = i.0",
+      "Seitensensor B-Saeule rechts"
+     ]
+    },
+    {
+     "name": "STAT_ROSE_I",
+     "type": "int",
+     "comment": [
+      "0 = verbaut (externer Fehler), 1 = nicht verbaut, -1 = Ausgabe nicht gültig für die Baureihen R50,R52,R53",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "ROSE I verbaut nur für die Baureihe E83",
+      "Bemerkung: RoSE = Rollover Sensierung",
+      "Über die Auswertung interner Sensorik wird, im Rollover-Crash, der Kopfairbag und Gurtstrammer ausgelöst"
+     ]
+    },
+    {
+     "name": "STAT_ROSE_II",
+     "type": "int",
+     "comment": [
+      "0 = verbaut (externer Fehler), 1 = nicht verbaut, -1 = Ausgabe nicht gültig für die Baureihen R50,R52,R53",
+      "ZK = ignition circuit, externer Fehler = external error",
+      "ROSE II verbaut nur für die Baureihe E83",
+      "Bemerkung: RoSE = Rollover Sensierung",
+      "Das MRS5rd empfängt die Telegramme Eingangsdaten ROSE (ID = $12C) und CLU2 VDA (ID = $E3) über den F-CAN",
+      "Zusaetzlich fliessen ueber den F-CAN empfangene Daten in den Auswerte - Algorithmus mit ein"
+     ]
+    }
+   ]
+  },
+  "STATUS_ZUENDKREISWIDERSTAENDE": {
+   "comment": [
+    "Herstellerspezifische Daten lesen (Funktionsnummer 0A)"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_ZK0",
+     "type": "real",
+     "comment": [
+      "ZK0=Airbag Fahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_ZK0_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK1",
+     "type": "real",
+     "comment": [
+      "ZK1=Gurtstrammer Fahrer"
+     ]
+    },
+    {
+     "name": "STAT_ZK1_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK2",
+     "type": "real",
+     "comment": [
+      "ZK2=Gurtstrammer Beifahrer"
+     ]
+    },
+    {
+     "name": "STAT_ZK2_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK3",
+     "type": "real",
+     "comment": [
+      "ZK3=Airbag Beifahrer Stufe 1"
+     ]
+    },
+    {
+     "name": "STAT_ZK3_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK4",
+     "type": "real",
+     "comment": [
+      "ZK4=Seitenairbag vorne links"
+     ]
+    },
+    {
+     "name": "STAT_ZK4_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK5",
+     "type": "real",
+     "comment": [
+      "ZK5=Seitenairbag vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_ZK5_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK6",
+     "type": "real",
+     "comment": [
+      "ZK6=Seitenairbag hinten links"
+     ]
+    },
+    {
+     "name": "STAT_ZK6_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK7",
+     "type": "real",
+     "comment": [
+      "ZK7=Seitenairbag hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_ZK7_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK8",
+     "type": "real",
+     "comment": [
+      "ZK8=Curtain links / Knieairbag Fahrer nur R50,R52,R53"
+     ]
+    },
+    {
+     "name": "STAT_ZK8_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK9",
+     "type": "real",
+     "comment": [
+      "ZK9=Curtain rechts / Knieairbag Beifahrer nur R50,R52,R53"
+     ]
+    },
+    {
+     "name": "STAT_ZK9_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK10",
+     "type": "real",
+     "comment": [
+      "ZK10=Sicherheitsbatterieklemme"
+     ]
+    },
+    {
+     "name": "STAT_ZK10_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK11",
+     "type": "real",
+     "comment": [
+      "ZK11=Airbag Beifahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_ZK11_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK12",
+     "type": "real",
+     "comment": [
+      "ZK12=Airbag Fahrer Stufe 2"
+     ]
+    },
+    {
+     "name": "STAT_ZK12_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK13",
+     "type": "real",
+     "comment": [
+      "ZK13=Gurtstrammer hinten links"
+     ]
+    },
+    {
+     "name": "STAT_ZK13_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_ZK14",
+     "type": "real",
+     "comment": [
+      "ZK14=Gurtstrammer hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_ZK14_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit: Ohm"
+     ]
+    },
+    {
+     "name": "STAT_DATEN",
+     "type": "binary",
+     "comment": [
+      "Zuendkreiswiderstaende"
+     ]
+    }
+   ]
+  },
+  "STEUERGERAETE_RESET": {
+   "comment": [
+    "Steuergeraete Reset ausloesen"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'STEUERGERAETE_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SYSTEMZEIT_LESEN": {
+   "comment": [
+    "aktuelle Systemzeit lesen",
+    "Read current system time"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "SYSTEMZEIT",
+     "type": "string",
+     "comment": [
+      "Systemzeit",
+      "system time"
+     ]
+    },
+    {
+     "name": "_TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "TYP_LESEN": {
+   "comment": [
+    "Lesen des Fahrzeugtyps (Baureihe)",
+    "Read vehicle model"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "TYP",
+     "type": "string",
+     "comment": [
+      "Baureihe z.B: E31 / 03h , E34 / 01h ...",
+      "Vehicle e.g: L30, R50...."
+     ]
+    }
+   ]
+  },
+  "VERRIEGELUNG_LESEN": {
+   "comment": [
+    "Auslesen der Verriegelung (= Pruefstempel)",
+    "",
+    "Auslesen des Pruefstempels / Sind Airbags scharfgeschaltet?",
+    "KWP2000: $22 ReadDataByCommonIdentifier",
+    "$1000 TestStamp",
+    "Modus  : Default",
+    "",
+    "BYTE1=BYTE2=BYTE3 =   0 = 0x00 = SG verriegelt / Airbags sind scharf",
+    "BYTE1=BYTE2=BYTE3 = 255 = 0xFF = SG nicht verriegelt",
+    ""
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Datenbyte 1"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Datenbyte 2"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Datenbyte 3"
+     ]
+    },
+    {
+     "name": "PRUEFSTEMPEL",
+     "type": "binary",
+     "comment": [
+      "Gesamter Pruefstempel"
+     ]
+    }
+   ]
+  },
+  "VERRIEGELUNG_SCHREIBEN": {
+   "comment": [
+    "Verriegelungsbytes setzen",
+    "",
+    "Hinweis zu Job PRUEFSTEMPEL_SCHREIBEN:",
+    "Argument: 0 0 0 , um Steuergeraet zu verriegeln. / Airbags scharfschalten",
+    "WICHTIG: Werte durch Semikolon getrennt eingeben!!",
+    "---Steuergeraet kann NUR durch die Entwicklung entriegelt werden.---",
+    ""
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "ERROR_CODE",
+     "type": "string",
+     "comment": [
+      "Bei NIO Fehlertext, sonst Leerstring"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Continental Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0x72",
+    "LIEF_TEXT": "AISIN AW CO.LTD"
+   },
+   {
+    "LIEF_NR": "0x73",
+    "LIEF_TEXT": "Shorlock"
+   },
+   {
+    "LIEF_NR": "0x74",
+    "LIEF_TEXT": "Schrader"
+   },
+   {
+    "LIEF_NR": "0x75",
+    "LIEF_TEXT": "BERU Electronics GmbH"
+   },
+   {
+    "LIEF_NR": "0x76",
+    "LIEF_TEXT": "CEL"
+   },
+   {
+    "LIEF_NR": "0x77",
+    "LIEF_TEXT": "Audio Mobil"
+   },
+   {
+    "LIEF_NR": "0x78",
+    "LIEF_TEXT": "rd electronic"
+   },
+   {
+    "LIEF_NR": "0x79",
+    "LIEF_TEXT": "iSYS RTS GmbH"
+   },
+   {
+    "LIEF_NR": "0x80",
+    "LIEF_TEXT": "Westfalia Automotive GmbH"
+   },
+   {
+    "LIEF_NR": "0x81",
+    "LIEF_TEXT": "Tyco Electronics"
+   },
+   {
+    "LIEF_NR": "0x82",
+    "LIEF_TEXT": "Paragon AG"
+   },
+   {
+    "LIEF_NR": "0x83",
+    "LIEF_TEXT": "IEE S.A"
+   },
+   {
+    "LIEF_NR": "0x84",
+    "LIEF_TEXT": "TEMIC AUTOMOTIVE of NA"
+   },
+   {
+    "LIEF_NR": "0x85",
+    "LIEF_TEXT": "AKsys GmbH"
+   },
+   {
+    "LIEF_NR": "0x86",
+    "LIEF_TEXT": "META System"
+   },
+   {
+    "LIEF_NR": "0x87",
+    "LIEF_TEXT": "Hülsbeck & Fürst GmbH & Co KG"
+   },
+   {
+    "LIEF_NR": "0x88",
+    "LIEF_TEXT": "Mann & Hummel Automotive GmbH"
+   },
+   {
+    "LIEF_NR": "0x89",
+    "LIEF_TEXT": "Brose Fahrzeugteile GmbH & Co"
+   },
+   {
+    "LIEF_NR": "0x90",
+    "LIEF_TEXT": "Keihin"
+   },
+   {
+    "LIEF_NR": "0x91",
+    "LIEF_TEXT": "Vimercati S.p.A."
+   },
+   {
+    "LIEF_NR": "0x92",
+    "LIEF_TEXT": "CRH"
+   },
+   {
+    "LIEF_NR": "0x93",
+    "LIEF_TEXT": "TPO Display Corp."
+   },
+   {
+    "LIEF_NR": "0x94",
+    "LIEF_TEXT": "KÜSTER Automotive Control"
+   },
+   {
+    "LIEF_NR": "0x95",
+    "LIEF_TEXT": "Hitachi Automotive"
+   },
+   {
+    "LIEF_NR": "0x96",
+    "LIEF_TEXT": "Continental Automotive"
+   },
+   {
+    "LIEF_NR": "0x97",
+    "LIEF_TEXT": "TI-Automotive"
+   },
+   {
+    "LIEF_NR": "0x98",
+    "LIEF_TEXT": "Hydro"
+   },
+   {
+    "LIEF_NR": "0x99",
+    "LIEF_TEXT": "Johnson Controls"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTNUMPREFIX": [
+   {
+    "ROVER_NR": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "ROVER_NR": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "ROVER_NR": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "ROVER_NR": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "ROVER_NR": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "ROVER_NR": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "ROVER_NR": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "ROVER_NR": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "ROVER_NR": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "ROVER_NR": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "ROVER_NR": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "ROVER_NR": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "ROVER_NR": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "ROVER_NR": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "ROVER_NR": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "ROVER_NR": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "ROVER_NR": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "ROVER_NR": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "ROVER_NR": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "ROVER_NR": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "ROVER_NR": "0xXY",
+    "PREFIX": "???"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "Zuendkreis ZK0 / Airbag Fahrer Stufe 1"
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "Zuendkreis ZK1 / Gurtstrammer Fahrer"
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "Zuendkreis ZK2 / Gurtstrammer Beifahrer"
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "Zuendkreis ZK3 / Airbag Beifahrer Stufe 1"
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "Zuendkreis ZK4 / Sitzairbag vorne links"
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "Zuendkreis ZK5 / Sitzairbag vorne rechts"
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "Zuendkreis ZK6 / Sitzairbag hinten links"
+   },
+   {
+    "ORT": "0x08",
+    "ORTTEXT": "Zuendkreis ZK7 / Sitzairbag hinten rechts"
+   },
+   {
+    "ORT": "0x09",
+    "ORTTEXT": "Zuendkreis ZK8 / Curtainairbag links"
+   },
+   {
+    "ORT": "0x11",
+    "ORTTEXT": "Zuendkreis ZK8 / Knieairbag Fahrer"
+   },
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "Zuendkreis ZK9 / Curtainairbag rechts"
+   },
+   {
+    "ORT": "0x12",
+    "ORTTEXT": "Zuendkreis ZK9 / Knieairbag Beifahrer"
+   },
+   {
+    "ORT": "0x0B",
+    "ORTTEXT": "Zuendkreis ZK10 / Sicherheits-Batterie-Klemme"
+   },
+   {
+    "ORT": "0x0C",
+    "ORTTEXT": "Zuendkreis ZK11 / Airbag Beifahrer Stufe 2"
+   },
+   {
+    "ORT": "0x0D",
+    "ORTTEXT": "Zuendkreis ZK12 / Airbag Fahrer Stufe 2"
+   },
+   {
+    "ORT": "0x0E",
+    "ORTTEXT": "Zuendkreis ZK13 / Kopfstuetze Fahrer"
+   },
+   {
+    "ORT": "0x0F",
+    "ORTTEXT": "Zuendkreis ZK14 / Kopfstuetze Beifahrer"
+   },
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "Zuendkreis ZK15 / AUX1"
+   },
+   {
+    "ORT": "0x30",
+    "ORTTEXT": "Zuendkreis ZK0 / Airbag Fahrer Stufe 1"
+   },
+   {
+    "ORT": "0x31",
+    "ORTTEXT": "Zuendkreis ZK1 / Gurtstrammer Fahrer"
+   },
+   {
+    "ORT": "0x32",
+    "ORTTEXT": "Zuendkreis ZK2 / Gurtstrammer Beifahrer"
+   },
+   {
+    "ORT": "0x33",
+    "ORTTEXT": "Zuendkreis ZK3 / Airbag Beifahrer Stufe 1"
+   },
+   {
+    "ORT": "0x34",
+    "ORTTEXT": "Zuendkreis ZK4 / Sitzairbag vorne links"
+   },
+   {
+    "ORT": "0x35",
+    "ORTTEXT": "Zuendkreis ZK5 / Sitzairbag vorne rechts"
+   },
+   {
+    "ORT": "0x36",
+    "ORTTEXT": "Zuendkreis ZK6 / Sitzairbag hinten links"
+   },
+   {
+    "ORT": "0x37",
+    "ORTTEXT": "Zuendkreis ZK7 / Sitzairbag hinten rechts"
+   },
+   {
+    "ORT": "0x38",
+    "ORTTEXT": "Zuendkreis ZK8 / Curtainairbag links"
+   },
+   {
+    "ORT": "0x40",
+    "ORTTEXT": "Zuendkreis ZK8 / Knieairbag Fahrer"
+   },
+   {
+    "ORT": "0x39",
+    "ORTTEXT": "Zuendkreis ZK9 / Curtainairbag rechts"
+   },
+   {
+    "ORT": "0x41",
+    "ORTTEXT": "Zuendkreis ZK9 / Knieairbag Beifahrer"
+   },
+   {
+    "ORT": "0x3A",
+    "ORTTEXT": "Zuendkreis ZK10 / Sicherheits-Batterie-Klemme"
+   },
+   {
+    "ORT": "0x3B",
+    "ORTTEXT": "Zuendkreis ZK11 / Airbag Beifahrer Stufe 2"
+   },
+   {
+    "ORT": "0x3C",
+    "ORTTEXT": "Zuendkreis ZK12 / Airbag Fahrer Stufe 2"
+   },
+   {
+    "ORT": "0x3D",
+    "ORTTEXT": "Zuendkreis ZK13 / Kopfstuetze Fahrer"
+   },
+   {
+    "ORT": "0x3E",
+    "ORTTEXT": "Zuendkreis ZK14 / Kopfstuetze Beifahrer"
+   },
+   {
+    "ORT": "0x3F",
+    "ORTTEXT": "Zuendkreis ZK15 / AUX1"
+   },
+   {
+    "ORT": "0x60",
+    "ORTTEXT": "Gurtkontakt Fahrer"
+   },
+   {
+    "ORT": "0x6A",
+    "ORTTEXT": "Gurtkontakt Fahrer"
+   },
+   {
+    "ORT": "0x61",
+    "ORTTEXT": "Gurtkontakt Beifahrer"
+   },
+   {
+    "ORT": "0x6B",
+    "ORTTEXT": "Gurtkontakt Beifahrer"
+   },
+   {
+    "ORT": "0x62",
+    "ORTTEXT": "Gurtkontakt hinten links"
+   },
+   {
+    "ORT": "0x6C",
+    "ORTTEXT": "Gurtkontakt hinten links"
+   },
+   {
+    "ORT": "0x63",
+    "ORTTEXT": "Gurtkontakt hinten rechts"
+   },
+   {
+    "ORT": "0x6D",
+    "ORTTEXT": "Gurtkontakt hinten rechts"
+   },
+   {
+    "ORT": "0x67",
+    "ORTTEXT": "Passenger Airbag Off Schalter (POS)"
+   },
+   {
+    "ORT": "0x6E",
+    "ORTTEXT": "Passenger Airbag Off Schalter (POS)"
+   },
+   {
+    "ORT": "0x68",
+    "ORTTEXT": "Passenger Airbag Off Schalter (POS) inverse"
+   },
+   {
+    "ORT": "0x6F",
+    "ORTTEXT": "Passenger Airbag Off Schalter (POS) inverse"
+   },
+   {
+    "ORT": "0x69",
+    "ORTTEXT": "Passenger Airbag Off Schalter (POS)"
+   },
+   {
+    "ORT": "0x70",
+    "ORTTEXT": "Sitz-Belegungs-Erkennung"
+   },
+   {
+    "ORT": "0x71",
+    "ORTTEXT": "Occupant Classification System (OC3)"
+   },
+   {
+    "ORT": "0x72",
+    "ORTTEXT": "Occupant Classification System (OC3)"
+   },
+   {
+    "ORT": "0x84",
+    "ORTTEXT": "UPFRONT  links"
+   },
+   {
+    "ORT": "0x85",
+    "ORTTEXT": "UPFRONT  links"
+   },
+   {
+    "ORT": "0x86",
+    "ORTTEXT": "UPFRONT  rechts"
+   },
+   {
+    "ORT": "0x87",
+    "ORTTEXT": "UPFRONT  rechts"
+   },
+   {
+    "ORT": "0x88",
+    "ORTTEXT": "B-Säule X-Richtung links"
+   },
+   {
+    "ORT": "0x89",
+    "ORTTEXT": "B-Säule X-Richtung links"
+   },
+   {
+    "ORT": "0x8A",
+    "ORTTEXT": "B-Säule X-Richtung rechts"
+   },
+   {
+    "ORT": "0x8B",
+    "ORTTEXT": "B-Säule X-Richtung rechts"
+   },
+   {
+    "ORT": "0x8C",
+    "ORTTEXT": "B-Säule Y-Richtung links"
+   },
+   {
+    "ORT": "0x8D",
+    "ORTTEXT": "B-Säule Y-Richtung links"
+   },
+   {
+    "ORT": "0x8E",
+    "ORTTEXT": "B-Säule Y-Richtung rechts"
+   },
+   {
+    "ORT": "0x8F",
+    "ORTTEXT": "B-Säule Y-Richtung rechts"
+   },
+   {
+    "ORT": "0x80",
+    "ORTTEXT": "MRSA Tuer links"
+   },
+   {
+    "ORT": "0x81",
+    "ORTTEXT": "MRSA Tuer links"
+   },
+   {
+    "ORT": "0x82",
+    "ORTTEXT": "MRSA Tuer rechts"
+   },
+   {
+    "ORT": "0x83",
+    "ORTTEXT": "MRSA Tuer rechts"
+   },
+   {
+    "ORT": "0x50",
+    "ORTTEXT": "Versorgungsspannung"
+   },
+   {
+    "ORT": "0x51",
+    "ORTTEXT": "Airbag Warnleuchte (AWL)"
+   },
+   {
+    "ORT": "0x52",
+    "ORTTEXT": "Passenger Airbag OFF Leuchte (POL)"
+   },
+   {
+    "ORT": "0x55",
+    "ORTTEXT": "TCU - Ausgang"
+   },
+   {
+    "ORT": "0x90",
+    "ORTTEXT": "EEPROM"
+   },
+   {
+    "ORT": "0x91",
+    "ORTTEXT": "Crashtelegramspeicher"
+   },
+   {
+    "ORT": "0x92",
+    "ORTTEXT": "Crashtelegramspeicher"
+   },
+   {
+    "ORT": "0x94",
+    "ORTTEXT": "Alert-Schwelle"
+   },
+   {
+    "ORT": "0x93",
+    "ORTTEXT": "Zentralsteuergeraet"
+   },
+   {
+    "ORT": "0x95",
+    "ORTTEXT": "LCD Leuchtdichte"
+   },
+   {
+    "ORT": "0xF0",
+    "ORTTEXT": "Zentralsteuergeraet - Interner Fehler"
+   },
+   {
+    "ORT": "0xA0",
+    "ORTTEXT": "Rollover Funktion - Sensor nicht verbaut"
+   },
+   {
+    "ORT": "0xA1",
+    "ORTTEXT": "ROSE II / CLU2VDA"
+   },
+   {
+    "ORT": "0xA2",
+    "ORTTEXT": "ROSE II / InputSensorDataRose"
+   },
+   {
+    "ORT": "0xA3",
+    "ORTTEXT": "ROSE II / ASC3 1F3h"
+   },
+   {
+    "ORT": "0xA4",
+    "ORTTEXT": "F-CAN"
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Zentralsteuergeraet - Unbekannter Fehler"
+   }
+  ],
+  "FARTMATRIX": [
+   {
+    "ORT": "0x01",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x02",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x03",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x04",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x05",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x06",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x07",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x08",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x09",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x0A",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x0B",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x0C",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x0D",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x0E",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x0F",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x10",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x11",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x12",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x04",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x06",
+    "A7_0": "0xFF",
+    "A7_1": "0x07",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x30",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x31",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x32",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x33",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x34",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x35",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x36",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x37",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x38",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x39",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x3A",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x3B",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x3C",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x3D",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x3E",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x3F",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x40",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x41",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x23",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x50",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x2E",
+    "A5_0": "0xFF",
+    "A5_1": "0x2F",
+    "A6_0": "0xFF",
+    "A6_1": "0x1F",
+    "A7_0": "0xFF",
+    "A7_1": "0x18",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x51",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x20",
+    "A5_0": "0xFF",
+    "A5_1": "0x21",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x52",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x20",
+    "A5_0": "0xFF",
+    "A5_1": "0x21",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x55",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x20",
+    "A5_0": "0xFF",
+    "A5_1": "0x21",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x60",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0A",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x0B",
+    "A7_0": "0xFF",
+    "A7_1": "0x0C",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x6A",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x22",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x61",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0A",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x0B",
+    "A7_0": "0xFF",
+    "A7_1": "0x0C",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x6B",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x22",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x62",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0A",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x0B",
+    "A7_0": "0xFF",
+    "A7_1": "0x0C",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x6C",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x22",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x63",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0A",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x0B",
+    "A7_0": "0xFF",
+    "A7_1": "0x0C",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x6D",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x22",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x67",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0A",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x0B",
+    "A7_0": "0xFF",
+    "A7_1": "0x0C",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x6E",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x22",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x68",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0A",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x05",
+    "A6_0": "0xFF",
+    "A6_1": "0x0B",
+    "A7_0": "0xFF",
+    "A7_1": "0x0C",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x6F",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0x22",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x69",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x03",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x70",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x0E",
+    "A5_0": "0xFF",
+    "A5_1": "0x0F",
+    "A6_0": "0xFF",
+    "A6_1": "0x10",
+    "A7_0": "0xFF",
+    "A7_1": "0x11",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x71",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x24",
+    "A4_0": "0xFF",
+    "A4_1": "0x25",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x72",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0x29",
+    "A6_0": "0xFF",
+    "A6_1": "0x26",
+    "A7_0": "0xFF",
+    "A7_1": "0x27",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x80",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0x2C",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x81",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0x2B",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x82",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0x2C",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x83",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0x2B",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x84",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x85",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x86",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x87",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x88",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x89",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x8A",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x8B",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x8C",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x8D",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x8E",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0x13",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0x17",
+    "A7_0": "0xFF",
+    "A7_1": "0x2A",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x8F",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x12",
+    "A4_0": "0xFF",
+    "A4_1": "0x19",
+    "A5_0": "0xFF",
+    "A5_1": "0x1A",
+    "A6_0": "0xFF",
+    "A6_1": "0x2D",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x90",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x1C",
+    "A4_0": "0xFF",
+    "A4_1": "0x1D",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x91",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x1E",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x92",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x14",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x94",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x28",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0xFF",
+    "A8_1": "0xFF"
+   },
+   {
+    "ORT": "0xA0",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0xA1",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x30",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0xA2",
+    "A1_0": "0xFF",
+    "A1_1": "0x00",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x30",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0xA3",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0xFF",
+    "A2_1": "0xFF",
+    "A3_0": "0xFF",
+    "A3_1": "0x30",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0xFF",
+    "A8_1": "0xFF"
+   },
+   {
+    "ORT": "0xA4",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x0D",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x93",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0x15",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0x95",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0xF0",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   },
+   {
+    "ORT": "0xFF",
+    "A1_0": "0xFF",
+    "A1_1": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A3_0": "0xFF",
+    "A3_1": "0xFF",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0xFF",
+    "A5_1": "0xFF",
+    "A6_0": "0xFF",
+    "A6_1": "0xFF",
+    "A7_0": "0xFF",
+    "A7_1": "0xFF",
+    "A8_0": "0x08",
+    "A8_1": "0x09"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x00",
+    "ARTTEXT": "Plausibilitaetsfehler"
+   },
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "Fehler nicht vorhanden"
+   },
+   {
+    "ARTNR": "0x02",
+    "ARTTEXT": "Fehler aktuell vorhanden"
+   },
+   {
+    "ARTNR": "0x03",
+    "ARTTEXT": "POS-Ausgang Positiv und Inverse nicht komplementaer"
+   },
+   {
+    "ARTNR": "0x04",
+    "ARTTEXT": "Fehler Kurzschluss gegen Masse"
+   },
+   {
+    "ARTNR": "0x05",
+    "ARTTEXT": "Fehler Kurzschluss gegen U-Batt"
+   },
+   {
+    "ARTNR": "0x06",
+    "ARTTEXT": "Widerstand zu klein"
+   },
+   {
+    "ARTNR": "0x07",
+    "ARTTEXT": "Widerstand zu gross"
+   },
+   {
+    "ARTNR": "0x08",
+    "ARTTEXT": "Fehler nicht sporadisch"
+   },
+   {
+    "ARTNR": "0x09",
+    "ARTTEXT": "Fehler sporadisch"
+   },
+   {
+    "ARTNR": "0x0A",
+    "ARTTEXT": "Widerstand nicht definiert oder Graubereich"
+   },
+   {
+    "ARTNR": "0x0B",
+    "ARTTEXT": "Kriechstrom gegen Masse / Widerstand zu klein"
+   },
+   {
+    "ARTNR": "0x0C",
+    "ARTTEXT": "Unterbrechung / Widerstand zu gross"
+   },
+   {
+    "ARTNR": "0x0D",
+    "ARTTEXT": "Kommunikationsstoerung"
+   },
+   {
+    "ARTNR": "0x0E",
+    "ARTTEXT": "Leitung gegen Masse"
+   },
+   {
+    "ARTNR": "0x0F",
+    "ARTTEXT": "Leitung gegen Plus"
+   },
+   {
+    "ARTNR": "0x10",
+    "ARTTEXT": "Unterbrechung Sitzmatte"
+   },
+   {
+    "ARTNR": "0x11",
+    "ARTTEXT": "Kurzschluss Sitzmatte"
+   },
+   {
+    "ARTNR": "0x12",
+    "ARTTEXT": "kein ID-Telegramm empfangen"
+   },
+   {
+    "ARTNR": "0x13",
+    "ARTTEXT": "Sensorfehler"
+   },
+   {
+    "ARTNR": "0x14",
+    "ARTTEXT": "Drei Crashtelegramme sind gespeichert"
+   },
+   {
+    "ARTNR": "0x15",
+    "ARTTEXT": "Geraet ist nicht verriegelt"
+   },
+   {
+    "ARTNR": "0x17",
+    "ARTTEXT": "Falscher Messbereich"
+   },
+   {
+    "ARTNR": "0x18",
+    "ARTTEXT": "Ueberspannung"
+   },
+   {
+    "ARTNR": "0x19",
+    "ARTTEXT": "Leitung Masse-Schluss"
+   },
+   {
+    "ARTNR": "0x1A",
+    "ARTTEXT": "Leitung U-Batterie-Schluss"
+   },
+   {
+    "ARTNR": "0x1C",
+    "ARTTEXT": "EEPROM Layout passt nicht zur SW-Version"
+   },
+   {
+    "ARTNR": "0x1D",
+    "ARTTEXT": "CRC Fehler durch Schreiben Codierdaten"
+   },
+   {
+    "ARTNR": "0x1E",
+    "ARTTEXT": "Mindestens ein Crashtelegramm gespeichert"
+   },
+   {
+    "ARTNR": "0x1F",
+    "ARTTEXT": "Unterspannung"
+   },
+   {
+    "ARTNR": "0x20",
+    "ARTTEXT": "Masse-Schluss / Unterbrechung"
+   },
+   {
+    "ARTNR": "0x21",
+    "ARTTEXT": "U-Batterie-Schluss / Ansteuerungdefekt"
+   },
+   {
+    "ARTNR": "0x22",
+    "ARTTEXT": "Leitung verkoppelt"
+   },
+   {
+    "ARTNR": "0x23",
+    "ARTTEXT": "Zuendkreis verkoppelt"
+   },
+   {
+    "ARTNR": "0x24",
+    "ARTTEXT": "OC3 sendet nicht"
+   },
+   {
+    "ARTNR": "0x25",
+    "ARTTEXT": "OC3 sendet Fehler"
+   },
+   {
+    "ARTNR": "0x26",
+    "ARTTEXT": "Datenspeicher voll"
+   },
+   {
+    "ARTNR": "0x27",
+    "ARTTEXT": "System noch nicht freigegeben"
+   },
+   {
+    "ARTNR": "0x28",
+    "ARTTEXT": "Ueberpruefung Ausloeseschwelle"
+   },
+   {
+    "ARTNR": "0x29",
+    "ARTTEXT": "System konnte nicht freigegeben werden"
+   },
+   {
+    "ARTNR": "0x2A",
+    "ARTTEXT": "Sensordaten inplausibel"
+   },
+   {
+    "ARTNR": "0x2B",
+    "ARTTEXT": "Drucksensor ausserhalb des Messbereichs"
+   },
+   {
+    "ARTNR": "0x2C",
+    "ARTTEXT": "Absolutdruck - Uebertragungsstoerung"
+   },
+   {
+    "ARTNR": "0x2D",
+    "ARTTEXT": "Leitungsfehler / MRSA verkoppelt"
+   },
+   {
+    "ARTNR": "0x2E",
+    "ARTTEXT": "Unterspannung im PDC"
+   },
+   {
+    "ARTNR": "0x2F",
+    "ARTTEXT": "Überspannung im PDC"
+   },
+   {
+    "ARTNR": "0x30",
+    "ARTTEXT": "Telegramm nicht erhalten / Inhalt ungueltig F-CAN"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "--"
+   }
+  ],
+  "FUMWELTMATRIX": [
+   {
+    "ORT": "0xFF",
+    "UW_ANZ": "0x02",
+    "UW_SATZ": "0x01",
+    "UW1_NR": "0x01",
+    "UW2_NR": "0x02"
+   }
+  ],
+  "FUMWELTTEXTE": [
+   {
+    "UWNR": "0x01",
+    "UWTEXT": "Beginnfehleruhr",
+    "UW_EINH": "Sek."
+   },
+   {
+    "UWNR": "0x02",
+    "UWTEXT": "Endefehleruhr",
+    "UW_EINH": "Sek."
+   }
+  ],
+  "DIGITALARGUMENT": [
+   {
+    "TEXT": "ein",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "aus",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "ja",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "nein",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "auf",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "ab",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "an",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "yes",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "no",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "on",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "off",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "up",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "down",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "true",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "false",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "1",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "0",
+    "WERT": "0"
+   }
+  ]
+ }
+}

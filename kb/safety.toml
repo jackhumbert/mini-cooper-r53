@@ -1,0 +1,71 @@
+# Safety policy for running EDIABAS jobs. Patterns are full-match, case-insensitive
+# regexes against the job name. Evaluation order:
+#
+#   1. blocked   -> never runnable. No flag, override or code path unblocks these.
+#   2. overrides -> per "SGBD.JOB" tier (may only say read / confirm / blocked)
+#   3. confirm   -> runnable only with an explicit --confirm (a human approves each one)
+#   4. read      -> runs freely
+#   5. anything else is UNCLASSIFIED and treated as blocked
+#
+# Rationale: reading can't hurt the car. Clearing faults, actuators and self-tests change
+# state, so a person approves each one. Coding, flashing, immobiliser/key, odometer,
+# security-access and session/baud manipulation are out of scope for this tool entirely
+# (use NCS Expert / WinKFP deliberately if ever needed).
+
+[tiers]
+blocked = [
+  '.*SCHREIBEN.*',            # any write: coding, ident, VIN, odometer offset, keys, memory
+  'WRITE_.*', 'FLASH_.*', 'SWITCH_TO_BOOT', 'EXECUTE_RAM_ROUTINE', 'INIT_EEPROM',
+  'C_.*_AUFTRAG', 'C_FS_LOESCHEN', 'C_CHECKSUM', 'CODIERUNG_CHECK',
+  'CODE_LOESCHEN', 'DATA_LOESCHEN', 'DEL_INIT',
+  'SEED', 'SEED_KEY', 'SG_LOGIN', 'SECURITY_CHANGE', 'PASSWORT_.*',
+  'LEARN_IMOB_SEED', 'RESYNC_IMOB_SEED', 'ISN_.*', 'WECHSELCODE_.*', 'SCHL_SPERREN_FREIGEBEN',
+  'STEUERN_EWS4_SK', 'KD_INIT.*',
+  'SCHL_.*', 'SCHLUESSEL_.*', 'READ_PLIP_CODES', 'CODE_LESEN',   # key / transponder / anti-theft data
+  'START_DIAGNOSTICS',                    # BC1 seed/key unlock
+  'GWSZ_RESET', 'GWSZ_OFFSET_.*',
+  '.*_ABGLEICHEN', 'ABGLEICH_VORGEBEN',   # sensor zero-point calibration (DSC, LWS)
+  'START_DIAGNOSTIC_SESSION', 'DIAGNOSE_MODE', 'DIAGNOSEPROTOKOLL_SETZEN',
+  'ACCESS_TIMING_PARAMETERS', 'CHANGE_TIMING_PARAMETERS',
+  'RESET', 'SG_RESET', 'SOFTWARE_RESET', 'CONTROLLER_RESET', 'STEUERGERAETE_RESET', 'STEUERN_SG_RESET',
+  'SLEEP_MODE', 'POWER_DOWN_MODE', 'ENERGIESPARMODE', 'BET_AKTIV', 'BET_PASSIV',
+  'STEUERN_APPLICATION_CORRECTION',       # changes idle CO / temperature trims in the DME
+]
+
+confirm = [
+  'FS_LOESCHEN', 'ADAPTIVWERT_LOESCHEN', 'AIF_BATTMON_RESET', 'RPA_RESET', 'RPA_EOL_PASSIV',
+  'SIA_RESET', 'CLEAR_RF_BUFFERS',
+  'STEUERN_.*',                            # actuators, gauge sweeps, adaptation resets
+  'LWR_ON', 'LWR_OFF', 'AIC_INIT.*', 'CALIBRATE_MOTORS',
+  'GIB_SELF_TEST', 'START_CAT_TEST', 'START_MAN_TEST', 'LDP_TEST',
+  'VAKUUM', 'VAKUUM_PUMPE', 'R50_.*BLEEDMASTER_.*', 'NA_ENTLUEFTUNG_.*',
+  'DWA_DIAGNOSE', 'QUICKTEST',
+]
+
+read = [
+  '_JOBS', '_JOBCOMMENTS', '_ARGUMENTS', '_RESULTS', '_VERSIONINFO', '_TABLES', '_TABLE',
+  'INFO', 'INITIALISIERUNG', 'IDENT.*', 'IDENTIFIKATION',
+  'FS_LESEN.*', 'FS_QUICK_LESEN', 'C_FS_LESEN', 'IS_LESEN.*', 'STAT_FREEZEFRAME', 'WEBASTO_FS_LESEN',
+  'STATUS_.*', '.*_LESEN', 'READ_.*', 'MRSA_LESEN',
+  'HERSTELLER_SPEZDATEN', 'TYP_LESEN', 'AUSSTATTUNG_LESEN_EWS', 'COD_LESEN_.*',
+  'FASTA_EINSPURMODELL',                  # DSC_MK60: ReadMemoryByAddress
+  'REPORT_REPROG_STATUS', 'CHECK_REPROG_DEPENDING',
+  'DIAGNOSE_ENDE', 'DIAGNOSE_AUFRECHT', 'DIAGNOSE_ERHALTEN', 'DIAGNOSE_FORTSETZEN',
+  'DIAGNOSE_WEITER', 'NORMALER_DATENVERKEHR',
+]
+
+# Per-job exceptions, keyed "SGBD.JOB" (upper case).
+[overrides]
+# (none yet — add e.g. "EMS2K.SOME_JOB" = "confirm" after reviewing a job)
+
+[actuation]
+default_max_seconds = 20   # `r53 actuate` holds at most this long, then runs the release job
+
+# How to hand an output back to the ECU after `r53 actuate`. "{0}" = the first argument
+# the actuation was called with. UNVERIFIED on the car until noted otherwise; jobs not
+# listed here have no known release and the CLI says so before running them.
+[actuation.release]
+"EMS2K.STEUERN_ACTUATOR" = { job = "STEUERN_ACTUATOR", args = "{0};0" }   # CONTROL 0 = return control to ECU
+"EHPSR50.STEUERN_PWM" = { job = "STEUERN_PWM_RESET", args = "" }
+"BC1RD.STEUERN_IOSTATES" = { job = "STEUERN_IOSTATES", args = "{0};0" }
+"BC1.STEUERN_IOSTATES" = { job = "STEUERN_IOSTATES", args = "{0};0" }

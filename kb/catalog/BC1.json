@@ -1,0 +1,5291 @@
+{
+ "sgbd": "BC1",
+ "file": "BC1.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "BC1"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Gerd Huber"
+  ],
+  "REVISION": [
+   "2.5"
+  ],
+  "AUTHOR": [
+   "SW-Style M.Rafferty, BMW TI-433 Robert Kuessel"
+  ],
+  "ECUCOMMENT": [
+   "Basierend auf V3.0/Datum 09.04.01"
+  ]
+ },
+ "jobs": {
+  "CLEAR_RF_BUFFERS": {
+   "comment": [
+    "Clear the RF receive and status buffers"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'CLEAR_RF_BUFFERS'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "C_C_AUFTRAG": {
+   "comment": [
+    "Codierdaten schreiben und verifizieren",
+    "Write and verify the coding data"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write coding data telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write coding data response",
+      "cod_schreiben antwort"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read coding data response",
+      "cod_lesen antwort"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_C_LESEN": {
+   "comment": [
+    "Codierdaten lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CODIER_DATEN",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "C_FG_AUFTRAG": {
+   "comment": [
+    "Beschreiben der FG-Nummer",
+    "Write the VIN"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Vehicle ID number",
+      "Fahrgestellnummer",
+      "7 or 8 character string - if 8 characters the last is ignored"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write VIN Telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write VIN response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read VIN response"
+     ]
+    }
+   ]
+  },
+  "C_FG_LESEN": {
+   "comment": [
+    "Auslesen FG-Nummer",
+    "Read the VIN"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer",
+      "Last digits of the VIN"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Ping message"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnosemode des SG beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "ENERGIESPARMODE": {
+   "comment": [
+    "Einstellen des Energiesparmodes"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'ENERGIESPARMODE'",
+   "args": [
+    {
+     "name": "PRODUKTIONSMODE",
+     "type": "string",
+     "comment": [
+      "\"ein\" -> Produktions Mode ein",
+      "\"aus\" -> Produktions Mode aus",
+      "table DigitalArgument TEXT",
+      "Default: \"aus\""
+     ]
+    },
+    {
+     "name": "TRANSPORTMODE",
+     "type": "string",
+     "comment": [
+      "\"ein\" -> Transport Mode ein",
+      "\"aus\" -> Transport Mode aus",
+      "table DigitalArgument TEXT",
+      "Default: \"aus\""
+     ]
+    },
+    {
+     "name": "WERKSTATTMODE",
+     "type": "string",
+     "comment": [
+      "\"ein\" -> Werkstatt Mode ein",
+      "\"aus\" -> Werkstatt Mode aus",
+      "table DigitalArgument TEXT",
+      "Default: \"aus\""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Read internal and external faults"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode",
+      "Raw fault data from the ECU"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Fehlerort",
+      "Fault number"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Fault description",
+      "See column \"ORTTEXT\" in table \"FOrtTexte\""
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Frequency"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Count of Environment Data Items per fault"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten",
+      "Count of additional fault status information"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "1. (einzige) Fehlerart",
+      "Fault status 1"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. (einzige) Fehlerart als Text",
+      "Fault status text 1"
+     ]
+    },
+    {
+     "name": "F_LZ",
+     "type": "int",
+     "comment": [
+      "Fehler alter",
+      "Secondary frequency counter (age)"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Clears All Faults"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Clear block 0 response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Clear block 1 response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT3",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Clear block 2 response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT4",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Clear block 3 response"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Identification data"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer",
+      "BMW Part Number"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "string",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW",
+      "Week of manufacture"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr",
+      "Year of manufacture"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Software version"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer",
+      "Supplier code"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "Supplier Name"
+     ]
+    },
+    {
+     "name": "ID_AIF_VORHANDEN",
+     "type": "int",
+     "comment": [
+      "Ist ein AIF vorhanden (0 (nein)/ 1 (ja))",
+      "1, If AIF data is available"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "IS_LESEN": {
+   "comment": [
+    "Read the alarm mislock and alarm trigger fault logs",
+    "Auslesen der alarm Fehler speicher"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Infodaten pro Fehler als Hexcode",
+      "Raw fault data from the ECU"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Infoort",
+      "Fault number = (raw fault code + block offset)"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Infoort als Text",
+      "See table \"IOrtTexte\" column \"ORTTEXT\""
+     ]
+    },
+    {
+     "name": "F_LZ",
+     "type": "int",
+     "comment": [
+      "Fault age in AUX cycles",
+      "Fehler alt"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fault age in AUX cycles",
+      "Fehler alt"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Infoarten",
+      "Bereich: immer 0",
+      "Number of status strings = 0"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Bereich: immer 0",
+      "Number of environmental conditions = 0"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read alarm mislocks response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read alarm triggers response"
+     ]
+    }
+   ]
+  },
+  "LWR_OFF": {
+   "comment": [
+    "Switch on LWR2A"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'LWR_OFF'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "LWR_ON": {
+   "comment": [
+    "Switch on LWR2A"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'LWR_ON'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "READ_ALARM_MISLOCK": {
+   "comment": [
+    "Read Alarm mislocks"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_1",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_1",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_1",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_2",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_2",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_2",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_3",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_3",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_3",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_4",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_4",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_4",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_5",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_5",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_5",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_6",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_6",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_6",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_7",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_7",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_7",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_8",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_8",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_8",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_9",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_9",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_9",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_10",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_10",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_10",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_11",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_11",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_11",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_12",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_12",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_12",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_13",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_13",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_13",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_14",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_14",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_14",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "MISLOCK_NR_15",
+     "type": "int",
+     "comment": [
+      "Mislock Fault number"
+     ]
+    },
+    {
+     "name": "MISLOCK_TEXT_15",
+     "type": "string",
+     "comment": [
+      "Mislock Fault description"
+     ]
+    },
+    {
+     "name": "MISLOCK_AGE_15",
+     "type": "int",
+     "comment": [
+      "Mislock Fault age"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "READ_ALARM_TRIGGER": {
+   "comment": [
+    "Read alarm triggers"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ALARM_NR_1",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_1",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_1",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_2",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_2",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_2",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_3",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_3",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_3",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_4",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_4",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_4",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_5",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_5",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_5",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_6",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_6",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_6",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_7",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_7",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_7",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_8",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_8",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_8",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_9",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_9",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_9",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_10",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_10",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_10",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_11",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_11",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_11",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_12",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_12",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_12",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_13",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_13",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_13",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_14",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_14",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_14",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "ALARM_NR_15",
+     "type": "int",
+     "comment": [
+      "Alarm Fault number"
+     ]
+    },
+    {
+     "name": "ALARM_TEXT_15",
+     "type": "string",
+     "comment": [
+      "Alarm Fault description"
+     ]
+    },
+    {
+     "name": "ALARM_AGE_15",
+     "type": "int",
+     "comment": [
+      "Alarm Fault age"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "READ_MANUFACTURER_DATA": {
+   "comment": [
+    "Auslesen der Herstelldaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE4",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE5",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE6",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE7",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE8",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE9",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE10",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE11",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE12",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE13",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE14",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE15",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "SW_ID_NR",
+     "type": "string",
+     "comment": [
+      "Software ID number in ROM"
+     ]
+    },
+    {
+     "name": "CHKSUM_RESULT",
+     "type": "int",
+     "comment": [
+      "Checksum result"
+     ]
+    },
+    {
+     "name": "CHKSUM_BYTE_1",
+     "type": "unsigned char",
+     "comment": [
+      "Checksum byte 1"
+     ]
+    },
+    {
+     "name": "CHKSUM_BYTE_2",
+     "type": "unsigned char",
+     "comment": [
+      "Checksum byte 2"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read manufacturing data response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read software ID number response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT3",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read checksum result response"
+     ]
+    }
+   ]
+  },
+  "READ_PLIP_CODES": {
+   "comment": [
+    "Read the codes and status for a specified plip location"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'READ_PLIP_CODES'",
+   "args": [
+    {
+     "name": "PLIP",
+     "type": "unsigned int",
+     "comment": [
+      "Plip location to read 1 - 4"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CIPHER_KEY",
+     "type": "string",
+     "comment": [
+      "Cipher code for required plip location"
+     ]
+    },
+    {
+     "name": "WINDOW_KEY",
+     "type": "string",
+     "comment": [
+      "Window code for required plip location"
+     ]
+    },
+    {
+     "name": "BASE_CODE_KEY",
+     "type": "string",
+     "comment": [
+      "Base code for required plip location"
+     ]
+    },
+    {
+     "name": "ENABLED",
+     "type": "unsigned int",
+     "comment": [
+      "0 = plip disabled, 1 = plip enabled"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "READ_SIA_DATA": {
+   "comment": [
+    "Read Service information"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "TOTAL_DISTANCE_WERT",
+     "type": "long",
+     "comment": [
+      "Total Distance"
+     ]
+    },
+    {
+     "name": "TOTAL_DISTANCE_EINH",
+     "type": "string",
+     "comment": [
+      "Total distance units km"
+     ]
+    },
+    {
+     "name": "CONSUMED_LITRES_SINCE_SERVICE_WERT",
+     "type": "long",
+     "comment": [
+      "Count of litres"
+     ]
+    },
+    {
+     "name": "LAST_SERVICE_TYPE_OIL",
+     "type": "int",
+     "comment": [
+      "1 = Last service was an oil service, 0 = not"
+     ]
+    },
+    {
+     "name": "LAST_SERVICE_TYPE_INSPECTION",
+     "type": "int",
+     "comment": [
+      "1 = Last service was an inspection, 0 = not"
+     ]
+    },
+    {
+     "name": "TIME_SINCE_INSPECTION_SERVICE_WERT",
+     "type": "long",
+     "comment": [
+      "Time count (at/since?) inspection"
+     ]
+    },
+    {
+     "name": "TIME_SINCE_INSPECTION_SERVICE_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit = Tage, days"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "SG_RESET": {
+   "comment": [
+    "Reset the ECU"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SG_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "SLEEP_MODE": {
+   "comment": [
+    "SG in Sleep-Mode versetzen"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SLEEP_MODE'",
+   "args": [
+    {
+     "name": "ZEIT",
+     "type": "real",
+     "comment": [
+      "a) Zeit nach der das Steuergerät einschläft",
+      "Bereich   : 0.5 bis 20.0 [Sekunden]",
+      "Auflösung : 0.5 [Sekunden]",
+      "=> zeitgesteuerter Power-Down (0x9B) wird aktiviert",
+      "b) Default: (Es wird kein Argument übergeben!)",
+      "=> normaler Power-Down (0x9D) wird aktiviert"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Read memory by address",
+    "Lesen des internen Speichers",
+    "Als Argumente werden die Anzahl und",
+    "die Adresse der Datenbytes uebergeben."
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ANZAHL",
+     "type": "int",
+     "comment": [
+      "length of data to read",
+      "anzahl data lesen",
+      "1 - 32 bytes"
+     ]
+    },
+    {
+     "name": "ADRESSE",
+     "type": "int",
+     "comment": [
+      "16 bit ECU memory address",
+      "EEPROM address range: 0x0C00 -> 0x0FFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "ausgelesene Daten"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "ERROR_argumentname, wenn argument nicht",
+      "uebergeben oder ausser Bereich",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_SCHREIBEN": {
+   "comment": [
+    "Write memory by address",
+    "Schreiben des Speicherinhaltes"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "ADRESSE_HIGH",
+     "type": "int",
+     "comment": [
+      "gewuenschte Adresse high als Hexwert!",
+      "Address high byte 0x00 -> 0xFF"
+     ]
+    },
+    {
+     "name": "ADRESSE_LOW",
+     "type": "int",
+     "comment": [
+      "gewuenschte Adresse low als Hexwert!",
+      "Address low byte 0x00 -> 0xFF"
+     ]
+    },
+    {
+     "name": "WERT",
+     "type": "int",
+     "comment": [
+      "gewuenschter Wert als Hexwert!",
+      "Single byte of data to write 0x00 -> 0xFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "START_DIAGNOSTICS": {
+   "comment": [
+    "Obtain diagnostic seed and send key to begin diagnostics",
+    "The ecu will lock if no diagnostic messages have been sent to it for 30 seconds"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'START_DIAGNOSTICS'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "JOB_STATUS -> OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Request seed response"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Send key telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Send key response"
+     ]
+    }
+   ]
+  },
+  "STATUS_ANALOG": {
+   "comment": [
+    "Read Analogue Input and Output States"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read analogue inputs response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read PWM outputs response"
+     ]
+    },
+    {
+     "name": "STAT_AIP_EXT_5V_MON_WERT",
+     "type": "real",
+     "comment": [
+      "Monitor the Switch 5V power"
+     ]
+    },
+    {
+     "name": "STAT_AIP_EXT_5V_MON_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_CURR_SENSE_WERT",
+     "type": "real",
+     "comment": [
+      "Current sense to detect window stall"
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_CURR_SENSE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_WIN_RELAY_MON_WERT",
+     "type": "real",
+     "comment": [
+      "Passenger and driver relay status"
+     ]
+    },
+    {
+     "name": "STAT_AIP_WIN_RELAY_MON_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_BLOWER_MOT_SENSE_WERT",
+     "type": "real",
+     "comment": [
+      "Blower motor fault sense before A/C Switch on"
+     ]
+    },
+    {
+     "name": "STAT_AIP_BLOWER_MOT_SENSE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_HEAD_LGT_LEVEL_SW_WERT",
+     "type": "long",
+     "comment": [
+      "Switch to determine headlight level"
+     ]
+    },
+    {
+     "name": "STAT_AIP_HEAD_LGT_LEVEL_SW_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_MAIN_FLASH_SW_WERT",
+     "type": "real",
+     "comment": [
+      "Switch to flash main beam"
+     ]
+    },
+    {
+     "name": "STAT_AIP_MAIN_FLASH_SW_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_MAIN_FLASH_SW_STATE",
+     "type": "string",
+     "comment": [
+      "Switch to flash main beam"
+     ]
+    },
+    {
+     "name": "STAT_AIP_FT_WIPER_SENSE_WERT",
+     "type": "real",
+     "comment": [
+      "Sense to detect fault in front wiper"
+     ]
+    },
+    {
+     "name": "STAT_AIP_FT_WIPER_SENSE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_DRV_WIN_ANTITRAP_WERT",
+     "type": "real",
+     "comment": [
+      "Anti trap monitoring of driver window lift"
+     ]
+    },
+    {
+     "name": "STAT_AIP_DRV_WIN_ANTITRAP_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_DRV_WIN_ANTITRAP_STATE",
+     "type": "string",
+     "comment": [
+      "State of anti trap monitoring of driver window lift"
+     ]
+    },
+    {
+     "name": "STAT_AIP_DRV_WIN_CURR_SENSE_WERT",
+     "type": "real",
+     "comment": [
+      "Current sense to detect window stall"
+     ]
+    },
+    {
+     "name": "STAT_AIP_DRV_WIN_CURR_SENSE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_RELAY_MON_WERT",
+     "type": "real",
+     "comment": [
+      "Diagnostic current monitor"
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_RELAY_MON_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_LOCK_RELAY_MON_WERT",
+     "type": "real",
+     "comment": [
+      "Central locking relay status"
+     ]
+    },
+    {
+     "name": "STAT_AIP_LOCK_RELAY_MON_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_EVAPORATOR_SENSE_WERT",
+     "type": "real",
+     "comment": [
+      "Evaporation sensor"
+     ]
+    },
+    {
+     "name": "STAT_AIP_EVAPORATOR_SENSE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_LOCK_RELAY_MON_2_WERT",
+     "type": "real",
+     "comment": [
+      "Central locking status 2"
+     ]
+    },
+    {
+     "name": "STAT_AIP_LOCK_RELAY_MON_2_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_INDICATOR_SW_WERT",
+     "type": "real",
+     "comment": [
+      "Switch to change indicators"
+     ]
+    },
+    {
+     "name": "STAT_AIP_INDICATOR_SW_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_INDICATOR_SW_STATE",
+     "type": "string",
+     "comment": [
+      "Indicator position"
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_ANTITRAP_WERT",
+     "type": "real",
+     "comment": [
+      "Anti trap monitoring of passenger window lift"
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_ANTITRAP_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AIP_PASS_WIN_ANTITRAP_STATE",
+     "type": "string",
+     "comment": [
+      "State of anti trap monitoring of passenger window lift"
+     ]
+    },
+    {
+     "name": "STAT_AIP_BATT_VOLTS_MON_WERT",
+     "type": "real",
+     "comment": [
+      "Main battery monitoring level"
+     ]
+    },
+    {
+     "name": "STAT_AIP_BATT_VOLTS_MON_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AOP_MAP_READ_LGT_WERT",
+     "type": "real",
+     "comment": [
+      "PWM output for map reading lights"
+     ]
+    },
+    {
+     "name": "STAT_AOP_MAP_READ_LGT_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AOP_INTERIOR_LGT_WERT",
+     "type": "real",
+     "comment": [
+      "PWM output for Interior lights"
+     ]
+    },
+    {
+     "name": "STAT_AOP_INTERIOR_LGT_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AOP_MAIN_BEAM_WERT",
+     "type": "real",
+     "comment": [
+      "PWM output for Main Beam"
+     ]
+    },
+    {
+     "name": "STAT_AOP_MAIN_BEAM_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AOP_DIPPED_BEAM_WERT",
+     "type": "real",
+     "comment": [
+      "PWM output for Dipped Beam"
+     ]
+    },
+    {
+     "name": "STAT_AOP_DIPPED_BEAM_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STATUS_DIGITAL_INPUTS": {
+   "comment": [
+    "Read Digital Input States"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_DIP_DRV_KEY_SW_UNLK_ON",
+     "type": "int",
+     "comment": [
+      "Driver key switch unlock",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_DRV_KEY_SW_LK_ON",
+     "type": "int",
+     "comment": [
+      "Driver key switch lock",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_DRV_DOOR_OPEN_ON",
+     "type": "int",
+     "comment": [
+      "Driver door open",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_PASS_DOOR_OPEN_ON",
+     "type": "int",
+     "comment": [
+      "Passenger door open",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_HT_FT_SCR_SW_ON",
+     "type": "int",
+     "comment": [
+      "Heated front screen switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BONNET_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch to detect the bonnet open",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BOOT_OPEN_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch to detect the boot open",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BOOT_HANDLE_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input boot release motor",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_MASTER_LK_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input master lock",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_MASTER_UNLK_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input master unlock",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_DRV_WIN_UP_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input driver window up",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_DRV_WIN_DOWN_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input driver window down",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_PASS_WIN_UP_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input passenger window up",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_PASS_WIN_DOWN_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input passenger window down",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_PASS_KEY_SW_LK_ON",
+     "type": "int",
+     "comment": [
+      "Passenger key switch lock",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_PASS_KEY_SW_UNLK_ON",
+     "type": "int",
+     "comment": [
+      "Passenger key switch unlock",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_HT_RR_WIN_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input heated rear window",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_AUX_SW_ON",
+     "type": "int",
+     "comment": [
+      "Auxiliary monitor from main ignition switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_POLL_SENSE_ON",
+     "type": "int",
+     "comment": [
+      "Pollution sensor input, polluted air 1",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_ALARM_TILT_SW_ON",
+     "type": "int",
+     "comment": [
+      "Alarm tilt sensor",
+      "This output cannot be read from using read digital inputs command",
+      "Use Tilt sensor status instead",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RR_WASH_PUMP_ON",
+     "type": "int",
+     "comment": [
+      "Switch for rear washer pump active",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_FT_WASH_PUMP_ON",
+     "type": "int",
+     "comment": [
+      "Switch input front washer pump active",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_INERTIA_SENSE_ON",
+     "type": "int",
+     "comment": [
+      "Inertia sensor to detect unusual stop conditions",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_COL_SW_1_ON",
+     "type": "int",
+     "comment": [
+      "Wiper switch 1 to activate front wipers",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_COL_SW_2_ON",
+     "type": "int",
+     "comment": [
+      "Wiper switch 2 to activate front wipers",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RR_WIPER_SW_ON",
+     "type": "int",
+     "comment": [
+      "Rear wiper switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_AC_SWITCH_ON",
+     "type": "int",
+     "comment": [
+      "Switch input air conditioning",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RECIRC_SW_ON",
+     "type": "int",
+     "comment": [
+      "Toggles between recirc and fresh",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_FT_WIPER_PARK_ON",
+     "type": "int",
+     "comment": [
+      "Front wiper at the parked position",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RR_WIPER_PARK_ON",
+     "type": "int",
+     "comment": [
+      "Rear wiper at the parked position",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_KEY_IN_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input to detect key in ignition",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_POLICE_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input police functions",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_LH_LATCH_ON",
+     "type": "int",
+     "comment": [
+      "Switch input for left hand door latch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RH_LATCH_ON",
+     "type": "int",
+     "comment": [
+      "Switch input for right hand door latch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RECIRC_MONITOR_ON",
+     "type": "int",
+     "comment": [
+      "Recirc control monitor",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BOOT_RELEASE_MONITOR_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the boot release",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BRAKE_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input brake pedal",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_ULTRASONIC_IN_ON",
+     "type": "int",
+     "comment": [
+      "Ultrasonic alarm activated",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RF_CODE_LOGIC_ON",
+     "type": "int",
+     "comment": [
+      "RF Code input",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RECIRC_ERROR_ON",
+     "type": "int",
+     "comment": [
+      "Error with recirc control",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BOOT_REL_STATUS_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the boot release",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    }
+   ]
+  },
+  "STATUS_DIGITAL_OUTPUTS": {
+   "comment": [
+    "Read Digital outputs"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_DOP_DRV_LOCK_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Driver lock relay",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_SUPER_LOCK_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Super lock relay",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_COMMON_LOCK_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Common relay",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_REST_LOCK_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Rest lock relay",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_PASS_WIN_DOWN_ON",
+     "type": "int",
+     "comment": [
+      "Passenger window down",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_PASS_WIN_UP_ON",
+     "type": "int",
+     "comment": [
+      "Passenger window up",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_DRV_WIN_DOWN_ON",
+     "type": "int",
+     "comment": [
+      "Driver window down",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_DRV_WIN_UP_ON",
+     "type": "int",
+     "comment": [
+      "Driver window up",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_HT_RR_WIN_LED_ON",
+     "type": "int",
+     "comment": [
+      "Heated rear window LED",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_HT_FT_WIN_LED_ON",
+     "type": "int",
+     "comment": [
+      "Heated front screen LED",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_AC_LED_ON",
+     "type": "int",
+     "comment": [
+      "Air conditioning LED",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RECIRC_LED_ON",
+     "type": "int",
+     "comment": [
+      "Indicator for the recirc on",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_FT_WIPER_PARK_RUN_ON",
+     "type": "int",
+     "comment": [
+      "Front wiper slow park run relay",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_HEATED_RR_WIN_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Heated rear window relay coil",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_HEATED_FT_WIN_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Heated front screen relay coil",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_BBS_ARM_DISARM_ON",
+     "type": "int",
+     "comment": [
+      "BBS arm/disarm",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_SOUND_ALARM_ON",
+     "type": "int",
+     "comment": [
+      "BBS version alarm",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_FT_WIPER_SLOW_FAST_ON",
+     "type": "int",
+     "comment": [
+      "Front wiper slow fast relay",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_BOOT_RELEASE_ON",
+     "type": "int",
+     "comment": [
+      "Boot release motor",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_WATCHDOG_IN_ON",
+     "type": "int",
+     "comment": [
+      "Handshake with hardware watchdog",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RECIRC_CTL1_ON",
+     "type": "int",
+     "comment": [
+      "Control 1 recirc operation",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RECIRC_CTL2_ON",
+     "type": "int",
+     "comment": [
+      "Control 2 recirc operation",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_ROTARY_SUPPLY_ON",
+     "type": "int",
+     "comment": [
+      "Supply to the rotary switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_AUX_RELAY_ON",
+     "type": "int",
+     "comment": [
+      "Auxiliary relay coil",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_PWR_WASH_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Powerwash relay coil",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RR_WIPER_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Rear wiper relay coil",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_BLOWER_ENABLE_ON",
+     "type": "int",
+     "comment": [
+      "Enable the blower motor",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_12V_EXT_PWR_ON",
+     "type": "int",
+     "comment": [
+      "External switched 12V feed",
+      "This output cannot be switched off via diagnostics",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_ALARM_LED_ON",
+     "type": "int",
+     "comment": [
+      "Alarm LED output",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    }
+   ]
+  },
+  "STATUS_LIGHT_INPUTS": {
+   "comment": [
+    "Read Lighting Digital Input States"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_DIP_HAZARD_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input hazard switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_POSN_LGT_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input position lights",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_INT_LGT_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input interior light",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RR_FOG_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input rear fog switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_FT_FOG_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input front fog switch",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_DIPPED_BEAM_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input dipped beam",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_AUX_LGT_SW_ON",
+     "type": "int",
+     "comment": [
+      "Switch input auxiliary lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_IND_SIGNAL_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the positive sense of indicator for sleep",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_IND_SIG_INVERTED_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the inverted sense of indicator for sleep",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_LAMP_STATUS_ON",
+     "type": "int",
+     "comment": [
+      "Indicator of the lamp status",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_LH_DIR_IND_STATUS_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the left hand indicator",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_RH_DIR_IND_STATUS_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the right hand indicator",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DIP_BRAKE_LAMP_STATUS_ON",
+     "type": "int",
+     "comment": [
+      "Monitor the brake lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    }
+   ]
+  },
+  "STATUS_LIGHT_OUTPUTS": {
+   "comment": [
+    "Read lighting Digital outputs"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RR_FOG_LED_ON",
+     "type": "int",
+     "comment": [
+      "Rear fog LED",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RR_FOG_LGT_ON",
+     "type": "int",
+     "comment": [
+      "Rear fog lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RH_INDICATOR_LGT_ON",
+     "type": "int",
+     "comment": [
+      "Right hand indicator lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_LH_INDICATOR_LGT_ON",
+     "type": "int",
+     "comment": [
+      "Left hand indicator lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_RH_POSITION_LGT_ON",
+     "type": "int",
+     "comment": [
+      "Right hand position lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_LH_POSITION_LGT_ON",
+     "type": "int",
+     "comment": [
+      "Left hand position lamps",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_FT_FOG_LGT_RLY_ON",
+     "type": "int",
+     "comment": [
+      "Front fog relay coil",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    },
+    {
+     "name": "STAT_DOP_NO_PLATE_LGT_ON",
+     "type": "int",
+     "comment": [
+      "Number plate light",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    }
+   ]
+  },
+  "STATUS_RF": {
+   "comment": [
+    "Read the RF status"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_LAST_RF_CODE",
+     "type": "string",
+     "comment": [
+      "Last valid RF code received from plip"
+     ]
+    },
+    {
+     "name": "STAT_RF_REMOTE_OK_ROLLING_CODE_OK",
+     "type": "int",
+     "comment": [
+      "Base and window code status",
+      "1 = Correct remote, correct rolling code (Correct base and window codes)"
+     ]
+    },
+    {
+     "name": "STAT_RF_REMOTE_OK_ROLLING_CODE_NOT_OK",
+     "type": "int",
+     "comment": [
+      "Rolling code synchronisation status",
+      "1 = Rolling code out of synchronisation (Correct base code, incorrect window code)"
+     ]
+    },
+    {
+     "name": "STAT_RF_REMOTE_INCORRECT",
+     "type": "int",
+     "comment": [
+      "Remote (Base) code status",
+      "1 = Incorrect remote (Incorrect base code), 0 = OK"
+     ]
+    },
+    {
+     "name": "STAT_RF_REMOTE_BATTERY_DEAD",
+     "type": "int",
+     "comment": [
+      "Battery status",
+      "1 = Flat battery detected, 0 = OK"
+     ]
+    }
+   ]
+  },
+  "STATUS_TILT_SENSOR": {
+   "comment": [
+    "Read the Tilt sensor status"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_TILT_SENSOR_PULSE_RECEIVED",
+     "type": "int",
+     "comment": [
+      "Tilt sensor Pulse status",
+      "1 = Tilt sensor check pulse received, 0 = not received"
+     ]
+    }
+   ]
+  },
+  "STEUERN_IOSTATES": {
+   "comment": [
+    "Force Digital Output States"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "ORT",
+     "type": "string",
+     "comment": [
+      "Digital output to force, DOP_?",
+      "Identifier \"DOP_?\" from \"NAME\" column in table \"BITS\""
+     ]
+    },
+    {
+     "name": "EIN",
+     "type": "int",
+     "comment": [
+      "1 = ON, 0 = OFF",
+      "1 wenn einschalten / 0 wenn ausschalten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read outputs response"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Force outputs telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Force outputs response"
+     ]
+    }
+   ]
+  },
+  "STEUERN_PWM_OUTPUTS": {
+   "comment": [
+    "Force Digital Output States"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "ORT",
+     "type": "string",
+     "comment": [
+      "PWM output to force, AOP_?",
+      "Identifier \"AOP_?\" from \"NAME\" column in table \"Analog\"",
+      "Argument is case sensitive"
+     ]
+    },
+    {
+     "name": "EIN",
+     "type": "int",
+     "comment": [
+      "0 for OFF, any other value for ON",
+      "'> 0', wenn einschalten / '0', wenn ausschalten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read PWM outputs response"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Force PWM outputs telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Force PWM outputs response"
+     ]
+    }
+   ]
+  },
+  "STEUERN_STEPPER_MOTOR": {
+   "comment": [
+    "Force Stepper motor Output State"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "EIN",
+     "type": "int",
+     "comment": [
+      "0 for START, any other value for STOP",
+      "0 fuer anfang, >0 fuer halt"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "STEUERN_TILT_SENSOR": {
+   "comment": [
+    "Force Tilt Sensor state"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "EIN",
+     "type": "int",
+     "comment": [
+      "0 = OFF,      >0 = ON",
+      "'>0', wenn ein / '0', wenn aus"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "WRITE_PLIP_CODES": {
+   "comment": [
+    "Write the codes and status for a specified plip location"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'WRITE_.*'",
+   "args": [
+    {
+     "name": "PLIP",
+     "type": "unsigned int",
+     "comment": [
+      "Plip location to write 1 - 4"
+     ]
+    },
+    {
+     "name": "CIPHER_KEY",
+     "type": "string",
+     "comment": [
+      "Cipher code for required plip location",
+      "16 characters ascii",
+      "This is the ascii representation of the 8 hex characters used"
+     ]
+    },
+    {
+     "name": "WINDOW_KEY",
+     "type": "string",
+     "comment": [
+      "Window code for required plip location",
+      "6 characters ascii",
+      "This is the ascii representation of the 3 hex characters used"
+     ]
+    },
+    {
+     "name": "BASE_CODE_KEY",
+     "type": "string",
+     "comment": [
+      "Base code for required plip location",
+      "6 characters ascii",
+      "This is the ascii representation of the 3 hex characters used"
+     ]
+    },
+    {
+     "name": "ENABLE",
+     "type": "unsigned int",
+     "comment": [
+      "0 = plip disabled, 1 = plip enabled"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write PLIP telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write PLIP response packet"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read PLIP response packet"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTNUMPREFIX": [
+   {
+    "ROVER_NR": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "ROVER_NR": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "ROVER_NR": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "ROVER_NR": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "ROVER_NR": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "ROVER_NR": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "ROVER_NR": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "ROVER_NR": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "ROVER_NR": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "ROVER_NR": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "ROVER_NR": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "ROVER_NR": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "ROVER_NR": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "ROVER_NR": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "ROVER_NR": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "ROVER_NR": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "ROVER_NR": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "ROVER_NR": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "ROVER_NR": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "ROVER_NR": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "ROVER_NR": "0xXY",
+    "PREFIX": "???"
+   }
+  ],
+  "DIGITALARGUMENT": [
+   {
+    "TEXT": "ein",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "aus",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "ja",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "nein",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "auf",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "ab",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "yes",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "no",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "on",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "off",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "up",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "down",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "true",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "false",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "1",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "0",
+    "WERT": "0"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "DATENBUS FEHLER"
+   },
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "FAHRER-RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "GEMEINS. RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "RUHERELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "SUPER-RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "FAH FEN HEBEN RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "FAH FEN HEBEN RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "FAH FEN SENKEN RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x08",
+    "ORTTEXT": "FAH FEN SENKEN RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x09",
+    "ORTTEXT": "BEIF FEN HEBEN RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "BEIF FEN HEBEN RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x0B",
+    "ORTTEXT": "BEIF FEN SENKEN RELAIS NC FEHLER"
+   },
+   {
+    "ORT": "0x0C",
+    "ORTTEXT": "BEIF FEN SENKEN RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x0D",
+    "ORTTEXT": "FAHRER-RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x0E",
+    "ORTTEXT": "GEMEINS. RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x0F",
+    "ORTTEXT": "RUHERELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "SUPER-RELAIS NO FEHLER"
+   },
+   {
+    "ORT": "0x80",
+    "ORTTEXT": "FAH FEN AUSGANG EIN FEHLER"
+   },
+   {
+    "ORT": "0x81",
+    "ORTTEXT": "BEIF FEN AUSGANG EIN FEHLER"
+   },
+   {
+    "ORT": "0x82",
+    "ORTTEXT": "FAH FEN AUSGANG AUS FEHLER"
+   },
+   {
+    "ORT": "0x83",
+    "ORTTEXT": "BEIF FEN AUSGANG AUS FEHLER"
+   },
+   {
+    "ORT": "0x84",
+    "ORTTEXT": "FRONTWISCHER EIN FEHLER"
+   },
+   {
+    "ORT": "0x85",
+    "ORTTEXT": "FRONTWISCHER GESCHW EIN FEHLER"
+   },
+   {
+    "ORT": "0x86",
+    "ORTTEXT": "FRISCHLUFT EIN FEHLER"
+   },
+   {
+    "ORT": "0x87",
+    "ORTTEXT": "UMLUFT EIN FEHLER O. FRISCHLUFT EIN FEHLER"
+   },
+   {
+    "ORT": "0x89",
+    "ORTTEXT": "HECKWISCHER EIN FEHLER"
+   },
+   {
+    "ORT": "0x8A",
+    "ORTTEXT": "REGENSENSOR FEHLER"
+   },
+   {
+    "ORT": "0x8B",
+    "ORTTEXT": "HHS EIN FEHLER"
+   },
+   {
+    "ORT": "0x8C",
+    "ORTTEXT": "FRONTWISCHER AUS FEHLER"
+   },
+   {
+    "ORT": "0x8D",
+    "ORTTEXT": "FRONTWISCHER GESCHW AUS FEHLER"
+   },
+   {
+    "ORT": "0x8E",
+    "ORTTEXT": "FRISCHLUFT AUS FEHLER"
+   },
+   {
+    "ORT": "0x8F",
+    "ORTTEXT": "UMLUFT AUS FEHLER"
+   },
+   {
+    "ORT": "0x91",
+    "ORTTEXT": "HECKWISCHER AUS FEHLER"
+   },
+   {
+    "ORT": "0x93",
+    "ORTTEXT": "HHS AUS FEHLER"
+   },
+   {
+    "ORT": "0x94",
+    "ORTTEXT": "FRONTWISCHER RÜCKMELD FEHLER"
+   },
+   {
+    "ORT": "0x95",
+    "ORTTEXT": "FRONTWISCHER BLOCKIERT FEHLER"
+   },
+   {
+    "ORT": "0x96",
+    "ORTTEXT": "HECKWISCHER BLOCKIERT FEHLER"
+   },
+   {
+    "ORT": "0x9A",
+    "ORTTEXT": "KLIMAKOMPRESSOR FEHLER"
+   },
+   {
+    "ORT": "0x9B",
+    "ORTTEXT": "HFS EIN FEHLER"
+   },
+   {
+    "ORT": "0x9C",
+    "ORTTEXT": "HFS AUS FEHLER"
+   },
+   {
+    "ORT": "0xAA",
+    "ORTTEXT": "BLINKER LINKS AUS FEHLER"
+   },
+   {
+    "ORT": "0xAC",
+    "ORTTEXT": "BLINKER RECHTS AUS FEHLER"
+   },
+   {
+    "ORT": "0xB1",
+    "ORTTEXT": "NSW EIN FEHLER"
+   },
+   {
+    "ORT": "0xB2",
+    "ORTTEXT": "NSW AUS FEHLER"
+   },
+   {
+    "ORT": "0xB3",
+    "ORTTEXT": "ZUSATZLEUCHTE EIN FEHLER"
+   },
+   {
+    "ORT": "0xB4",
+    "ORTTEXT": "ZUSATZLEUCHTE AUS FEHLER"
+   },
+   {
+    "ORT": "0xB5",
+    "ORTTEXT": "GEBLÄSEMOTOR EIN FEHLER"
+   },
+   {
+    "ORT": "0xB6",
+    "ORTTEXT": "GEBLÄSEMOTOR AUS FEHLER"
+   },
+   {
+    "ORT": "0xBD",
+    "ORTTEXT": "WASCHANLAGE EIN FEHLER"
+   },
+   {
+    "ORT": "0xBE",
+    "ORTTEXT": "WASCHANLAGE AUS FEHLER"
+   },
+   {
+    "ORT": "0xBF",
+    "ORTTEXT": "BBUS SCHÄRFEN ENTSCHÄRFEN EIN FEHLER"
+   },
+   {
+    "ORT": "0xC0",
+    "ORTTEXT": "BBUS SCHÄRFEN ENTSCHÄRFEN AUS FEHLER"
+   },
+   {
+    "ORT": "0xC1",
+    "ORTTEXT": "BBUS AKUST. ALARM EIN FEHLER"
+   },
+   {
+    "ORT": "0xC2",
+    "ORTTEXT": "BBUS AKUST. ALARM AUS FEHLER"
+   },
+   {
+    "ORT": "0xC4",
+    "ORTTEXT": "GEPÄCKR. ENTRIEG. AUS FEHLER"
+   },
+   {
+    "ORT": "0xC5",
+    "ORTTEXT": "FAH FEN EINKLEMMSCHUTZ FEHLER"
+   },
+   {
+    "ORT": "0xC6",
+    "ORTTEXT": "BEIF FEN EINKLEMMSCHUTZ FEHLER"
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "MORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "FAH TÜR AUSL."
+   },
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "BEIF TÜR AUSL."
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "HAUBE AUSL."
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "GEPÄCKR. OFFEN AUSL."
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "ZV überbeanspr."
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "AORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "NEBENVERBR.EIN AUSL."
+   },
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "ZÜNDG.EIN AUSL."
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "FAH TÜR AUSL."
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "BEIF TÜR AUSL."
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "ULTRASCHALL AUSL."
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "NEIG. AUSL."
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "HAUBE AUSL."
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "GEPÄCKR. OFFEN AUSL."
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x00",
+    "ARTTEXT": "Fehler aktiv"
+   },
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "Fehler inaktiv"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "IORTTEXTE": [
+   {
+    "ORT": "0x30",
+    "ORTTEXT": "Alarm-Fehlverriegelung - Fahrertür Eingang EIN"
+   },
+   {
+    "ORT": "0x31",
+    "ORTTEXT": "Alarm-Fehlverriegelung - Beifahrertür Eingang EIN"
+   },
+   {
+    "ORT": "0x32",
+    "ORTTEXT": "Alarm-Fehlverriegelung - Eingang Haube, Übergang EIN"
+   },
+   {
+    "ORT": "0x33",
+    "ORTTEXT": "Alarm-Fehlverriegelung - Gepäckraum-Entriegelungsschalter Eingang EIN"
+   },
+   {
+    "ORT": "0x35",
+    "ORTTEXT": "Alarm-Fehlverriegelung - Überhitzung ZV, Abschaltung ausgelöst"
+   },
+   {
+    "ORT": "0x40",
+    "ORTTEXT": "Alarmauslöser - Nebenverbraucher Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x41",
+    "ORTTEXT": "Alarmauslöser - Zündung Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x42",
+    "ORTTEXT": "Alarmauslöser - Fahrertür Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x43",
+    "ORTTEXT": "Alarmauslöser - Beifahrertür Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x44",
+    "ORTTEXT": "Alarmauslöser - Ultraschallzone 1 Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x45",
+    "ORTTEXT": "Alarmauslöser - Neigung Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x46",
+    "ORTTEXT": "Alarmauslöser - Haube Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0x47",
+    "ORTTEXT": "Alarmauslöser - Gepäckraum-Entriegelungsschalter Eingang, Übergang auf EIN"
+   },
+   {
+    "ORT": "0xXY",
+    "ORTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "ANALOG": [
+   {
+    "NAME": "AIP_EXT_5V_MON",
+    "FACT_A": "0.019607843",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Schalter Spannung 5V überwachen"
+   },
+   {
+    "NAME": "AIP_PASS_WIN_CURR_SENSE",
+    "FACT_A": "0.171568627",
+    "FACT_B": "0.0",
+    "EINH": "A",
+    "DESCRIPTION": "Stromfühler zum Erkennen einer Fensterblockierung"
+   },
+   {
+    "NAME": "AIP_WIN_RELAY_MON",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Status Fahrer-Relais"
+   },
+   {
+    "NAME": "AIP_BLOWER_MOT_SENSE",
+    "FACT_A": "0.071568627",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Fehlerfühler Gebläsemotor vor A/C-Schalter EIN"
+   },
+   {
+    "NAME": "AIP_HEAD_LGT_LEVEL_SW",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "Pos",
+    "DESCRIPTION": "Schalter Scheinwerferleuchtweite"
+   },
+   {
+    "NAME": "AIP_MAIN_FLASH_SW",
+    "FACT_A": "0.019607843",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Schalter Lichthupe"
+   },
+   {
+    "NAME": "AIP_FT_WIPER_SENSE",
+    "FACT_A": "0.080360012",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Geschwindigkeitserkennung Frontwischer"
+   },
+   {
+    "NAME": "AIP_DRV_WIN_ANTITRAP",
+    "FACT_A": "0.019607843",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Überwachung Einklemmschutz Fensterheber"
+   },
+   {
+    "NAME": "AIP_DRV_WIN_CURR_SENSE",
+    "FACT_A": "0.171568627",
+    "FACT_B": "0.0",
+    "EINH": "A",
+    "DESCRIPTION": "Stromfühler zum Erkennen einer Fensterblockierung"
+   },
+   {
+    "NAME": "AIP_PASS_WIN_RELAY_MON",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Status Beifahrer-Relais"
+   },
+   {
+    "NAME": "AIP_LOCK_RELAY_MON",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Status 1 Relais/Zentralverriegelung"
+   },
+   {
+    "NAME": "AIP_EVAPORATOR_SENSE",
+    "FACT_A": "0.356506238",
+    "FACT_B": "-29.3",
+    "EINH": "C",
+    "DESCRIPTION": "Verdampfertemperatursensor"
+   },
+   {
+    "NAME": "AIP_LOCK_RELAY_MON_2",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Status 2 Relais/Zentralverriegelung"
+   },
+   {
+    "NAME": "AIP_INDICATOR_SW",
+    "FACT_A": "0.019607843",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Blinkerschalter"
+   },
+   {
+    "NAME": "AIP_PASS_WIN_ANTITRAP",
+    "FACT_A": "0.019607843",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Überwachung Einklemmschutz Fensterheber"
+   },
+   {
+    "NAME": "AIP_BATT_VOLTS_MON",
+    "FACT_A": "0.072087658",
+    "FACT_B": "0.0",
+    "EINH": "V",
+    "DESCRIPTION": "Überwachungsebene Hauptbatterie"
+   },
+   {
+    "NAME": "AOP_MAP_READ_LGT",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Kartenleseleuchten"
+   },
+   {
+    "NAME": "AOP_INTERIOR_LGT",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Innenlichtschalter"
+   },
+   {
+    "NAME": "AOP_MAIN_BEAM",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Fernlicht"
+   },
+   {
+    "NAME": "AOP_DIPPED_BEAM",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "",
+    "DESCRIPTION": "Abblendlicht"
+   },
+   {
+    "NAME": "Unbekannter Gegenstand",
+    "FACT_A": "0.0",
+    "FACT_B": "0",
+    "EINH": "",
+    "DESCRIPTION": "Unbekannter Gegenstand"
+   }
+  ],
+  "BITS": [
+   {
+    "NAME": "DIP_DRV_KEY_SW_UNLK",
+    "BYTE": "4",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Schlüsselkontakt Fahrer entrieg."
+   },
+   {
+    "NAME": "DIP_DRV_KEY_SW_LK",
+    "BYTE": "4",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Schlüsselkontakt Fahrer verrieg."
+   },
+   {
+    "NAME": "DIP_DRV_DOOR_OPEN",
+    "BYTE": "4",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Fahrertür offen"
+   },
+   {
+    "NAME": "DIP_PASS_DOOR_OPEN",
+    "BYTE": "4",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Beifahrertür offen"
+   },
+   {
+    "NAME": "DIP_HAZARD_SW",
+    "BYTE": "4",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Schaltereingang Warnblinkschalter"
+   },
+   {
+    "NAME": "DIP_HT_FT_SCR_SW",
+    "BYTE": "4",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Schalter heizb. Frontscheibe"
+   },
+   {
+    "NAME": "DIP_BONNET_SW",
+    "BYTE": "4",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Schalter für offene Haube"
+   },
+   {
+    "NAME": "DIP_BOOT_OPEN_SW",
+    "BYTE": "5",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Schalter für offenen Gepäckraum"
+   },
+   {
+    "NAME": "DIP_BOOT_HANDLE_SW",
+    "BYTE": "5",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Schaltereingang Gepäckraum-Entriegelungsmotor"
+   },
+   {
+    "NAME": "DIP_MASTER_LK_SW",
+    "BYTE": "5",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Schaltereingang Hauptverriegelung"
+   },
+   {
+    "NAME": "DIP_MASTER_UNLK_SW",
+    "BYTE": "5",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Schaltereingang Hauptentriegelung"
+   },
+   {
+    "NAME": "DIP_DRV_WIN_UP_SW",
+    "BYTE": "5",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Schaltereingang Fenster/Fahrer heben"
+   },
+   {
+    "NAME": "DIP_DRV_WIN_DOWN_SW",
+    "BYTE": "5",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Schaltereingang Fenster/Fahrer senken"
+   },
+   {
+    "NAME": "DIP_PASS_WIN_UP_SW",
+    "BYTE": "5",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Schaltereingang Fenster/Beifahrer heben"
+   },
+   {
+    "NAME": "DIP_PASS_WIN_DOWN_SW",
+    "BYTE": "6",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Schaltereingang Fenster/Beifahrer senken"
+   },
+   {
+    "NAME": "DIP_PASS_KEY_SW_LK",
+    "BYTE": "6",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Schlüsselkontakt Beifahrer verrieg."
+   },
+   {
+    "NAME": "DIP_PASS_KEY_SW_UNLK",
+    "BYTE": "6",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Schlüsselkontakt Beifahrer entrieg."
+   },
+   {
+    "NAME": "DIP_HT_RR_WIN_SW",
+    "BYTE": "6",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Schaltereingang heizb. Heckscheibe"
+   },
+   {
+    "NAME": "DIP_POSN_LGT_SW",
+    "BYTE": "6",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Schaltereingang Standlicht"
+   },
+   {
+    "NAME": "DIP_INT_LGT_SW",
+    "BYTE": "6",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Schaltereingang Innenlicht"
+   },
+   {
+    "NAME": "DIP_AUX_SW",
+    "BYTE": "6",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Überwachung Nebenverbraucher von Hauptzündschalter"
+   },
+   {
+    "NAME": "DIP_POLL_SENSE",
+    "BYTE": "7",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Eingang Luftqualitätssensor, verschmutzte Luft 1"
+   },
+   {
+    "NAME": "DIP_RR_WASH_PUMP",
+    "BYTE": "7",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Schalter für Heckscheibenwaschpumpe aktiv"
+   },
+   {
+    "NAME": "DIP_ALARM_TILT_SW",
+    "BYTE": "7",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Neigungsgeber Alarmanlage"
+   },
+   {
+    "NAME": "DIP_INERTIA_SENSE",
+    "BYTE": "7",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Trägheitssensor für ungewöhnliche Anhaltebedingungen"
+   },
+   {
+    "NAME": "DIP_COL_SW_1",
+    "BYTE": "8",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Wischerschalter, zum Aktivieren der Frontwischer"
+   },
+   {
+    "NAME": "DIP_COL_SW_2",
+    "BYTE": "8",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Wischerschalter, zum Aktivieren der Frontwischer"
+   },
+   {
+    "NAME": "DIP_RR_WIPER_SW",
+    "BYTE": "8",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Heckwischerschalter"
+   },
+   {
+    "NAME": "DIP_AC_SWITCH",
+    "BYTE": "8",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Schaltereingang Klimaanlage"
+   },
+   {
+    "NAME": "DIP_RECIRC_SW",
+    "BYTE": "8",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Umschalten zwischen Umluft und Frischluft"
+   },
+   {
+    "NAME": "DIP_RR_FOG_SW",
+    "BYTE": "8",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Schaltereingang Nebelschlussleuchten"
+   },
+   {
+    "NAME": "DIP_FT_FOG_SW",
+    "BYTE": "8",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Schaltereingang Nebelscheinwerfer"
+   },
+   {
+    "NAME": "DIP_DIPPED_BEAM_SW",
+    "BYTE": "8",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Schaltereingang Abblendlicht"
+   },
+   {
+    "NAME": "DIP_FT_WIPER_PARK",
+    "BYTE": "9",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Frontwischer in Parkstellung"
+   },
+   {
+    "NAME": "DIP_RR_WIPER_PARK",
+    "BYTE": "9",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Heckwischer in Parkstellung"
+   },
+   {
+    "NAME": "DIP_KEY_IN_SW",
+    "BYTE": "9",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Schalter nicht eingebaut"
+   },
+   {
+    "NAME": "DIP_AUX_LGT_SW",
+    "BYTE": "9",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Schalter nicht eingebaut"
+   },
+   {
+    "NAME": "DIP_POLICE_SW",
+    "BYTE": "9",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Schalter nicht eingebaut"
+   },
+   {
+    "NAME": "DIP_LH_LATCH",
+    "BYTE": "9",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Schalter nicht eingebaut"
+   },
+   {
+    "NAME": "DIP_RH_LATCH",
+    "BYTE": "9",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Schalter nicht eingebaut"
+   },
+   {
+    "NAME": "DIP_FT_WASH_PUMP",
+    "BYTE": "9",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Schaltereingang Frontscheibenwaschpumpe aktiv"
+   },
+   {
+    "NAME": "DIP_LAMP_STATUS",
+    "BYTE": "10",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Anzeige für Lampenstatus"
+   },
+   {
+    "NAME": "DIP_RECIRC_MONITOR",
+    "BYTE": "10",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Überwachung Umluftregler"
+   },
+   {
+    "NAME": "DIP_BOOT_RELEASE_MONITOR",
+    "BYTE": "10",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Überwachung der Gepäckraumentriegelung"
+   },
+   {
+    "NAME": "DIP_BRAKE_SW",
+    "BYTE": "10",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Schaltereingang Bremspedal"
+   },
+   {
+    "NAME": "DIP_IND_SIGNAL",
+    "BYTE": "10",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Überwachung des Plus-Fühlers für Sleep-Anzeige"
+   },
+   {
+    "NAME": "DIP_IND_SIG_INVERTED",
+    "BYTE": "10",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Überwachung des Invers-Fühlers für Sleep-Anzeige"
+   },
+   {
+    "NAME": "DIP_ULTRASONIC_IN",
+    "BYTE": "10",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Ultraschall-Alarm aktiviert"
+   },
+   {
+    "NAME": "DIP_RF_CODE_LOGIC",
+    "BYTE": "10",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Eingang Funksignalcode"
+   },
+   {
+    "NAME": "DIP_BLOWER_MOTOR_STATUS",
+    "BYTE": "11",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Anzeige für Gebläsemotorstatus"
+   },
+   {
+    "NAME": "DIP_RECIRC_ERROR",
+    "BYTE": "11",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Fehlfunktion des Umluftreglers"
+   },
+   {
+    "NAME": "DIP_LH_DIR_IND_STATUS",
+    "BYTE": "11",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Überwachung Blinker links"
+   },
+   {
+    "NAME": "DIP_RH_DIR_IND_STATUS",
+    "BYTE": "11",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Überwachung Blinker rechts"
+   },
+   {
+    "NAME": "DIP_BRAKE_LAMP_STATUS",
+    "BYTE": "11",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Überwachung Bremsleuchten"
+   },
+   {
+    "NAME": "DIP_BOOT_REL_STATUS",
+    "BYTE": "11",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Überwachung der Gepäckraumentriegelung"
+   },
+   {
+    "NAME": "RF_REMOTE_OK_ROLLING_CODE_OK",
+    "BYTE": "4",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Richtige Fernbedienung und richtige Codes"
+   },
+   {
+    "NAME": "RF_REMOTE_OK_ROLLING_CODE_NOT_OK",
+    "BYTE": "4",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Richtige Fernbedienung und ungültiger alternierender Code"
+   },
+   {
+    "NAME": "RF_REMOTE_INCORRECT",
+    "BYTE": "4",
+    "MASK": "0x03",
+    "VALUE": "0x03",
+    "DESCRIPTION": "Falsche Fernbedienung verwendet"
+   },
+   {
+    "NAME": "RF_REMOTE_BATTERY_DEAD",
+    "BYTE": "4",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Zu schwache oder keine Batterie in Fernbedienung"
+   },
+   {
+    "NAME": "TILT_SENSOR_PULSE_RECEIVED",
+    "BYTE": "4",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Vom Neigungsgeber empfangener Impuls i.O."
+   },
+   {
+    "NAME": "DOP_DRV_LOCK_RLY",
+    "BYTE": "4",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Verriegelungsrelais Fahrer"
+   },
+   {
+    "NAME": "DOP_SUPER_LOCK_RLY",
+    "BYTE": "4",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Relais Entriegelungssperre"
+   },
+   {
+    "NAME": "DOP_COMMON_LOCK_RLY",
+    "BYTE": "4",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Gemeins. Relais"
+   },
+   {
+    "NAME": "DOP_REST_LOCK_RLY",
+    "BYTE": "4",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Relais Ruheverriegelung"
+   },
+   {
+    "NAME": "DOP_PASS_WIN_DOWN",
+    "BYTE": "4",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Fenster/Beifahrer senken"
+   },
+   {
+    "NAME": "DOP_PASS_WIN_UP",
+    "BYTE": "4",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Fenster/Beifahrer heben"
+   },
+   {
+    "NAME": "DOP_DRV_WIN_DOWN",
+    "BYTE": "4",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Fenster/Fahrer senken"
+   },
+   {
+    "NAME": "DOP_DRV_WIN_UP",
+    "BYTE": "4",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Fenster/Fahrer heben"
+   },
+   {
+    "NAME": "DOP_HT_RR_WIN_LED",
+    "BYTE": "5",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "LED heizb. Heckscheibe"
+   },
+   {
+    "NAME": "DOP_RR_FOG_LED",
+    "BYTE": "5",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Anzeige Nebelschlussleuchte"
+   },
+   {
+    "NAME": "DOP_HT_FT_WIN_LED",
+    "BYTE": "5",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "LED HFS"
+   },
+   {
+    "NAME": "DOP_AC_LED",
+    "BYTE": "5",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "LED A/C"
+   },
+   {
+    "NAME": "DOP_RR_FOG_LGT",
+    "BYTE": "5",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Nebelschlussleuchten"
+   },
+   {
+    "NAME": "DOP_RECIRC_LED",
+    "BYTE": "5",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Anzeige für Umluft EIN"
+   },
+   {
+    "NAME": "DOP_RH_INDICATOR_LGT",
+    "BYTE": "6",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Blinker rechts"
+   },
+   {
+    "NAME": "DOP_LH_INDICATOR_LGT",
+    "BYTE": "6",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Blinker links"
+   },
+   {
+    "NAME": "DOP_BBS_ARM_DISARM",
+    "BYTE": "6",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "BBS schärfen/entschärfen"
+   },
+   {
+    "NAME": "DOP_LH_POSITION_LGT",
+    "BYTE": "7",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Standlicht links"
+   },
+   {
+    "NAME": "DOP_RH_POSITION_LGT",
+    "BYTE": "7",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Standlicht rechts"
+   },
+   {
+    "NAME": "DOP_FT_WIPER_PARK_RUN",
+    "BYTE": "8",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Frontwischer, Relais, Langsamlauf in Parkstellung"
+   },
+   {
+    "NAME": "DOP_PWR_WASH_RLY",
+    "BYTE": "8",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Relaisspule, Waschanlage"
+   },
+   {
+    "NAME": "DOP_HEATED_RR_WIN_RLY",
+    "BYTE": "8",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Relaisspule, heizb. Heckscheibe"
+   },
+   {
+    "NAME": "DOP_HEATED_FT_WIN_RLY",
+    "BYTE": "8",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Relaisspule, HFS"
+   },
+   {
+    "NAME": "DOP_FT_FOG_LGT_RLY",
+    "BYTE": "8",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Relaisspule, Nebelscheinwerfer"
+   },
+   {
+    "NAME": "DOP_AUX_RELAY",
+    "BYTE": "8",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Relaisspule, Nebenverbraucher"
+   },
+   {
+    "NAME": "DOP_FT_WIPER_SLOW_FAST",
+    "BYTE": "8",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Langsam/Schnell-Relais Frontwischer"
+   },
+   {
+    "NAME": "DOP_RR_WIPER_RLY",
+    "BYTE": "8",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Relaisspule, Heckwischer"
+   },
+   {
+    "NAME": "DOP_NO_PLATE_LGT",
+    "BYTE": "9",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "Kennzeichenleuchte"
+   },
+   {
+    "NAME": "DOP_BOOT_RELEASE",
+    "BYTE": "9",
+    "MASK": "0x02",
+    "VALUE": "0x02",
+    "DESCRIPTION": "Gepäckraum-Entriegelungsmotor"
+   },
+   {
+    "NAME": "DOP_WATCHDOG_IN",
+    "BYTE": "9",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Handshake mit Hardware-Watchdog"
+   },
+   {
+    "NAME": "DOP_RECIRC_CTL1",
+    "BYTE": "9",
+    "MASK": "0x08",
+    "VALUE": "0x08",
+    "DESCRIPTION": "Steuerung Umluftbetrieb"
+   },
+   {
+    "NAME": "DOP_RECIRC_CTL2",
+    "BYTE": "9",
+    "MASK": "0x10",
+    "VALUE": "0x10",
+    "DESCRIPTION": "Steuerung Umluftbetrieb"
+   },
+   {
+    "NAME": "DOP_ROTARY_SUPPLY",
+    "BYTE": "9",
+    "MASK": "0x80",
+    "VALUE": "0x80",
+    "DESCRIPTION": "Speisung an Drehschalter"
+   },
+   {
+    "NAME": "DOP_SOUND_ALARM",
+    "BYTE": "11",
+    "MASK": "0x01",
+    "VALUE": "0x01",
+    "DESCRIPTION": "BBS Version Alarm"
+   },
+   {
+    "NAME": "DOP_BLOWER_ENABLE",
+    "BYTE": "11",
+    "MASK": "0x04",
+    "VALUE": "0x04",
+    "DESCRIPTION": "Aktivieren des Gebläsemotors"
+   },
+   {
+    "NAME": "DOP_12V_EXT_PWR",
+    "BYTE": "11",
+    "MASK": "0x20",
+    "VALUE": "0x20",
+    "DESCRIPTION": "Extern geschaltete 12V-Speisung"
+   },
+   {
+    "NAME": "DOP_ALARM_LED",
+    "BYTE": "11",
+    "MASK": "0x40",
+    "VALUE": "0x40",
+    "DESCRIPTION": "Ausgang Alarm-LED"
+   },
+   {
+    "NAME": "XY",
+    "BYTE": "XY",
+    "MASK": "0xXY",
+    "VALUE": "0xXY",
+    "DESCRIPTION": "Unbekannter Gegenstand"
+   }
+  ]
+ }
+}

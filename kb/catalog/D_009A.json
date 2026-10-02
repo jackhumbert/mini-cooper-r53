@@ -1,0 +1,62 @@
+{
+ "sgbd": "D_009A",
+ "file": "D_009A.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_009A"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Pichler"
+  ],
+  "REVISION": [
+   "1.41"
+  ],
+  "AUTHOR": [
+   "BMW TI-433 Teepe, BMW TI-430 Drexel, BMW TI-431 Schaller"
+  ],
+  "ECUCOMMENT": [
+   "LWR2A"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    "LWR2A : Konzept DS1"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD, derzeit nur Dummy"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O., derzeit nur Dummy"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

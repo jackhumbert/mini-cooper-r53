@@ -1,0 +1,190 @@
+# Control modules the R53 can have, and how to reach them through EDIABAS.
+#
+#   sgbds   candidate SGBD variants, most likely first; `r53 scan` tries the group
+#           file (if any) then each candidate until one answers IDENT
+#   group   EDIABAS group file that auto-selects the variant (D_00xx = address xx)
+#   line    pin7 = powertrain diagnostic line; pin8 = DS2 via KOMBI gateway to K-bus.
+#           pin8 modules only answer when the cable bridges OBD pins 7+8.
+#   fitted  yes | no | unknown for THIS car; scan skips "no" unless --all
+#
+# Confirmed on the car = answered IDENT (see kb/vehicle-profile.json once scanned).
+# Sources: research/FINDINGS.md §3, INPA CFGDAT/R50.ENG, NCS DATEN/R50/R50SGFAM.DAT.
+
+[dme]
+name = "Engine control (DME) — Siemens MS5150 (EMS2K SGBD)"
+sgbds = ["EMS2K"]
+group = "D_0013"
+address = 0x13
+line = "pin7"
+fitted = "yes"   # answered 2026-04-03
+
+[dsc]
+name = "ABS / ASC / DSC — Teves MK60"
+sgbds = ["DSC_MK60"]
+line = "pin7"
+fitted = "yes"   # answered 2026-04-03
+
+[ehps]
+name = "Electro-hydraulic power steering pump — ZF"
+sgbds = ["EHPSR50"]
+group = "D_0031"
+address = 0x31
+line = "pin7"
+fitted = "yes"   # answered 2026-04-03
+
+[egs]
+name = "Automatic transmission — Aisin 6-speed"
+sgbds = ["GSF21"]
+line = "pin7"
+fitted = "no"    # this car is a Getrag 6-speed manual
+
+[kombi]
+name = "Instrument cluster (KOMBI) — diagnostic gateway to the K-bus"
+sgbds = ["KOMBI50F", "KOMBIR50"]
+group = "D_0080"
+address = 0x80
+line = "pin8"
+fitted = "yes"
+
+[bc1]
+name = "Body and lights module (BC1) — K-bus master"
+sgbds = ["BC1RD", "BC1"]
+group = "D_ZKE_GM"
+address = 0x00
+line = "pin8"
+fitted = "yes"
+
+[airbag]
+name = "Airbag (MRS)"
+sgbds = ["MRS4", "MRS5K", "MRS4RD"]
+group = "D_00A4"
+address = 0xA4
+line = "pin8"
+fitted = "yes"
+
+[ews]
+name = "Immobiliser (EWS 3) — also switches the starter (terminal 50)"
+sgbds = ["EWS3", "EWS3D"]
+group = "D_0044"
+address = 0x44
+line = "pin8"
+fitted = "yes"
+
+[ihka]
+name = "Climate control (IHKA)"
+sgbds = ["IHKAR50", "IHKAR50R"]
+group = "D_005B"
+address = 0x5B
+line = "pin8"
+fitted = "unknown"
+
+[mfl]
+name = "Steering-wheel buttons (MFL)"
+sgbds = ["MFLR50"]
+group = "D_0050"
+address = 0x50
+line = "pin8"
+fitted = "unknown"
+
+[lws]
+name = "Steering angle sensor (LWS)"
+sgbds = ["LWS5_1B", "LWS5"]
+group = "D_0057"
+address = 0x57
+line = "pin8"
+fitted = "unknown"
+
+[pdc]
+name = "Park distance control (PDC)"
+sgbds = ["PDCACT"]
+group = "D_0060"
+address = 0x60
+line = "pin8"
+fitted = "unknown"
+
+[rls]
+name = "Rain / light sensor"
+sgbds = ["RLS_DS2", "AIC"]
+group = "D_00E8"
+address = 0xE8
+line = "pin8"
+fitted = "unknown"
+
+[shd]
+name = "Sunroof (SHD)"
+sgbds = ["SHD46", "SHD46_2"]
+group = "D_0008"
+address = 0x08
+line = "pin8"
+fitted = "unknown"
+
+[lwr]
+name = "Headlight levelling (LWR, xenon cars)"
+sgbds = ["LWR2A"]
+group = "D_009A"
+address = 0x9A
+line = "pin8"
+fitted = "unknown"
+
+[dws]
+name = "Tyre deflation warning (DWS) / tyre pressure (RDC)"
+sgbds = ["DWS", "RDC_53"]
+group = "D_0070"
+address = 0x70
+line = "pin8"
+fitted = "unknown"
+
+[oc3]
+name = "Passenger seat occupancy (OC3, US cars)"
+sgbds = ["OC3"]
+group = "D_0074"
+address = 0x74
+line = "pin8"
+fitted = "unknown"
+
+[radio]
+name = "Radio"
+sgbds = ["RADIO"]
+line = "pin8"
+fitted = "unknown"
+
+[bmbt]
+name = "Navigation display / controls (BMBT)"
+sgbds = ["BMBTR50"]
+group = "D_00F0"
+address = 0xF0
+line = "pin8"
+fitted = "unknown"
+
+[dsp]
+name = "Sound amplifier (DSP)"
+sgbds = ["DSP_R50"]
+group = "D_006A"
+address = 0x6A
+line = "pin8"
+fitted = "unknown"
+
+[xenon_l]
+name = "Xenon ballast left"
+sgbds = ["XENON_L"]
+line = "pin8"
+fitted = "unknown"
+
+[xenon_r]
+name = "Xenon ballast right"
+sgbds = ["XENON_R"]
+line = "pin8"
+fitted = "unknown"
+
+[rip]
+name = "Remote instrument pack (RIP)"
+sgbds = ["RIP"]
+line = "pin8"
+fitted = "unknown"
+
+[zcs]
+name = "Vehicle identification (ZCS / VIN / build date; read via the cluster)"
+sgbds = ["ZCS_R50"]
+line = "pin8"
+fitted = "yes"
+scan = false   # not a module; queried on demand

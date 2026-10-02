@@ -1,0 +1,59 @@
+{
+ "sgbd": "D_005B",
+ "file": "D_005B.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "Klimasteuergeraete"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Drexel"
+  ],
+  "REVISION": [
+   "1.41"
+  ],
+  "AUTHOR": [
+   "BMW TI-430 Drexel"
+  ],
+  "ECUCOMMENT": [
+   "IHKA36,IHKR38,IHKA38,IHKA38_2,IHKA38_3,IHR39,IHKR39, IHKA39,IHKA39_2,IHKA39_3,IHKA39_4,IHKA39_5,IHKR46,IHKA46,IHKA46_2,IHKA46_3,IHKS52,ATC40,IHKAR50,IHKAR50R,IHKA85,IHKS85,IHKA83"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "!!! nur in Gruppendatei !!!"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "entspricht Name der Varianten-Datei"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

@@ -1,0 +1,61 @@
+{
+ "sgbd": "D_0070",
+ "file": "D_0070.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0070"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Ludwig Staudinger"
+  ],
+  "REVISION": [
+   "1.09"
+  ],
+  "AUTHOR": [
+   "BMW TI-433 Gerd Huber, BMW TI-431 Ludwig Staudinger"
+  ],
+  "ECUCOMMENT": [
+   "RDC, DWS, RDC_53, RDC_KBUS"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten: RDC, DWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung / Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

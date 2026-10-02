@@ -1,0 +1,2296 @@
+{
+ "sgbd": "EHPSR50",
+ "file": "EHPSR50.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "EHPSR50"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Siegfried Helmich"
+  ],
+  "REVISION": [
+   "1.1"
+  ],
+  "AUTHOR": [
+   "Software-Style M.Rafferty"
+  ],
+  "ECUCOMMENT": [
+   "Basiert auf Spec Version A8"
+  ]
+ },
+ "jobs": {
+  "CHECK_REPROG_DEPENDING": {
+   "comment": [
+    "Calculate the checksum and check the coherence system"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'CHECK_REPROG_DEPENDING'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "C_FG_AUFTRAG": {
+   "comment": [
+    "Schreiben der Fahrgestellnummer",
+    "Write the VIN"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer (18-stellig)",
+      "VIN - stored as 17 ascii characters ( + 1 ascii checksum )",
+      "string can be 17 or 18 characters - if 18 the last character is ignored"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write VIN telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write VIN response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read VIN response"
+     ]
+    }
+   ]
+  },
+  "C_FG_LESEN": {
+   "comment": [
+    "Auslesen der Fahrgestellnummer",
+    "Read the VIN"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer",
+      "VIN"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Tester present message"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnosemode des SG beenden",
+    "Stop the diagnostic session"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "FLASH_SCHREIBEN": {
+   "comment": [
+    "Transfer data to the ECU",
+    "Data is transfered in blocks of 62 bytes (maximum 128 x 62 == 7936 bytes)"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "DATA",
+     "type": "binary",
+     "comment": [
+      "Data to transfer to the ECU (62 bytes)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "FLASH_SCHREIBEN_ADRESSE": {
+   "comment": [
+    "Request download"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "FLASH_SCHREIBEN_ENDE": {
+   "comment": [
+    "Exit data transfer"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Read internal and external faults"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode",
+      "Raw fault data from the ECU"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Fehlerort",
+      "Fault number"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Fault description"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Frequency"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Count of Environment Data Items per fault"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten",
+      "Count of additional fault status information per fault"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "1. (einzige) Fehlerart",
+      "Fault status 1 number"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. (einzige) Fehlerart als Text",
+      "Fault status 1 text"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "2. (einzige) Fehlerart",
+      "Fault status 2"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "2. (einzige) Fehlerart als Text",
+      "Fault string 2"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "3. (einzige) Fehlerart",
+      "Fault status 3"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "3. (einzige) Fehlerart als Text",
+      "Fault string 3"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "4. (einzige) Fehlerart",
+      "Fault status 4"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "4. (einzige) Fehlerart als Text",
+      "Fault string 4"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "5. (einzige) Fehlerart",
+      "Fault status 5"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "5. (einzige) Fehlerart als Text",
+      "Fault string 5"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "6. (einzige) Fehlerart",
+      "Fault status 6"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "6. (einzige) Fehlerart als Text",
+      "Fault string 6"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Clears All Faults"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Ident-Daten fuer EHPS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer",
+      "BMW Part number"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_SYSTEM_NAME",
+     "type": "int",
+     "comment": [
+      "BMW system name"
+     ]
+    },
+    {
+     "name": "ID_DATUM_TAG",
+     "type": "int",
+     "comment": [
+      "Herstelldatum tag",
+      "Day of manufacture"
+     ]
+    },
+    {
+     "name": "ID_DATUM_MON",
+     "type": "int",
+     "comment": [
+      "Herstelldatum monat",
+      "Month of manufacture"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr",
+      "Year of manufacture"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer",
+      "Supplier code"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "Supplier Name"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_AIF_VORHANDEN",
+     "type": "int",
+     "comment": [
+      "Ist ein AIF vorhanden (0 (nein)/ 1 (ja))",
+      "Is AIF data available 0=no 1=yes"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "IDENT_EXTENDED": {
+   "comment": [
+    "Read additional ECU Ident information"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_SIEMENS_HW_NR",
+     "type": "string",
+     "comment": [
+      "Siemens ECU hardware number"
+     ]
+    },
+    {
+     "name": "ID_SIEMENS_SW_NR",
+     "type": "string",
+     "comment": [
+      "Siemens ECU software number"
+     ]
+    },
+    {
+     "name": "ID_SIEMENS_SW_VERSION_NR",
+     "type": "string",
+     "comment": [
+      "Siemens ECU software version number"
+     ]
+    },
+    {
+     "name": "ID_PROG_DATUM_TAG",
+     "type": "int",
+     "comment": [
+      "Programm tag",
+      "Day of programming"
+     ]
+    },
+    {
+     "name": "ID_PROG_DATUM_MON",
+     "type": "int",
+     "comment": [
+      "Programm monat",
+      "Month of programming"
+     ]
+    },
+    {
+     "name": "ID_PROG_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Programm jahr",
+      "Year of programming"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read Siemens HW NR response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read Siemens SW NR response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT3",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read Siemens SW Version NR response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT4",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read Siemens Programming date response"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "PROG_DATUM_SCHREIBEN": {
+   "comment": [
+    "Schreiben der Programm datum",
+    "Write the programming date"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "PROG_DATUM_TAG",
+     "type": "int",
+     "comment": [
+      "Programm tag (1 -> 31)",
+      "Day of programming"
+     ]
+    },
+    {
+     "name": "PROG_DATUM_MON",
+     "type": "int",
+     "comment": [
+      "Programm monat (1 -> 12)",
+      "Month of programming"
+     ]
+    },
+    {
+     "name": "PROG_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Programm jahr - (2000 -> 9999)",
+      "Year of programming"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write program data telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write program date response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read program date response"
+     ]
+    }
+   ]
+  },
+  "READ_MEMORY": {
+   "comment": [
+    "Read ECU Memory by Address",
+    "Speicher auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [
+    {
+     "name": "MEM_ADDRESS",
+     "type": "unsigned int",
+     "comment": [
+      "16 bit ECU memory address",
+      "0x0000 -> 0x00FF: DATA memory",
+      "0x9F80 -> 0x9FBF: EEPROM memory used for Siemens logistic data",
+      "0x9FC0 -> 0x9FFF: EEPROM memory used for ZF data area",
+      "0xFF00 -> 0xFFFF: XDATA memory"
+     ]
+    },
+    {
+     "name": "MEM_LENGTH",
+     "type": "int",
+     "comment": [
+      "Length of memory to read (1 -> 20)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "MEM_DATA",
+     "type": "binary",
+     "comment": [
+      "ECU memory which is read"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "READ_SIEMENS_SERIAL_NR": {
+   "comment": [
+    "Read the Siemens serial number"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "SERIAL_NR",
+     "type": "string",
+     "comment": [
+      "Siemens serial number"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "READ_ZF_HW_NR": {
+   "comment": [
+    "Read the ZF ECU Hardware number"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ZF_HW_NR",
+     "type": "string",
+     "comment": [
+      "ZF ECU Hardware number"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "REPORT_REPROG_STATUS": {
+   "comment": [
+    "Get the status of reprogramming after a mistake"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'REPORT_REPROG_STATUS'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "REPROG_STATUS",
+     "type": "unsigned int",
+     "comment": [
+      "Reprogramming status",
+      "Bit0: checksum of ECU EEPROM software - if error then TRUE",
+      "Bit1: ECU EEPROM software does not fit to ROM software - if error then TRUE",
+      "Bit2: always FALSE",
+      "Bit3: always FALSE",
+      "Bit4: always FALSE",
+      "Bit5: always FALSE",
+      "Bit6: always FALSE",
+      "Bit7: always FALSE"
+     ]
+    }
+   ]
+  },
+  "SEED_KEY": {
+   "comment": [
+    "Obtain security access to the ECU",
+    "Schutzmechanismus SEED_KEY"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SEED_KEY'",
+   "args": [
+    {
+     "name": "LEVEL",
+     "type": "int",
+     "comment": [
+      "Security Access level",
+      "1=Dealer, 2=Programming"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE1",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Send key telegram to ECU - request seed"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Request seed response"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE2",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Send key telegram to ECU - send key"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Send key response"
+     ]
+    }
+   ]
+  },
+  "SG_RESET": {
+   "comment": [
+    "Reset the ECU"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SG_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "START_DIAGNOSTIC_SESSION": {
+   "comment": [
+    "Begins a diagnostic session"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'START_DIAGNOSTIC_SESSION'",
+   "args": [
+    {
+     "name": "MODE",
+     "type": "int",
+     "comment": [
+      "Diagnostic mode: 0x81=Standard, 0x85=Programming"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "STATUS_ANALOG": {
+   "comment": [
+    "Read Analogue Input / Outputs"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_BATTERY_VOLTS_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 25.5 V"
+     ]
+    },
+    {
+     "name": "STAT_BATTERY_VOLTS_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TEMPERATURE_WERT",
+     "type": "real",
+     "comment": [
+      "-40 -> 215 Deg C"
+     ]
+    },
+    {
+     "name": "STAT_TEMPERATURE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 127.5 A"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_SPEED_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 5100 rpm"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_SPEED_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_VOLTAGE_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 25.5 V"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_VOLTAGE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_PWM_MOTOR_CONTROL_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 100 %"
+     ]
+    },
+    {
+     "name": "STAT_PWM_MOTOR_CONTROL_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_SPEED_CONTROL_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 5100 rpm"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_SPEED_CONTROL_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_PWM_OUT_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 100 %"
+     ]
+    },
+    {
+     "name": "STAT_PWM_OUT_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_CURRENT_MAX_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 127.5 A"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_CURRENT_MAX_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_BATTERY_CURRENT_MAX_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 127.5 A"
+     ]
+    },
+    {
+     "name": "STAT_BATTERY_CURRENT_MAX_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_ENGINE_RUNNING_ANALOG_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 20.4 V"
+     ]
+    },
+    {
+     "name": "STAT_ENGINE_RUNNING_ANALOG_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_RESISTANCE_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 199 mOhms"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_RESISTANCE_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_EMF_COEF_WERT",
+     "type": "real",
+     "comment": [
+      "0 -> 797 rpm/V"
+     ]
+    },
+    {
+     "name": "STAT_EMF_COEF_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STATUS_FS_LESEN": {
+   "comment": [
+    "Read number of faults and earliest faults through snapshot"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_FAULT_COUNT",
+     "type": "int",
+     "comment": [
+      "Fehler zaehlen",
+      "Count of all faults up to a maximum of 10"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode",
+      "Raw fault data from the ECU"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Fehlerort",
+      "Fault number"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Fault description"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Frequency"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Count of Environment Data Items per fault"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten",
+      "Count of additional fault status information per fault"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "1. (einzige) Fehlerart",
+      "Fault status 1 number"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. (einzige) Fehlerart als Text",
+      "Fault status 1 text"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "2. (einzige) Fehlerart",
+      "Fault status 2"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "2. (einzige) Fehlerart als Text",
+      "Fault string 2"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "3. (einzige) Fehlerart",
+      "Fault status 3"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "3. (einzige) Fehlerart als Text",
+      "Fault string 3"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "4. (einzige) Fehlerart",
+      "Fault status 4"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "4. (einzige) Fehlerart als Text",
+      "Fault string 4"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "5. (einzige) Fehlerart",
+      "Fault status 5"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "5. (einzige) Fehlerart als Text",
+      "Fault string 5"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "6. (einzige) Fehlerart",
+      "Fault status 6"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "6. (einzige) Fehlerart als Text",
+      "Fault string 6"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_LESEN": {
+   "comment": [
+    "Read Digital inputs/outputs"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_IGNITION_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten / 0 wenn ausschalten",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_ENGINE_RUNNING",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_APPLICATION_RUNNING",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_SPEED_CONTROL_ENABLED",
+     "type": "int",
+     "comment": [
+      "1 wenn activ / 0 wenn aus",
+      "1=enabled, 0=disabled"
+     ]
+    },
+    {
+     "name": "STAT_DIAGNOSTIC_CONTROL_MODE_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn activ / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    }
+   ]
+  },
+  "STEUERN_PWM": {
+   "comment": [
+    "Force the Pulse Width Modulation from 0 to 100%"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "VALUE",
+     "type": "int",
+     "comment": [
+      "Value to set the PWM ( 0 -> 100 % )"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "STAT_PWM_WERT",
+     "type": "int",
+     "comment": [
+      "New value for the PWM as %"
+     ]
+    },
+    {
+     "name": "STAT_PWM_EINH",
+     "type": "string",
+     "comment": [
+      "Unit of PWM = %"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "STEUERN_PWM_RESET": {
+   "comment": [
+    "Return PWM output control to the application software"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "WRITE_MEMORY": {
+   "comment": [
+    "Write memory to a specified address",
+    "Speicher schreiben"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'WRITE_.*'",
+   "args": [
+    {
+     "name": "ADDRESS",
+     "type": "unsigned int",
+     "comment": [
+      "16 bit ECU memory address",
+      "0x0000 -> 0x00FF: DATA memory",
+      "0x9FC0 -> 0x9FFF: EEPROM memory used for ZF data area",
+      "0xFF00 -> 0xFFFF: XDATA memory"
+     ]
+    },
+    {
+     "name": "LENGTH",
+     "type": "int",
+     "comment": [
+      "Length of memory to write (1 -> 20)"
+     ]
+    },
+    {
+     "name": "MEMDATA",
+     "type": "string",
+     "comment": [
+      "Data to write"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  },
+  "WRITE_ZF_HW_NR": {
+   "comment": [
+    "Write the ZF ECU Hardware Number"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'WRITE_.*'",
+   "args": [
+    {
+     "name": "ZF_NR",
+     "type": "string",
+     "comment": [
+      "ZF ECU Hardware Number",
+      "12 characters"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation - OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0x11",
+    "STATUS_TEXT": "SERVICE NICHT UNTERSTÜTZT"
+   },
+   {
+    "SB": "0x12",
+    "STATUS_TEXT": "SUB-FUNKTION NICHT UNTERSTÜTZT"
+   },
+   {
+    "SB": "0x22",
+    "STATUS_TEXT": "Bedingung nicht korrekt"
+   },
+   {
+    "SB": "0x31",
+    "STATUS_TEXT": "Anfrage außer Toleranz"
+   },
+   {
+    "SB": "0x33",
+    "STATUS_TEXT": "Sicherheitszugang aberkannt / erforderlich"
+   },
+   {
+    "SB": "0x35",
+    "STATUS_TEXT": "Ungültiger Schlüssel"
+   },
+   {
+    "SB": "0x36",
+    "STATUS_TEXT": "Anzal der Versuche überschritten"
+   },
+   {
+    "SB": "0x37",
+    "STATUS_TEXT": "Erforderliche Zeitverzögerung nicht abgelaufen"
+   },
+   {
+    "SB": "0x40",
+    "STATUS_TEXT": "Hinunterladen nicht erlaubt"
+   },
+   {
+    "SB": "0x41",
+    "STATUS_TEXT": "Unzulässiger Typ zum hinunterladen"
+   },
+   {
+    "SB": "0x42",
+    "STATUS_TEXT": "Spezifizierte Adresse kann nicht hinuntergeladen werden"
+   },
+   {
+    "SB": "0x50",
+    "STATUS_TEXT": "Hochladen nicht erlaubt"
+   },
+   {
+    "SB": "0x52",
+    "STATUS_TEXT": "Hochladen von spezifizierte Adress nicht möglich"
+   },
+   {
+    "SB": "0x53",
+    "STATUS_TEXT": "Die angefordrte Anzahl Bytes kann nicht hochgeladen werden"
+   },
+   {
+    "SB": "0x78",
+    "STATUS_TEXT": "Anfoderung korrekt erhalten - Antwort noch offen"
+   },
+   {
+    "SB": "0x79",
+    "STATUS_TEXT": "Inkorrekte BYTE Anzahl während Block Transfer"
+   },
+   {
+    "SB": "0x80",
+    "STATUS_TEXT": "Service nicht unterstützt im aktuellen Diagnose Mode"
+   },
+   {
+    "SB": "0x90",
+    "STATUS_TEXT": "Vorgang nicht ausgeführt"
+   },
+   {
+    "SB": "0x91",
+    "STATUS_TEXT": "Ungültiges Nachrichten Format"
+   },
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "0x00",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "DIGITAL": [
+   {
+    "NAME": "IGNITION_ON",
+    "BYTE": "13",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "ENGINE_RUNNING",
+    "BYTE": "13",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "APPLICATION_RUNNING",
+    "BYTE": "13",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "SPEED_CONTROL_ENABLED",
+    "BYTE": "13",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "DIAGNOSTIC_CONTROL_MODE_ON",
+    "BYTE": "13",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "??",
+    "BYTE": "0",
+    "MASK": "0x00",
+    "VALUE": "0xFF"
+   }
+  ],
+  "ANALOG": [
+   {
+    "NAME": "BATTERY_VOLTS",
+    "FACT_A": "0.1",
+    "FACT_B": "0.0",
+    "EINH": "V"
+   },
+   {
+    "NAME": "TEMPERATURE",
+    "FACT_A": "1.0",
+    "FACT_B": "-40.0",
+    "EINH": "Grad C"
+   },
+   {
+    "NAME": "MOTOR_CURRENT",
+    "FACT_A": "0.5",
+    "FACT_B": "0.0",
+    "EINH": "A"
+   },
+   {
+    "NAME": "MOTOR_SPEED",
+    "FACT_A": "20.0",
+    "FACT_B": "0.0",
+    "EINH": "min-1"
+   },
+   {
+    "NAME": "MOTOR_VOLTAGE",
+    "FACT_A": "0.1",
+    "FACT_B": "0.0",
+    "EINH": "V"
+   },
+   {
+    "NAME": "PWM_MOTOR_CONTROL",
+    "FACT_A": "0.39215686",
+    "FACT_B": "0.0",
+    "EINH": "%"
+   },
+   {
+    "NAME": "MOTOR_SPEED_CONTROL",
+    "FACT_A": "20.0",
+    "FACT_B": "0.0",
+    "EINH": "min-1"
+   },
+   {
+    "NAME": "PWM_OUT",
+    "FACT_A": "0.39215686",
+    "FACT_B": "0.0",
+    "EINH": "%"
+   },
+   {
+    "NAME": "MOTOR_CURRENT_MAX",
+    "FACT_A": "0.5",
+    "FACT_B": "0.0",
+    "EINH": "A"
+   },
+   {
+    "NAME": "BATTERY_CURRENT_MAX",
+    "FACT_A": "0.5",
+    "FACT_B": "0.0",
+    "EINH": "A"
+   },
+   {
+    "NAME": "ENGINE_RUNNING_ANALOG",
+    "FACT_A": "0.08",
+    "FACT_B": "0.0",
+    "EINH": "V"
+   },
+   {
+    "NAME": "MOTOR_RESISTANCE",
+    "FACT_A": "0.78",
+    "FACT_B": "0.0",
+    "EINH": "mOhms"
+   },
+   {
+    "NAME": "EMF_COEF",
+    "FACT_A": "3.125",
+    "FACT_B": "0.0",
+    "EINH": "min-1/V"
+   },
+   {
+    "NAME": "Ungültige Ziffer",
+    "FACT_A": "0.0",
+    "FACT_B": "0",
+    "EINH": ""
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x5523",
+    "ORTTEXT": "Batterie Spannungsfehler"
+   },
+   {
+    "ORT": "0x5517",
+    "ORTTEXT": "Übertemperatur oder schlechtes Temperatursignal"
+   },
+   {
+    "ORT": "0x5531",
+    "ORTTEXT": "Verriegelungsschutz"
+   },
+   {
+    "ORT": "0x5550",
+    "ORTTEXT": "Motor Kurzschluß oder offener Stromkreis"
+   },
+   {
+    "ORT": "0x5529",
+    "ORTTEXT": "FET Kurzschluß oder offener Stromkreis"
+   },
+   {
+    "ORT": "0x5508",
+    "ORTTEXT": "Ungültiger Motorlauf"
+   },
+   {
+    "ORT": "0x5507",
+    "ORTTEXT": "Ungültige Motorspannung"
+   },
+   {
+    "ORT": "0xFFFF",
+    "ORTTEXT": "Ungültiger Fehler"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x00",
+    "ARTTEXT": "--"
+   },
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "über max Schwellwert"
+   },
+   {
+    "ARTNR": "0x02",
+    "ARTTEXT": "unter min Schwellwert"
+   },
+   {
+    "ARTNR": "0x03",
+    "ARTTEXT": "kein siknal gefunden"
+   },
+   {
+    "ARTNR": "0x04",
+    "ARTTEXT": "ungültiges Signal"
+   },
+   {
+    "ARTNR": "0x05",
+    "ARTTEXT": "--"
+   },
+   {
+    "ARTNR": "0x06",
+    "ARTTEXT": "Fehler momentan nicht vorhanden"
+   },
+   {
+    "ARTNR": "0x07",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ARTNR": "0x08",
+    "ARTTEXT": "--"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "unbekannter Status"
+   }
+  ]
+ }
+}

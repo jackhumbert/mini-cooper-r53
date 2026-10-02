@@ -1,0 +1,62 @@
+{
+ "sgbd": "D_0060",
+ "file": "D_0060.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0060"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Mueller"
+  ],
+  "REVISION": [
+   "1.36"
+  ],
+  "AUTHOR": [
+   "BMW TP-421 Spoljarec, BMW TP-421 Teepe, BMW TI-433 Guecker, BMW TI-430 Mueller"
+  ],
+  "ECUCOMMENT": [
+   "PDCE38, PDCACT"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    "PDC : Konzept DS1 oder DS2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

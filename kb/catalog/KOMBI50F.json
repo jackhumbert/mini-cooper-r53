@@ -1,0 +1,5892 @@
+{
+ "sgbd": "KOMBI50F",
+ "file": "KOMBI50F.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "KOMBI R50"
+  ],
+  "ORIGIN": [
+   "VOLKE BMW_EI-42 Andreas_Angerer"
+  ],
+  "REVISION": [
+   "2.200"
+  ],
+  "AUTHOR": [
+   "BMW TI-431 Lothar_Dennert, VOLKE BMW_EI-42 Andreas_Angerer, Nippon_Seiki BMW_EI-42 Katsuhito_Go"
+  ],
+  "ECUCOMMENT": [
+   "LH Diagnose V7.6"
+  ]
+ },
+ "jobs": {
+  "AIF_BATTMON_BLOCK_1_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 1 auslesen",
+    "Read battery monitor low voltage block 1"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_1",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_1",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_1",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_1",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_1",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_1",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_1",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_1",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_1",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_1",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_1",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_1",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_1",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_2_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 2 auslesen",
+    "Read battery monitor low voltage block 2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_2",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_2",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_2",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_2",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_2",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_2",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_2",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_2",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_2",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_2",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_2",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_2",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_2",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_3_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 3 auslesen",
+    "Read battery monitor low voltage block 3"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_3",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_3",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_3",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_3",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_3",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_3",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_3",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_3",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_3",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_3",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_3",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_3",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_3",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_4_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 4 auslesen",
+    "Read battery monitor low voltage block 4"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_4",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_4",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_4",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_4",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_4",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_4",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_4",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_4",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_4",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_4",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_4",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_4",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_4",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_5_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 5 auslesen",
+    "Read battery monitor low voltage block 5"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_5",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_5",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_5",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_5",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_5",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_5",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_5",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_5",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_5",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_5",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_5",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_5",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_5",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_6_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 6 auslesen",
+    "Read battery monitor low voltage block 6"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_6",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_6",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_6",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_6",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_6",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_6",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_6",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_6",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_6",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_6",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_6",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_6",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_6",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_7_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 7 auslesen",
+    "Read battery monitor low voltage block 7"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_7",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_7",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_7",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_7",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_7",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_7",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_7",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_7",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_7",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_7",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_7",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_7",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_7",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_8_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block 8 auslesen",
+    "Read battery monitor low voltage block 8"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BLOCK_DATEN_8",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT_8",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH_8",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT_8",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH_8",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT_8",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH_8",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT_8",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH_8",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT_8",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH_8",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT_8",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH_8",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_BLOCK_LESEN": {
+   "comment": [
+    "Batterie-Monitor Unterspannungs-Block auslesen",
+    "Read battery monitor low voltage block"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "unsigned char",
+     "comment": [
+      "Optional: Spannungs-Block-Nummer [1...8]",
+      "Ohne diesen Parameter: alle Bloecke lesen",
+      "Optional: Voltage block number [1...8]",
+      "Without this parameter: read all blocks"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "BLOCK_DATEN",
+     "type": "binary",
+     "comment": [
+      "Daten als Hexcode",
+      "Raw data from the ECU"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_WERT",
+     "type": "real",
+     "comment": [
+      "Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_WERT",
+     "type": "char",
+     "comment": [
+      "Umweltbedingung 1: Aussentemperatur (Anzeigewert)",
+      "Environmental condition 1: Ambient temperature (displayed)"
+     ]
+    },
+    {
+     "name": "STAT_UW1_TEMPERATUR_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_WERT",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung 2: Gesamtwegstreckenzaehler (absolut)",
+      "Environmental condition 2: Distance counter (absolute)"
+     ]
+    },
+    {
+     "name": "STAT_UW2_GWSZ_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_WERT",
+     "type": "unsigned char",
+     "comment": [
+      "Umweltbedingung 3: SIA Zeitinspektions-Reset-Zaehler",
+      "Environmental condition 3: SIA time inspection reset counter"
+     ]
+    },
+    {
+     "name": "STAT_UW3_SIA_RESETS_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_WERT",
+     "type": "unsigned int",
+     "comment": [
+      "Umweltbedingung 4: SIA Tage-Zaehler (Tage seit letztem Zeitinspektions-Reset)",
+      "Environmental condition 4: SIA days counter (since last time inspection)"
+     ]
+    },
+    {
+     "name": "STAT_UW4_SIA_TAGE_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_WERT",
+     "type": "unsigned int",
+     "comment": [
+      "Unterspannungs-Zeitzaehler (Dauer)",
+      "Low volt time counter (Duration)"
+     ]
+    },
+    {
+     "name": "STAT_DAUER_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit",
+      "Unit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_RESET": {
+   "comment": [
+    "Batterie-Monitor zuruecksetzen",
+    "Reset battery monitor"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'AIF_BATTMON_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_BATTMON_STATUS_LESEN": {
+   "comment": [
+    "Batterie-Monitor Status auslesen",
+    "Read status of battery monitor"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "STAT_SPANNUNG_AKTUELL_WERT",
+     "type": "real",
+     "comment": [
+      "Aktuelle Spannung in Volt",
+      "Current battery voltage level in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_AKTUELL_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_SLEEPMODE_WERT",
+     "type": "real",
+     "comment": [
+      "Letzte Batterie-Spannung waehrend Sleep-Mode in Volt",
+      "Last battery voltage level during sleep mode in Volt"
+     ]
+    },
+    {
+     "name": "STAT_SPANNUNG_SLEEPMODE_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Spannung: \"Volt\"",
+      "Unit voltage level: \"Volt\""
+     ]
+    },
+    {
+     "name": "STAT_ANZAHL_BLOECKE",
+     "type": "unsigned char",
+     "comment": [
+      "Nummer des letzten gefuellten Unterspannungs-Blocks",
+      "Number of last filled low voltage block"
+     ]
+    },
+    {
+     "name": "STAT_ANZAHL_BATTMON_RESETS",
+     "type": "unsigned char",
+     "comment": [
+      "Batterie-Monitor Reset-Zaehler (ab CP11 / SW 23)",
+      "Battery Monitor Reset Counter (since CP11 / SW 23)"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_DATUM_FZ_LESEN": {
+   "comment": [
+    "Read the Build Data from the User Information",
+    "Auslesen Herstelldatum des FZ"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "DATUM_FZ",
+     "type": "string",
+     "comment": [
+      "Build date as a string",
+      "Herstelldatum des FZ"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_FG_NR_LESEN": {
+   "comment": [
+    "Read the VIN from the User Information",
+    "Auslesen der Fahrgestellnummer aus dem Anwenderinfofeld"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "AIF_FG_NR",
+     "type": "string",
+     "comment": [
+      "Vehicle identification",
+      "Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read ident response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read user information response"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_GWSZ_LESEN": {
+   "comment": [
+    "Gesamtwegstreckenzaehler aus Anwenderinfofeld auslesen",
+    "Read the Kilometers from the User Information Memory Block"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "STAT_GWSZ_WERT",
+     "type": "long",
+     "comment": [
+      "Gesamtwegstreckenzaehler",
+      "Distance counter"
+     ]
+    },
+    {
+     "name": "STAT_GWSZ_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit des GWSZ [km]"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm vom SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_SIA_DATEN_LESEN": {
+   "comment": [
+    "Read the SIA from the User Information"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "STAT_MOTORTYP_NR",
+     "type": "int",
+     "comment": [
+      "Fuel type of vehicle 0=Petrol, 1=Diesel",
+      "0=Benzinmotor, 1=Dieselmotor"
+     ]
+    },
+    {
+     "name": "STAT_MOTORTYP_TEXT",
+     "type": "string",
+     "comment": [
+      "Fuel type of vehicle as text"
+     ]
+    },
+    {
+     "name": "STAT_GETRIEBE_NR",
+     "type": "int",
+     "comment": [
+      "Transmission type of vehicle 1=Manual, 0=Automatic",
+      "1=Schaltgetriebe, 0=Automatikgetriebe"
+     ]
+    },
+    {
+     "name": "STAT_GETRIEBE_TEXT",
+     "type": "string",
+     "comment": [
+      "Transmission type of vehicle as text"
+     ]
+    },
+    {
+     "name": "STAT_ZEITINSPEKTION",
+     "type": "int",
+     "comment": [
+      "time inspection enabled = 1",
+      "Zeitinspektion enabled = 1"
+     ]
+    },
+    {
+     "name": "STAT_VORGEZOGENE_ZEITINSPEKTION",
+     "type": "int",
+     "comment": [
+      "premature time inspection = 1",
+      "vorgezogene Zeitinspektion = 1"
+     ]
+    },
+    {
+     "name": "STAT_INSPEKTIONSGRENZE_WERT",
+     "type": "int",
+     "comment": [
+      "Allowed volume of fuel between service",
+      "Inspektionsgrenze [Liter]"
+     ]
+    },
+    {
+     "name": "STAT_INSPEKTIONSGRENZE_EINH",
+     "type": "string",
+     "comment": [
+      "Unit = Litre"
+     ]
+    },
+    {
+     "name": "STAT_ZEITGRENZE_WERT",
+     "type": "int",
+     "comment": [
+      "Number of days between time service",
+      "Zeitgrenze [Tage]"
+     ]
+    },
+    {
+     "name": "STAT_ZEITGRENZE_EINH",
+     "type": "string",
+     "comment": [
+      "Unit = Days"
+     ]
+    },
+    {
+     "name": "STAT_KRAFTSTOFFMENGE_WERT",
+     "type": "int",
+     "comment": [
+      "Consumed litres since last service",
+      "verbrauchte SI-Kraftstoffmenge [Liter]"
+     ]
+    },
+    {
+     "name": "STAT_KRAFTSTOFFMENGE_EINH",
+     "type": "string",
+     "comment": [
+      "Unit = Litre"
+     ]
+    },
+    {
+     "name": "STAT_ZEIT_INSP_ZAEHLER_WERT",
+     "type": "int",
+     "comment": [
+      "Number of days since last service",
+      "Zeitinspektionszaehler [Tage]"
+     ]
+    },
+    {
+     "name": "STAT_ZEIT_INSP_ZAEHLER_EINH",
+     "type": "string",
+     "comment": [
+      "Unit = Days"
+     ]
+    },
+    {
+     "name": "STAT_SERVICE_ART",
+     "type": "int",
+     "comment": [
+      "Type of last service ( 1=oil, 0=Inspection )",
+      "Gibt die letzte durchgefuehrte Serviceart an",
+      "0 = Inspektion, 1 = Oelservice"
+     ]
+    },
+    {
+     "name": "STAT_SERVICE_TEXT",
+     "type": "string",
+     "comment": [
+      "Type of last service as text"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "AIF_ZENTRALCODE_LESEN": {
+   "comment": [
+    "Anwenderinfofeld Block 4 auslesen",
+    "Read the ZCS from the AIF record"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal (8 ASCII nos + 1 ASCII c/sum)",
+      "Centralcode C1 - Basic features"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung (16 ASCII nos + 1 ASCII c/sum)",
+      "Centralcode C2 - Particular equipment"
+     ]
+    },
+    {
+     "name": "VN",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal (10 ASCII nos + 1 ASCII c/sum)",
+      "Centralcode C3 - Version information"
+     ]
+    },
+    {
+     "name": "STAT_ZENTRALCODE_ANLIEFERCODIERUNG",
+     "type": "int",
+     "comment": [
+      "True falls der Zentralcode der Anliefercodierung entspricht",
+      "0 = Empty ZCS record, 1 = ZCS has been coded"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "CODIERBLOCK_LESEN": {
+   "comment": [
+    "Codierblock auslesen",
+    "Read the coding data"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "int",
+     "comment": [
+      "Blockadresse"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "BLOCKINHALT",
+     "type": "binary",
+     "comment": [
+      "Codierdaten des Blocks"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_C_AUFTRAG": {
+   "comment": [
+    "Codierdaten schreiben und verifizieren",
+    "Write and then verify the coding data"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Byte 0:               01=Daten 02=Maskenbyte (nicht unterstuetzt)",
+      "Byte 1:               Wortbreite (0:Byte, 2:Word, 3:DW",
+      "Byte 2:               Byteordnung (0:LSB zuerst, 1 MSB",
+      "Byte 3:               Adressierung (0: freie Adressier",
+      "Byte 4:               Byteparameter 1",
+      "Byte 5,6:             WordParameter 1 (low/high)",
+      "Byte 7,8:             WordParameter 2 (low/high)",
+      "Byte 9,10,11,12:      Maske (linksbuendig)",
+      "Byte 13,14:           Anzahl Bytedaten (low/high)",
+      "Byte 15,16:           Anzahl Wortdaten (low/high)",
+      "Byte 17:              Byteadresse im Block",
+      "Byte 18,19,20:        Blockadresse (low, middle, high)",
+      "Byte 21,....:         Codierdaten",
+      "Byte 21+Anzahl Daten: ETX (0x03)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write coding data telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write coding data response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read coding data response"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_C_LESEN": {
+   "comment": [
+    "Codierdaten lesen",
+    "Read the coding data"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Byte 0:               01=Daten 02=Maskenbyte (nicht unterstuetzt)",
+      "Byte 1:               Wortbreite (0:Byte, 2:Word, 3:DW",
+      "Byte 2:               Byteordnung (0:LSB zuerst, 1 MSB",
+      "Byte 3:               Adressierung (0: freie Adressier",
+      "Byte 4:               Byteparameter 1",
+      "Byte 5,6:             WordParameter 1 (low/high)",
+      "Byte 7,8:             WordParameter 2 (low/high)",
+      "Byte 9,10,11,12:      Maske (linksbuendig)",
+      "Byte 13,14:           Anzahl Bytedaten (low/high)",
+      "Byte 15,16:           Anzahl Wortdaten (low/high)",
+      "Byte 17:              Byteadresse im Block",
+      "Byte 18,19,20:        Blockadresse (low, middle, high)",
+      "Byte 21,....:         Codierdaten",
+      "Byte 21+Anzahl Daten: ETX (0x03)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CODIER_DATEN",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_FG_AUFTRAG": {
+   "comment": [
+    "Schreiben der 7-stelligen Fahrgestellnummer",
+    "Write the 7 digit VIN into block 2 of the AIF record"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer (18-stellig)",
+      "VIN",
+      "Either 17 or 18 characters - if 18 the last character is ignored"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write empty VIN response"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write new VIN telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write new VIN response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT3",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read VIN response"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_FG_LESEN": {
+   "comment": [
+    "Read the VIN from the User Information",
+    "Auslesen der Fahrgestellnummer aus dem Anwenderinfofeld"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Vehicle identification",
+      "Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read ident response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read user information response"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_ZCS_AUFTRAG": {
+   "comment": [
+    "Write and verify the Central code"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal (8 ASCII nos + 1 ASCII c/sum)",
+      "Basic features"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung (16 ASCII nos + 1 ASCII c/sum)",
+      "Particular equipment"
+     ]
+    },
+    {
+     "name": "VN",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal (10 ASCII nos + 1 ASCII c/sum)",
+      "Version information"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Write ZCS telegram to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Write ZCS response"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Read ZCS response"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "C_ZCS_LESEN": {
+   "comment": [
+    "Anwenderinfofeld Block 4 auslesen",
+    "Read the ZCS from the AIF record"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal (8 ASCII nos + 1 ASCII c/sum)",
+      "Basic features"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung (16 ASCII nos + 1 ASCII c/sum)",
+      "Particular equipment"
+     ]
+    },
+    {
+     "name": "VN",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal (10 ASCII nos + 1 ASCII c/sum)",
+      "Version information"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "ECU Pinging message"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnosemode des SG beenden",
+    "Terminate the diagnostic session"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "EEPROM_LESEN": {
+   "comment": [
+    "EEPROM-Speicher auslesen",
+    "Read EEPROM out of IKE"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ADRESSE",
+     "type": "string",
+     "comment": [
+      "Hexwert (0x0000-0xFFFF) der WortAdresse, ab der das EEPROM gelesen werden soll"
+     ]
+    },
+    {
+     "name": "BYTE_ANZAHL",
+     "type": "int",
+     "comment": [
+      "Number of bytes of data to read, 1 -> 32"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Datenfeld"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Read internal and external faults"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode",
+      "Raw fault data from the ECU"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Index fuer Fehlerort",
+      "Fault number"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Fault description"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Frequency"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Count of Environment Data Items per fault"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten = 6",
+      "Count of additional fault status information"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "1 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "'Kurzschluss gegen U-Batt' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "2 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "'Kurzschluss gegen Masse' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "4 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "'Leitungsunterbrechung' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "8 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "'unplausibler Wert, ungültiger Arbeitsbereich' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "64 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "'Fehler momentan vorhanden' oder '--'"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "128 oder 0"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "'sporadischer Fehler' oder '--'"
+     ]
+    },
+    {
+     "name": "F_UW1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW1_TEXT",
+     "type": "string",
+     "comment": [
+      "Text der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW1_WERT",
+     "type": "long",
+     "comment": [
+      "Wert der 1. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW1_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "F_UW2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_TEXT",
+     "type": "string",
+     "comment": [
+      "Text der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_WERT",
+     "type": "long",
+     "comment": [
+      "Wert der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Clears All Faults"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "GWSZ_MINUS_OFFSET_LESEN": {
+   "comment": [
+    "Gesamtwegstreckenzaehler aus Anwenderinfofeld auslesen und Offset abziehen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Job-Status: OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "STAT_GWSZ_MINUS_OFFSET_WERT",
+     "type": "long",
+     "comment": [
+      "Gesamtwegstreckenzaehler minus Offset"
+     ]
+    },
+    {
+     "name": "STAT_GWSZ_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit des GWSZ [km]"
+     ]
+    }
+   ]
+  },
+  "GWSZ_OFFSET_LESEN": {
+   "comment": [
+    "OFFSET-Wert des GWSZ aus EEPROM lesen"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'GWSZ_OFFSET_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Job-Status: OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "GWSZ_OFFSET_WERT",
+     "type": "int",
+     "comment": [
+      "absoluter Offset-Wert des GWSZ (0-255)"
+     ]
+    }
+   ]
+  },
+  "GWSZ_OFFSET_SCHREIBEN": {
+   "comment": [
+    "OFFSET-Wert des GWSZ in EEPROM schreiben"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "GWSZ_OFFSET_WERT",
+     "type": "int",
+     "comment": [
+      "absoluter Offset-Wert des GWSZ"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Job-Status: OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "GWSZ_RESET": {
+   "comment": [
+    "GWSZ zuruecksetzen, nur moeglich wenn Km-Stand < 255"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'GWSZ_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Job-Status: OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "HERSTELLERDATEN_LESEN": {
+   "comment": [
+    "Herstellerdaten auslesen",
+    "Read supplier specific data"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "int",
+     "comment": [
+      "Blockadresse"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "BLOCKINHALT",
+     "type": "binary",
+     "comment": [
+      "Daten des Blocks"
+     ]
+    },
+    {
+     "name": "LAENGE",
+     "type": "int",
+     "comment": [
+      "Länge des Blocks"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Ident-Daten fuer Instrument Pack"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer",
+      "BMW Part number"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW",
+      "Week of manufacture"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr",
+      "Year of manufacture"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer",
+      "Supplier code"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "Supplier Name"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "ID_CAN_INDEX",
+     "type": "int",
+     "comment": [
+      "Can Index"
+     ]
+    },
+    {
+     "name": "ID_AENDERUNG_INDEX",
+     "type": "int",
+     "comment": [
+      "Modification Index (minor software modifications)"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Read the Test Stamp",
+    "Default pruefstempel_lesen job"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Pruefstempel Datenbyte1"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Pruefstempel Datenbyte2"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Pruefstempel Datenbyte3"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Read the Test Stamp",
+    "Beschreiben des Pruefstempels"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden (0x00-0xFF)"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden (0x00-0xFF)"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden (0x00-0xFF)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "PSEUDO_EEPROM_LESEN": {
+   "comment": [
+    "PSEUDO-EEPROM-Speicher auslesen",
+    "Read EEPROM out of IKE"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ADRESSE",
+     "type": "string",
+     "comment": [
+      "Hexwert (0x0000-0xFFFF) der WortAdresse, ab der das Pseudo- EEPROM gelesen werden soll"
+     ]
+    },
+    {
+     "name": "BYTE_ANZAHL",
+     "type": "int",
+     "comment": [
+      "Number of bytes of data to read, 1 -> 32"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Datenfeld"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "RAM_LESEN": {
+   "comment": [
+    "RAM-Speicher auslesen",
+    "Read internal and external RAM"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ADRESSE",
+     "type": "string",
+     "comment": [
+      "ECU address in RAM",
+      "Hexwert (0x000-0x3FFF) der Adresse, ab der das Ram gelesen werden soll"
+     ]
+    },
+    {
+     "name": "BYTE_ANZAHL",
+     "type": "int",
+     "comment": [
+      "Number of bytes of data to read, 1 -> 32"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Data read from RAM",
+      "Datenfeld"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "READ_DIGITAL": {
+   "comment": [
+    "Read all Digital Inputs for a specified port"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'READ_.*'",
+   "args": [
+    {
+     "name": "PORT",
+     "type": "int",
+     "comment": [
+      "Port of the micro controller in the instrument pack ECU",
+      "1 -> 4"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "BYTE",
+     "type": "unsigned char",
+     "comment": [
+      "Raw byte value for this port"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "ROM_LESEN": {
+   "comment": [
+    "ROM-Speicher auslesen",
+    "Read ROM out of IKE"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ADRESSE",
+     "type": "string",
+     "comment": [
+      "ECU address in ROM",
+      "Hexwert (0x8000-0xFEFF) der Adresse, ab der das Rom gelesen werden soll"
+     ]
+    },
+    {
+     "name": "BYTE_ANZAHL",
+     "type": "int",
+     "comment": [
+      "Number of bytes of data to read, 1 -> 32"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Data read from ROM",
+      "Datenfeld"
+     ]
+    },
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "SIA_RESET": {
+   "comment": [
+    "Force an SIA reset"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'SIA_RESET'",
+   "args": [
+    {
+     "name": "ARG1",
+     "type": "string",
+     "comment": [
+      "moegliche Uebergabeparameter: OEL_RESET, WEG_RESET, ZEIT_RESET",
+      "parameter \"SELECTOR\" from table \"SiaReset\""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "SLEEP_MODE": {
+   "comment": [
+    "SG in Sleep-Mode versetzen"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SLEEP_MODE'",
+   "args": [
+    {
+     "name": "ZEIT",
+     "type": "real",
+     "comment": [
+      "a) Zeit nach der das Steuergerät einschläft",
+      "Bereich   : 0.5 bis 20.0 [Sekunden]",
+      "Auflösung : 0.5 [Sekunden]",
+      "=> zeitgesteuerter Power-Down (0x9B) wird aktiviert",
+      "b) Default: (Es wird kein Argument übergeben!)",
+      "=> normaler Power-Down (0x9D) wird aktiviert"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SOFTWARE_RESET": {
+   "comment": [
+    "Instrument cluster will reset itself",
+    "Kombi loest selbststaendig einen Reset aus"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SOFTWARE_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_ANALOG": {
+   "comment": [
+    "Read Analogue Input States"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "STAT_FUEL_SENDER_1_WERT",
+     "type": "real",
+     "comment": [
+      "Fuel sender tank 1"
+     ]
+    },
+    {
+     "name": "STAT_FUEL_SENDER_1_EINH",
+     "type": "string",
+     "comment": [
+      "Output in Ohm"
+     ]
+    },
+    {
+     "name": "STAT_FUEL_SENDER_2_WERT",
+     "type": "real",
+     "comment": [
+      "Fuel sender tank 2"
+     ]
+    },
+    {
+     "name": "STAT_FUEL_SENDER_2_EINH",
+     "type": "string",
+     "comment": [
+      "Output in Ohm"
+     ]
+    },
+    {
+     "name": "STAT_AD0_FUEL_SENDER_2_WERT",
+     "type": "real",
+     "comment": [
+      "Fuel sender tank 2"
+     ]
+    },
+    {
+     "name": "STAT_AD0_FUEL_SENDER_2_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AD1_FUEL_SENDER_1_WERT",
+     "type": "real",
+     "comment": [
+      "Fuel sender tank 1"
+     ]
+    },
+    {
+     "name": "STAT_AD1_FUEL_SENDER_1_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AMBIENT_TEMP_RESISTANCE_WERT",
+     "type": "real",
+     "comment": [
+      "Resistance for ambient temperature sensor"
+     ]
+    },
+    {
+     "name": "STAT_AMBIENT_TEMP_RESISTANCE_EINH",
+     "type": "string",
+     "comment": [
+      "Output in Ohm"
+     ]
+    },
+    {
+     "name": "STAT_AD2_AMBIENT_TEMP_WERT",
+     "type": "real",
+     "comment": [
+      "Ambient temperature (raw ADC value)"
+     ]
+    },
+    {
+     "name": "STAT_AD2_AMBIENT_TEMP_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AMBIENT_TEMP_WERT",
+     "type": "real",
+     "comment": [
+      "Ambient temperature (calculated value with very big tolerances)"
+     ]
+    },
+    {
+     "name": "STAT_AMBIENT_TEMP_EINH",
+     "type": "string",
+     "comment": [
+      "Celsius"
+     ]
+    },
+    {
+     "name": "STAT_AD3_AMBIENT_LIGHT_LEVEL_WERT",
+     "type": "real",
+     "comment": [
+      "Ambient light level"
+     ]
+    },
+    {
+     "name": "STAT_AD3_AMBIENT_LIGHT_LEVEL_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AD4_WERT",
+     "type": "real",
+     "comment": [
+      "AD Channel 4"
+     ]
+    },
+    {
+     "name": "STAT_AD4_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AD5_BATTERY_VOLTS_WERT",
+     "type": "real",
+     "comment": [
+      "Battery Voltage"
+     ]
+    },
+    {
+     "name": "STAT_AD5_BATTERY_VOLTS_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AD6_WERT",
+     "type": "real",
+     "comment": [
+      "AD Channel 6"
+     ]
+    },
+    {
+     "name": "STAT_AD6_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_AD7_WERT",
+     "type": "real",
+     "comment": [
+      "AD Channel 7",
+      "a) before 03/2003:  -NA-",
+      "b) since 03/2003 (SW-Index 18 ... 80, Coding-Index 07):  Brake pad wear"
+     ]
+    },
+    {
+     "name": "STAT_AD7_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_BOOST_PRESSURE_CAN_WERT",
+     "type": "real",
+     "comment": [
+      "Not used (was Boost Pressure CAN)"
+     ]
+    },
+    {
+     "name": "STAT_BOOST_PRESSURE_CAN_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_ROAD_SPEED_CAN_WERT",
+     "type": "real",
+     "comment": [
+      "Vehicle speed"
+     ]
+    },
+    {
+     "name": "STAT_ROAD_SPEED_CAN_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TACHO_CAN_WERT",
+     "type": "real",
+     "comment": [
+      "Engine speed"
+     ]
+    },
+    {
+     "name": "STAT_TACHO_CAN_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_FUEL_CONSUMPTION_CAN_WERT",
+     "type": "real",
+     "comment": [
+      "Fuel consumption"
+     ]
+    },
+    {
+     "name": "STAT_FUEL_CONSUMPTION_CAN_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_ENGINE_TEMP_CAN_WERT",
+     "type": "real",
+     "comment": [
+      "Engine temperature"
+     ]
+    },
+    {
+     "name": "STAT_ENGINE_TEMP_CAN_EINH",
+     "type": "string",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_AUSSENTEMP_LESEN": {
+   "comment": [
+    "Read Temprature"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Job-Status: OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "STAT_AUSSENTEMP_SENSOR_WERT",
+     "type": "real",
+     "comment": [
+      "Temp. Value"
+     ]
+    },
+    {
+     "name": "STAT_AUSSENTEMP_SENSOR_EINH",
+     "type": "string",
+     "comment": [
+      "Temp. Unit in: \"Grad Celsius\""
+     ]
+    },
+    {
+     "name": "ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_CAN_SHUTDOWN": {
+   "comment": [
+    "Read status of CAN shutdown output from port 4"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_CAN_SHUTDOWN_OUTPUT_HIGH",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=CAN shutdown output high, 0=CAN shutdown output low"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_DIMMER_DRIVER": {
+   "comment": [
+    "Read dimmer driver digital input from Port 4"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_DIMMER_ACTIVE",
+     "type": "int",
+     "comment": [
+      "1=active (over heat / sc load / ac load), 0=not active"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_DIMMER_SW": {
+   "comment": [
+    "Read dimmer switch digital inputs from Port 1"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_DIMMER_1_PRESSED",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten / 0 wenn ausschalten",
+      "1=pressed 0=not pressed"
+     ]
+    },
+    {
+     "name": "STAT_DIMMER_2_PRESSED",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten / 0 wenn ausschalten",
+      "1=pressed 0=not pressed"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_HAZARD_SW": {
+   "comment": [
+    "Read hazard switch digital input from Port 4"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_HAZARD_SWITCH_PRESSED",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten / 0 wenn ausschalten",
+      "1=pressed, 0=not pressed"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_KBUS_INTERRUPT": {
+   "comment": [
+    "Read status of Kbus interrupt from port 2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_KBUS_INTERRUPT_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_LCD_BACKLIGHT": {
+   "comment": [
+    "Read LCD Backlight input from port 4"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_LCD_BACKLIGHT_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_LED_DIG_INPUTS": {
+   "comment": [
+    "Read LED 19, LED 20 and LED A9 digital inputs from Port 3"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_TACHO_RED_LINE_LED_19_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_TACHO_RED_LINE_LED_20_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_SPARE_LED_A9_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_MISC": {
+   "comment": [
+    "Read miscellaneous digital inputs from Port 2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_PDC_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1=ON, 0=OFF"
+     ]
+    },
+    {
+     "name": "STAT_LOW_OIL_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1=Oel druck niedrig, 0=Oel druck nicht niedrig",
+      "1=ON, 0=OFF"
+     ]
+    },
+    {
+     "name": "STAT_TRIP_COMPUTER_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten / 0 wenn ausschalten",
+      "1=ON, 0=OFF"
+     ]
+    },
+    {
+     "name": "STAT_LOW_BRAKE_FLUID_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1=Bremsfluessigkeit niedrig, 0=Bremsfluessigkeit nicht niedrig",
+      "1=ON, 0=OFF"
+     ]
+    },
+    {
+     "name": "STAT_ALTERNATOR_CHARGE_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1=ON, 0=OFF"
+     ]
+    },
+    {
+     "name": "STAT_REVERSE_GEAR_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1=Rueckwaertsgang activ, 0=nicht activ",
+      "1=ON, 0=OFF"
+     ]
+    },
+    {
+     "name": "STAT_SEAT_BELT_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1=ein, 0=aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_HAND_BRAKE_INPUT_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn Handbremse ein / 0 wenn Handbremse aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_MOTOR_DRIVERS": {
+   "comment": [
+    "Read status of the motor drivers from port 2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_DRIVERS_RESET_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=on, 0=off"
+     ]
+    },
+    {
+     "name": "STAT_MOTOR_DRIVERS_ERROR_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=Error generated by stepper motor drivers, 0=no error"
+     ]
+    },
+    {
+     "name": "STAT_CENTRE_GAUGE_MOTOR_SELECTED",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=Centre gauge motor selected, 0=not selected"
+     ]
+    },
+    {
+     "name": "STAT_TEMP_AND_FUEL_MOTORS_SELECTED",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=temp or fuel motors selected, 0=not selected"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_POWER": {
+   "comment": [
+    "Read Power digital inputs from Port 0"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_KLR_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=Ignition switch at AUX, 0=ignition switch not at AUX"
+     ]
+    },
+    {
+     "name": "STAT_KLR_15_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=Ignition switch at IGN, 0=ignition switch not at IGN"
+     ]
+    },
+    {
+     "name": "STAT_KLR_50_ON",
+     "type": "int",
+     "comment": [
+      "1 wenn ein / 0 wenn aus",
+      "1=Ignition switch not at CRANK, 0=Ignition switch at CRANK"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_TRIP_RESET": {
+   "comment": [
+    "Read Trip Reset digital input from Port 3"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_TRIP_RESET_PRESSED",
+     "type": "int",
+     "comment": [
+      "1 wenn einschalten / 0 wenn ausschalten",
+      "1=SIA reset switch pressed, 0=not pressed"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_WAKE_UP": {
+   "comment": [
+    "Read 10 minute wake up status from port 2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "STAT_10_MIN_TIMER_CHARGED",
+     "type": "int",
+     "comment": [
+      "1 wenn laden / 0 wenn nicht laden",
+      "1=timer capacitor charged, 0=not charged"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STATUS_TANKINHALT_LESEN": {
+   "comment": [
+    "Tankinhalt lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Job-Status: OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "STAT_TANKINHALT_HEBEL1_WERT",
+     "type": "real",
+     "comment": [
+      "Tankinhalt Hebelgeber1 in Liter"
+     ]
+    },
+    {
+     "name": "STAT_TANKINHALT_HEBEL2_WERT",
+     "type": "real",
+     "comment": [
+      "Tankinhalt Hebelgeber2 in Liter"
+     ]
+    },
+    {
+     "name": "STAT_TANKINHALT_WERT",
+     "type": "real",
+     "comment": [
+      "Tankinhalt gesamt in Liter"
+     ]
+    },
+    {
+     "name": "STAT_TANKINHALT_HEBEL1_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Tankinhalt: \"Liter\""
+     ]
+    },
+    {
+     "name": "STAT_TANKINHALT_HEBEL2_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Tankinhalt: \"Liter\""
+     ]
+    },
+    {
+     "name": "STAT_TANKINHALT_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Tankinhalt gesamt: \"Liter\""
+     ]
+    },
+    {
+     "name": "ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm von SG"
+     ]
+    }
+   ]
+  },
+  "STEUERN_ALL_GAUGES": {
+   "comment": [
+    "Force all instrument gauges"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "SPEEDO",
+     "type": "int",
+     "comment": [
+      "Steuern TACHO",
+      "Force the speedometer (0 - 100% full scale deflection)"
+     ]
+    },
+    {
+     "name": "TACHO",
+     "type": "int",
+     "comment": [
+      "Steuern DREHZAHL",
+      "Force the tachometer (0 - 100% fsd)"
+     ]
+    },
+    {
+     "name": "FUEL_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern TANKINHALT",
+      "Force the fuel gauge (0 - 100% fsd)"
+     ]
+    },
+    {
+     "name": "TEMP_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern TEMPERATUR",
+      "Force the temperature gauge (0 - 100% fsd)"
+     ]
+    },
+    {
+     "name": "BOOST_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern BOOST",
+      "Force the boost pressure gauge (0 - 100% fsd)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_ALL_GAUGES_2": {
+   "comment": [
+    "Force all instrument gauges"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "SPEEDO",
+     "type": "int",
+     "comment": [
+      "Steuern TACHO",
+      "Force the speedometer (0 - 100% full scale deflection)"
+     ]
+    },
+    {
+     "name": "TACHO",
+     "type": "int",
+     "comment": [
+      "Steuern DREHZAHL",
+      "Force the tachometer (0 - 100% fsd)"
+     ]
+    },
+    {
+     "name": "FUEL_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern TANKINHALT",
+      "Force the fuel gauge (0 - 100% fsd)"
+     ]
+    },
+    {
+     "name": "TEMP_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern TEMPERATUR",
+      "Force the temperature gauge (0 - 100% fsd)"
+     ]
+    },
+    {
+     "name": "OIL_TEMP_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern OIL_TEMP_GAUGE",
+      "a) diag index 85 - 88",
+      "Optional - not necessary to specify",
+      "(was BOOST_GAUGE)",
+      "b) diag index 89",
+      "Force the oil temperature gauge (0 - 100% fsd)",
+      "Only work for SA547 instrument (hardware index 30 or more)"
+     ]
+    },
+    {
+     "name": "OIL_PRESS_GAUGE",
+     "type": "int",
+     "comment": [
+      "Steuern OIL_PRESS_GAUGE",
+      "a) diag index 85 - 88",
+      "Optional - not necessary to specify",
+      "b) diag index 89",
+      "Force the oil pressure gauge (0 - 100% fsd)",
+      "Only work for SA547 instrument (hardware index 30 or more)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_ANZEIGE": {
+   "comment": [
+    "Force an instrument gauge"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "ORT",
+     "type": "string",
+     "comment": [
+      "Instrument gauge to force",
+      "Parameter \"ORT\" in table \"Komponenten\"",
+      "a) diag index 85 - 88",
+      "TACHO, DREHZAHL, TANKINHALT, TEMPERATUR",
+      "b) diag index 89",
+      "TACHO, DREHZAHL, TANKINHALT, TEMPERATUR, OELTEMPERATUR, OELDRUCK",
+      "OELTEMPERATUR, OELDRUCK - Only work for SA547 (hardware index 30 or more)"
+     ]
+    },
+    {
+     "name": "WERT",
+     "type": "int",
+     "comment": [
+      "Forcing value for the gauge",
+      "0 -> 100% full scale deflection"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_BACKLIGHT": {
+   "comment": [
+    "Force the Odometer and trip computer backlight"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "LIGHT_LEVEL",
+     "type": "int",
+     "comment": [
+      "light level (0 - 100 percent)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_GONG": {
+   "comment": [
+    "Force the gong"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "WERT",
+     "type": "int",
+     "comment": [
+      "Forcing mode of gong",
+      "0=No sound, 1=Single high note, 2=Single low note, 3=Tic Toc"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_LCD_ODO": {
+   "comment": [
+    "Force the LCD Odometer"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "TEST_MAP",
+     "type": "int",
+     "comment": [
+      "Which test map to use (0x00 - 0x03)",
+      "0 = All on",
+      "1 = All off",
+      "2 = Pattern 2",
+      "3 = Pattern 3"
+     ]
+    },
+    {
+     "name": "TEST_SEGMENT",
+     "type": "int",
+     "comment": [
+      "Test segment (0x00 -> 0x08)",
+      "Segment 00 = (Blank)",
+      "Segment 01 = 'k'",
+      "Segment 02 = 'm'",
+      "Segment 03 = 'iles'",
+      "Segment 04 = 'Inspection'",
+      "Segment 05 = 'Oil Service'",
+      "Segment 06 = (Clock Face)",
+      "Segment 07 = (Blank)",
+      "Segment 08 = '.'",
+      "Segments 0x09 - 0xFF = Not Used"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_LCD_TRIP": {
+   "comment": [
+    "Force the LCD trip computer"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "TEST_MAP",
+     "type": "int",
+     "comment": [
+      "Which test map to use (0x00 - 0x03)",
+      "0 = All on",
+      "1 = All off",
+      "2 = Pattern 2",
+      "3 = Pattern 3"
+     ]
+    },
+    {
+     "name": "TEST_SEGMENT",
+     "type": "int",
+     "comment": [
+      "Test segment (0x00 - 0x11)",
+      "Segment 00 = 'Range'",
+      "Segment 01 = 'trip 2'",
+      "Segment 02 = 'Speed'",
+      "Segment 03 = 'timer'",
+      "Segment 04 = ' C' - Deg C (Grad C)",
+      "Segment 05 = ' F' - Deg F (Grad F)",
+      "Segment 06 = 'S'",
+      "Segment 07 = 'mph'",
+      "Segment 08 = 'km'",
+      "Segment 09 = 'miles'",
+      "Segment 0A = 'k/h'",
+      "Segment 0B = 'm'",
+      "Segment 0C = 'mpg'",
+      "Segment 0D = 'km/'",
+      "Segment 0E = 'L'",
+      "Segment 0F = 'Temp'",
+      "Segment 10 = 'Ave.S'",
+      "Segment 11 = 'Cons'",
+      "Segment 12 = '.'",
+      "Segment 13 = '/100K'"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_LEUCHTE": {
+   "comment": [
+    "Force the warning lamps in byte blocks"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "BYTE0",
+     "type": "int",
+     "comment": [
+      "Refer to ecu diagnostic spec"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "BYTE4",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "BYTE5",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "BYTE6",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "BYTE7",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response as a hex string"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_PANEL_LIGHT": {
+   "comment": [
+    "Force the Panel Illumination"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "LIGHT_LEVEL",
+     "type": "int",
+     "comment": [
+      "Illumination level (0 -> 100 percent)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "_TEL_SENDE",
+     "type": "binary",
+     "comment": [
+      "Sendetelegramm anzeigen",
+      "Telegram sent to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "STEUERN_SELBSTTEST": {
+   "comment": [
+    "Perform ECU Self Test"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  },
+  "ZEITINSPEKTIONSZAEHLER_LESEN": {
+   "comment": [
+    "Zeitinspektionszaehler auslesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "ZAEHLER_WERT",
+     "type": "int",
+     "comment": [
+      "Number of days since last service",
+      "Zeitinspektionszaehler [Tage]"
+     ]
+    },
+    {
+     "name": "ZAEHLER_EINH",
+     "type": "string",
+     "comment": [
+      "Unit = Days"
+     ]
+    },
+    {
+     "name": "SERVICE_ART",
+     "type": "int",
+     "comment": [
+      "Type of last service ( 1=oil, 0=Inspection )",
+      "Gibt die letzte durchgefuehrte Serviceart an",
+      "0 = Inspektion, 1 = Oelservice"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "ECU response packet"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Continental Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0x72",
+    "LIEF_TEXT": "ASIN AWCO.LTD"
+   },
+   {
+    "LIEF_NR": "0x73",
+    "LIEF_TEXT": "Shorlock"
+   },
+   {
+    "LIEF_NR": "0x74",
+    "LIEF_TEXT": "Schrader"
+   },
+   {
+    "LIEF_NR": "0x75",
+    "LIEF_TEXT": "BERU Electronics GmbH"
+   },
+   {
+    "LIEF_NR": "0x76",
+    "LIEF_TEXT": "CEL"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "DIGITAL": [
+   {
+    "NAME": "KLR",
+    "BYTE": "3",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "KLR_15",
+    "BYTE": "3",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "KLR_50",
+    "BYTE": "3",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "TRIP_RESET",
+    "BYTE": "3",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "DIMMER_1",
+    "BYTE": "3",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "DIMMER_2",
+    "BYTE": "3",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "PDC_INPUT",
+    "BYTE": "3",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "LOW_OIL_INPUT",
+    "BYTE": "3",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "TRIP_COMPUTER_INPUT",
+    "BYTE": "3",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "LOW_BRAKE_FLUID_INPUT",
+    "BYTE": "3",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "ALTERNATOR_CHARGE_INPUT",
+    "BYTE": "3",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "REVERSE_GEAR_INPUT",
+    "BYTE": "3",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "SEAT_BELT",
+    "BYTE": "3",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "HAND_BRAKE_INPUT",
+    "BYTE": "3",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "HAZARD_SWITCH",
+    "BYTE": "3",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "DIMMER",
+    "BYTE": "3",
+    "MASK": "0x04",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "SPARE_LED_A9",
+    "BYTE": "3",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "TACHO_RED_LINE_LED_19",
+    "BYTE": "3",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "TACHO_RED_LINE_LED_20",
+    "BYTE": "3",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "MOTOR_DRIVERS_RESET",
+    "BYTE": "3",
+    "MASK": "0x02",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "MOTOR_DRIVERS_ERROR",
+    "BYTE": "3",
+    "MASK": "0x20",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "CENTRE_GAUGE_MOTOR",
+    "BYTE": "3",
+    "MASK": "0x40",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "TEMP_AND_FUEL_MOTORS",
+    "BYTE": "3",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "10_MIN_TIMER",
+    "BYTE": "3",
+    "MASK": "0x01",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "LCD_BACKLIGHT",
+    "BYTE": "3",
+    "MASK": "0x08",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "CAN_SHUTDOWN_OUTPUT",
+    "BYTE": "3",
+    "MASK": "0x80",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "KBUS_INTERRUPT",
+    "BYTE": "3",
+    "MASK": "0x10",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "??",
+    "BYTE": "FF",
+    "MASK": "0x00",
+    "VALUE": "0xFF"
+   }
+  ],
+  "ANALOG": [
+   {
+    "NAME": "AD1_FUEL_SENDER_1",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "AD0_FUEL_SENDER_2",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "AD2_AMBIENT_TEMP",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "AD3_AMBIENT_LIGHT_LEVEL",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "AD4",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "AD5_BATTERY_VOLTS",
+    "FACT_A": "0.019698",
+    "FACT_B": "0.93",
+    "EINH": "Volts"
+   },
+   {
+    "NAME": "AD6",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "AD7",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": ""
+   },
+   {
+    "NAME": "BOOST_PRESSURE_CAN",
+    "FACT_A": "1.0",
+    "FACT_B": "-100.0",
+    "EINH": "kPa"
+   },
+   {
+    "NAME": "ROAD_SPEED_CAN",
+    "FACT_A": "0.0625",
+    "FACT_B": "0.0",
+    "EINH": "km/h"
+   },
+   {
+    "NAME": "TACHO_CAN",
+    "FACT_A": "0.15625",
+    "FACT_B": "0.0",
+    "EINH": "Umdrehungen pro Minute"
+   },
+   {
+    "NAME": "FUEL_CONSUMPTION_CAN",
+    "FACT_A": "1.0",
+    "FACT_B": "0.0",
+    "EINH": "Mikroliter"
+   },
+   {
+    "NAME": "ENGINE_TEMP_CAN",
+    "FACT_A": "0.75",
+    "FACT_B": "-48.0",
+    "EINH": "Grad C"
+   },
+   {
+    "NAME": "Unknown item",
+    "FACT_A": "0.0",
+    "FACT_B": "0",
+    "EINH": ""
+   }
+  ],
+  "LEDDATA": [
+   {
+    "NAME": "HIGH_COOLANT_TEMP",
+    "BYTE": "0",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "BATTERY_CHARGE",
+    "BYTE": "0",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "LOW_OIL_PRESSURE",
+    "BYTE": "0",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "LOW_FUEL",
+    "BYTE": "0",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "HAZARD",
+    "BYTE": "0",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "MAIN_BEAM",
+    "BYTE": "0",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "BONNET",
+    "BYTE": "1",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "ABS",
+    "BYTE": "1",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "BRAKE_SYSTEM",
+    "BYTE": "1",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "DRIVE_BY_WIRE",
+    "BYTE": "1",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "MIL",
+    "BYTE": "1",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "DI",
+    "BYTE": "1",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "SEAT_BELT",
+    "BYTE": "1",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "RED_LINE_3",
+    "BYTE": "2",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "RED_LINE_1",
+    "BYTE": "2",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "RED_LINE_4",
+    "BYTE": "2",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "CAN_CRUISE_ACTIVE",
+    "BYTE": "3",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "CAN_TRACTION_CONTROL",
+    "BYTE": "3",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "CAN_SEAT_BELT",
+    "BYTE": "3",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "CAN_SAUDI_OVERSPEED",
+    "BYTE": "3",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "CAN_DRIVE_BY_WIRE",
+    "BYTE": "3",
+    "VALUE": "0x10"
+   },
+   {
+    "NAME": "CAN_MIL",
+    "BYTE": "3",
+    "VALUE": "0x20"
+   },
+   {
+    "NAME": "CAN_MAIN_BEAM",
+    "BYTE": "3",
+    "VALUE": "0x40"
+   },
+   {
+    "NAME": "CAN_ABS",
+    "BYTE": "3",
+    "VALUE": "0x80"
+   },
+   {
+    "NAME": "CAN_BREAK_SYSTEM",
+    "BYTE": "4",
+    "VALUE": "0x01"
+   },
+   {
+    "NAME": "CAN_BONNET",
+    "BYTE": "4",
+    "VALUE": "0x02"
+   },
+   {
+    "NAME": "CAN_DI",
+    "BYTE": "4",
+    "VALUE": "0x04"
+   },
+   {
+    "NAME": "CAN_TIRE_DEFLATION",
+    "BYTE": "4",
+    "VALUE": "0x08"
+   },
+   {
+    "NAME": "Unknown item",
+    "BYTE": "0",
+    "VALUE": "0x00"
+   }
+  ],
+  "ROVERPARTPREFIX": [
+   {
+    "CODE": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "CODE": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "CODE": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "CODE": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "CODE": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "CODE": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "CODE": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "CODE": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "CODE": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "CODE": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "CODE": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "CODE": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "CODE": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "CODE": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "CODE": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "CODE": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "CODE": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "CODE": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "CODE": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "CODE": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "CODE": "0xB6",
+    "PREFIX": "YUW"
+   },
+   {
+    "CODE": "0xFF",
+    "PREFIX": "???"
+   }
+  ],
+  "SIARESET": [
+   {
+    "SELECTOR": "OEL_RESET",
+    "RESET": "0x01",
+    "TEXT": "Oel Service Reset"
+   },
+   {
+    "SELECTOR": "WEG_RESET",
+    "RESET": "0x02",
+    "TEXT": "Inspektion Reset"
+   },
+   {
+    "SELECTOR": "ZEIT_RESET",
+    "RESET": "0x04",
+    "TEXT": "Zeit Service Reset"
+   },
+   {
+    "SELECTOR": "",
+    "RESET": "0x00",
+    "TEXT": ""
+   }
+  ],
+  "KOMPONENTEN": [
+   {
+    "ORT": "TACHO",
+    "BYTE": "0x0A",
+    "TEXT": "Tachometer"
+   },
+   {
+    "ORT": "DREHZAHL",
+    "BYTE": "0x0B",
+    "TEXT": "Tachometer"
+   },
+   {
+    "ORT": "TANKINHALT",
+    "BYTE": "0x0C",
+    "TEXT": "Tankuhr"
+   },
+   {
+    "ORT": "TEMPERATUR",
+    "BYTE": "0x0D",
+    "TEXT": "Temperaturmesser"
+   },
+   {
+    "ORT": "BOOST",
+    "BYTE": "0x0E",
+    "TEXT": "Ladedruckmesser"
+   },
+   {
+    "ORT": "OELTEMPERATUR",
+    "BYTE": "0x10",
+    "TEXT": "Oel-Temperatur-Anzeige"
+   },
+   {
+    "ORT": "OELDRUCK",
+    "BYTE": "0x11",
+    "TEXT": "Oel-Druck-Anzeige"
+   },
+   {
+    "ORT": "unbekannt",
+    "BYTE": "0xFF",
+    "TEXT": ""
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "Kein Fehler"
+   },
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "Tankgeber 1 Kurzschluss gegen oder Batteriespannung"
+   },
+   {
+    "ORT": "0x11",
+    "ORTTEXT": "Tankgeber 2 Kurzschluss gegen Masse oder Batteriespannung"
+   },
+   {
+    "ORT": "0x12",
+    "ORTTEXT": "Aussentemperatur Sensor Kurzschluss zu Masse oder Batteriespannung"
+   },
+   {
+    "ORT": "0x13",
+    "ORTTEXT": "Batteriespannung > 16V - Fehler in Lichtmaschine"
+   },
+   {
+    "ORT": "0x20",
+    "ORTTEXT": "Zündung (KL.15) eingeschaltet, aber Zündung (KL.R) ausgeschaltet"
+   },
+   {
+    "ORT": "0x21",
+    "ORTTEXT": "Anlasser (KL.50) ist eingeschaltet, aber Zündung (KL.15) ist ausgeschaltet"
+   },
+   {
+    "ORT": "0x30",
+    "ORTTEXT": "EEPROM Checksummen Fehler - Center-Instrument"
+   },
+   {
+    "ORT": "0x31",
+    "ORTTEXT": "EEPROM Checksummen Fehler - Remote-Instrument (RIP)"
+   },
+   {
+    "ORT": "0x40",
+    "ORTTEXT": "K-Bus Fehler"
+   },
+   {
+    "ORT": "0x50",
+    "ORTTEXT": "KOMBI Fahrgestellnummer ungleich der im Grundmodul bzw. Grundmodul fehlerhaft"
+   },
+   {
+    "ORT": "0x51",
+    "ORTTEXT": "Automatik Getriebe SG hat Getriebefehler-Flag gesendet"
+   },
+   {
+    "ORT": "0x52",
+    "ORTTEXT": "Falscher RIP Typ wurde empfangen"
+   },
+   {
+    "ORT": "0x60",
+    "ORTTEXT": "CAN: Bus Off - CAN HI Kurschluss gegen Masse, CAN Low gegen Batteriespannung oder CAN HI gegen CAN LO"
+   },
+   {
+    "ORT": "0x61",
+    "ORTTEXT": "CAN: No ID - Kein Telegramm vom CAN für 6 s und Bus ist nicht ausgeschaltet"
+   },
+   {
+    "ORT": "0x62",
+    "ORTTEXT": "CAN: Kein ASC1 - Kein Telegramm erhalten vom ABS für 200 ms"
+   },
+   {
+    "ORT": "0x63",
+    "ORTTEXT": "CAN: Keine DME1/DDE1 - Kein Telegramm erhalten 1 von EMS/DDE für 200 ms"
+   },
+   {
+    "ORT": "0x64",
+    "ORTTEXT": "CAN: Keine DME2/DDE2 - Kein Telegramm erhalten 2 von EMS/DDE für 200 ms"
+   },
+   {
+    "ORT": "0x65",
+    "ORTTEXT": "CAN: Keine DME4/DDE4 - Kein Telegramm erhalten 4 von EMS/DDE für 200 ms"
+   },
+   {
+    "ORT": "0x66",
+    "ORTTEXT": "CAN: Kein EGS1 - Kein Telegramm erhalten von ATCU für 200 ms"
+   },
+   {
+    "ORT": "0x67",
+    "ORTTEXT": "CAN: Kein RIP1 - Kein Telegramm erhalten von 'Remote Instrument Pack' (RIP)"
+   },
+   {
+    "ORT": "0x68",
+    "ORTTEXT": "CAN: Keine DME5 - Kein Telegramm erhalten 5 vom EMS für 200 ms"
+   },
+   {
+    "ORT": "0x69",
+    "ORTTEXT": "CAN: Kein INSTR5 - RIP - Kein Telegramm erhalten 5 vom KOMBI für 2 s"
+   },
+   {
+    "ORT": "0x6A",
+    "ORTTEXT": "CAN: Kein INSTR6 - RIP - Kein Telegramm erhalten 6 vom KOMBI für 5 s"
+   },
+   {
+    "ORT": "0x6B",
+    "ORTTEXT": "CAN: Kein ASC1 - RIP - Kein Telegramm erhalten vom ABS für 200 ms"
+   },
+   {
+    "ORT": "0x6C",
+    "ORTTEXT": "CAN: Keine DME1/DDE1 - RIP - Kein Telegramm erhalten 1 von EMS/DDE für 200 ms"
+   },
+   {
+    "ORT": "0x6D",
+    "ORTTEXT": "CAN: Kein EGS1 - RIP - Kein Telegramm erhalten von ATCU für 200 ms"
+   },
+   {
+    "ORT": "0x6E",
+    "ORTTEXT": "CAN: Keine DME3/DDE3 - Kein Telegramm erhalten 3 vom DDE für 200 ms"
+   },
+   {
+    "ORT": "0x80",
+    "ORTTEXT": "Treibstoff Messug Leitungsunterbrechung / Kurzschluss entdeckt"
+   },
+   {
+    "ORT": "0x81",
+    "ORTTEXT": "Motor Temperatur Messug Leitungsunterbrechung / Kurzschluss entdeckt"
+   },
+   {
+    "ORT": "0x82",
+    "ORTTEXT": "Kilometertacho Messug Leitungsunterbrechung / Kurzschluss entdeckt"
+   },
+   {
+    "ORT": "0x83",
+    "ORTTEXT": "Ladedruck Messug Leitungsunterbrechung / Kurzschluss entdeckt"
+   },
+   {
+    "ORT": "0x84",
+    "ORTTEXT": "Drehzahlmesser Messug Leitungsunterbrechung / Kurzschluss entdeckt"
+   },
+   {
+    "ORT": "0x90",
+    "ORTTEXT": "Airbag Alive-Zähler (KBus Nachricht 70h) steht für 15 s"
+   },
+   {
+    "ORT": "0x91",
+    "ORTTEXT": "Airbag - Keine KBus Nachricht erhalten 70h vom Airbag SG für 15 s"
+   },
+   {
+    "ORT": "0x92",
+    "ORTTEXT": "Airbag Warnlampe 'aktiv' empfangen vom Airbag SG"
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ART": "0x00",
+    "ARTTEXT": "--"
+   },
+   {
+    "ART": "0x01",
+    "ARTTEXT": "Kurzschluss gegen U-Batt"
+   },
+   {
+    "ART": "0x02",
+    "ARTTEXT": "Kurzschluss gegen Masse"
+   },
+   {
+    "ART": "0x03",
+    "ARTTEXT": "Leitungsunterbrechung"
+   },
+   {
+    "ART": "0x04",
+    "ARTTEXT": "unplausibler Wert, ungültiger Arbeitsbereich"
+   },
+   {
+    "ART": "0x05",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ART": "0x06",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ART": "0xFF",
+    "ARTTEXT": "unbekannte Fehlerart"
+   }
+  ],
+  "FARTMATRIX": [
+   {
+    "ORT": "0x01",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x04",
+    "A4_0": "0x00",
+    "A4_1": "0x08",
+    "A5_0": "0x00",
+    "A5_1": "0x40",
+    "A6_0": "0x00",
+    "A6_1": "0x80"
+   }
+  ],
+  "FUMWELTMATRIX": [
+   {
+    "ORT": "0x50",
+    "UW_ANZ": "0x02",
+    "UW1_NR": "0x00",
+    "UW2_NR": "0x02",
+    "UW1FAKTOR": "0x08",
+    "UW2FAKTOR": "0x01"
+   },
+   {
+    "ORT": "0x30",
+    "UW_ANZ": "0x02",
+    "UW1_NR": "0x00",
+    "UW2_NR": "0x01",
+    "UW1FAKTOR": "0x08",
+    "UW2FAKTOR": "0x01"
+   },
+   {
+    "ORT": "0x31",
+    "UW_ANZ": "0x02",
+    "UW1_NR": "0x00",
+    "UW2_NR": "0x01",
+    "UW1FAKTOR": "0x08",
+    "UW2FAKTOR": "0x01"
+   },
+   {
+    "ORT": "0xXY",
+    "UW_ANZ": "0x02",
+    "UW1_NR": "0x00",
+    "UW2_NR": "0xXY",
+    "UW1FAKTOR": "0x08",
+    "UW2FAKTOR": "0x01"
+   }
+  ],
+  "FUMWELTTEXTE": [
+   {
+    "UWNR": "0x00",
+    "UWTEXT": "Kilometerstand intern",
+    "UW_EINH": "km"
+   },
+   {
+    "UWNR": "0x01",
+    "UWTEXT": "EEPROM-Blocknummer",
+    "UW_EINH": ""
+   },
+   {
+    "UWNR": "0x02",
+    "UWTEXT": "RDA-Status",
+    "UW_EINH": ""
+   },
+   {
+    "UWNR": "0xXY",
+    "UWTEXT": "unbekannte Umweltbedingung",
+    "UW_EINH": "XY"
+   }
+  ],
+  "SUPPLIERDATA": [
+   {
+    "INDEX": "0x00",
+    "INFO": "Zusätliche Software Identifikation"
+   },
+   {
+    "INDEX": "0x01",
+    "INFO": "Elektronik / PCB Index"
+   },
+   {
+    "INDEX": "0x10",
+    "INFO": "Echtzeit-Uhr"
+   }
+  ]
+ }
+}

@@ -1,0 +1,2598 @@
+{
+ "sgbd": "PDCACT",
+ "file": "pdcact.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "PDCACT"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Mueller"
+  ],
+  "REVISION": [
+   "1.09"
+  ],
+  "AUTHOR": [
+   "BMW TI-433 Spoljarec, BMW TI-431 Robert Kuessel, BMW TI-430 Marcus Mueller, BMW TI-431 Lothar Dennert"
+  ],
+  "ECUCOMMENT": [
+   "Park Distance Control E38 E39 E46 E53 R50"
+  ]
+ },
+ "jobs": {
+  "COD_LESEN_CHECKSUM": {
+   "comment": [
+    "Auslesen der Codierchecksummen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'COD_LESEN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "COD_CHKSUM_VARIANTE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "COD_CHKSUM_H_ECKEN",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "COD_CHKSUM_H_MITTE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "COD_CHKSUM_V_ECKEN",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "COD_CHKSUM_V_MITTE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "COD_LESEN_SCHWELLE": {
+   "comment": [
+    "Auslesen der codierten Schwellwerte der PDC aktiv"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'COD_LESEN_.*'",
+   "args": [
+    {
+     "name": "CODIERBLOCK",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "COD_DATEN",
+     "type": "string",
+     "comment": [
+      "13 Codierbytes"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_15MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 1,5 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_20MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 2,0 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_25MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 2,5 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_30MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 3,0 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_35MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 3,5 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_40MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 4,0 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_45MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 4,5 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_50MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 5 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_60MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 6 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_70MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 7 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_80MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 8 ms"
+     ]
+    },
+    {
+     "name": "COD_SCHWELLE_90MS",
+     "type": "int",
+     "comment": [
+      "Schwellenwert ab 9 ms"
+     ]
+    },
+    {
+     "name": "COD_FLAGS",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "COD_LESEN_VARIANTE": {
+   "comment": [
+    "Auslesen der Codiervariante der PDC aktiv"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'COD_LESEN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "COD_DATEN",
+     "type": "string",
+     "comment": [
+      "23 Codierbytes"
+     ]
+    },
+    {
+     "name": "COD_ANZAHL_WANDLER",
+     "type": "int",
+     "comment": [
+      "4 oder 8"
+     ]
+    },
+    {
+     "name": "COD_TONGEBER_HINTEN",
+     "type": "string",
+     "comment": [
+      "BC-GONG oder Lautsprecher"
+     ]
+    },
+    {
+     "name": "COD_TONGEBER_VORNE",
+     "type": "string",
+     "comment": [
+      "BC-GONG oder Lautsprecher"
+     ]
+    },
+    {
+     "name": "COD_EIN_TONGEBER",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_PARKHILFESCHALTER",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_RUECKFAHRGONG",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_GETRIEBE",
+     "type": "string",
+     "comment": [
+      "Schaltgetriebe oder Automatikgetriebe"
+     ]
+    },
+    {
+     "name": "COD_PDC_AKTIV_KL15",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_DEAKTIVIERUNG",
+     "type": "string",
+     "comment": [
+      "Rueckwaertsgang oder Weg/Geschwindigkeit"
+     ]
+    },
+    {
+     "name": "COD_EINSCHALTMELDUNG",
+     "type": "string",
+     "comment": [
+      "keine / bei erstem aktivieren / bei jedem aktivieren"
+     ]
+    },
+    {
+     "name": "COD_ABSCHALTMELDUNG",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_TASTERMELDUNG",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_NOTFUNKTION",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_AKUSTIKKONZEPT",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "COD_ABSTAND_WANDLER_HINTEN_ECKEN",
+     "type": "int",
+     "comment": [
+      "0 - 255 cm"
+     ]
+    },
+    {
+     "name": "COD_ABSTAND_WANDLER_HINTEN_MITTE",
+     "type": "int",
+     "comment": [
+      "0 - 255 cm"
+     ]
+    },
+    {
+     "name": "COD_ABSTAND_WANDLER_VORNE_ECKEN",
+     "type": "int",
+     "comment": [
+      "0 - 255 cm"
+     ]
+    },
+    {
+     "name": "COD_ABSTAND_WANDLER_VORNE_MITTE",
+     "type": "int",
+     "comment": [
+      "0 - 255 cm"
+     ]
+    },
+    {
+     "name": "COD_MESSBEREICH_HINTEN_ECKEN",
+     "type": "int",
+     "comment": [
+      "0 - 180 cm"
+     ]
+    },
+    {
+     "name": "COD_MESSBEREICH_HINTEN_MITTE",
+     "type": "int",
+     "comment": [
+      "0 - 180 cm"
+     ]
+    },
+    {
+     "name": "COD_MESSBEREICH_VORNE_ECKEN",
+     "type": "int",
+     "comment": [
+      "0 - 180 cm"
+     ]
+    },
+    {
+     "name": "COD_MESSBEREICH_VORNE_MITTE",
+     "type": "int",
+     "comment": [
+      "0 - 180 cm"
+     ]
+    },
+    {
+     "name": "COD_OFFSET_HINTEN_ECKEN",
+     "type": "int",
+     "comment": [
+      "0 - 60 cm"
+     ]
+    },
+    {
+     "name": "COD_OFFSET_HINTEN_MITTE",
+     "type": "int",
+     "comment": [
+      "0 - 60 cm"
+     ]
+    },
+    {
+     "name": "COD_OFFSET_VORNE_ECKEN",
+     "type": "int",
+     "comment": [
+      "0 - 60 cm"
+     ]
+    },
+    {
+     "name": "COD_OFFSET_VORNE_MITTE",
+     "type": "int",
+     "comment": [
+      "0 - 60 cm"
+     ]
+    },
+    {
+     "name": "COD_DAUERTONBEREICH_HINTEN",
+     "type": "int",
+     "comment": [
+      "0 - 255 cm"
+     ]
+    },
+    {
+     "name": "COD_DAUERTONBEREICH_VORNE",
+     "type": "int",
+     "comment": [
+      "0 - 255 cm"
+     ]
+    },
+    {
+     "name": "COD_LAUTSTAERKE_HINTEN",
+     "type": "int",
+     "comment": [
+      "0 - 7"
+     ]
+    },
+    {
+     "name": "COD_LAUTSTAERKE_VORNE",
+     "type": "int",
+     "comment": [
+      "0 - 7"
+     ]
+    },
+    {
+     "name": "COD_EINSCHALTGESCHWINDIGKEIT",
+     "type": "int",
+     "comment": [
+      "0 - 27 km/h"
+     ]
+    },
+    {
+     "name": "COD_ABSCHALTGESCHWINDIGKEIT",
+     "type": "int",
+     "comment": [
+      "3 - 30 km/h"
+     ]
+    },
+    {
+     "name": "COD_ABSCHALTWEG",
+     "type": "int",
+     "comment": [
+      "0 - 255 m"
+     ]
+    },
+    {
+     "name": "COD_WEGKENNZAHL",
+     "type": "int",
+     "comment": [
+      "0 - 8160 Imp/sek (Byte * 32)"
+     ]
+    },
+    {
+     "name": "COD_VERZOEGERUNG_RUECKFAHRGONG",
+     "type": "real",
+     "comment": [
+      "0 - 25,5 sek (Byte * 0,1)"
+     ]
+    }
+   ]
+  },
+  "C_C_AUFTRAG": {
+   "comment": [
+    "Codierdaten schreiben und verifizieren"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_C_LESEN": {
+   "comment": [
+    "Codierdaten lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CODIER_DATEN",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_FG_AUFTRAG": {
+   "comment": [
+    "Beschreiben des Pruefstempels mit der FG-Nummer"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer (18-stellig)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "C_FG_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels und Interpretation als FG-Nummer"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnose beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_WEITER": {
+   "comment": [
+    "Diagnose aufrechterhalten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_WEITER'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen",
+    "bedingtes High-Konzept nach Lastenheft Codierung/Diagnose",
+    "Die Fehlerspeichercodes sind willkuerlich vergeben",
+    "Fehler stehen immer an der gleichen Stelle"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "Fehlercode"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit des jeweiligen Fehlers"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "2. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART3_NR",
+     "type": "int",
+     "comment": [
+      "Index der 3. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART3_TEXT",
+     "type": "string",
+     "comment": [
+      "3. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART4_NR",
+     "type": "int",
+     "comment": [
+      "Index der 4. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART4_TEXT",
+     "type": "string",
+     "comment": [
+      "4. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART5_NR",
+     "type": "int",
+     "comment": [
+      "Index der 5. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART5_TEXT",
+     "type": "string",
+     "comment": [
+      "5. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_ART6_NR",
+     "type": "int",
+     "comment": [
+      "Index der 6. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART6_TEXT",
+     "type": "string",
+     "comment": [
+      "6. Fehlerart als Text"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Identdaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Init-Job fuer PDC"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1 wenn Okay"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "FG_ZIFFERN",
+     "type": "string",
+     "comment": [
+      "die letzten vier Stellen der Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Lesen des internen Speichers"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "ADRESSE",
+     "type": "long",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "SEGMENT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "ERROR_argumentname, wenn argument nicht",
+      "uebergeben oder ausser Bereich"
+     ]
+    }
+   ]
+  },
+  "STATUS_AUSSCHWINGZEIT_LESEN": {
+   "comment": [
+    "AUSSCHWINGZEIT lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit Ausschwingzeit usec"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_HL_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit hinten links"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_HR_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_HML_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit hinten mitte links"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_HMR_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit hinten mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_VL_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit vorne links"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_VR_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_VML_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit vorne mitte links"
+     ]
+    },
+    {
+     "name": "STAT_AUSSCHWING_T_VMR_WERT",
+     "type": "int",
+     "comment": [
+      "Ausschwingzeit vorne mitte rechts"
+     ]
+    }
+   ]
+  },
+  "STATUS_IO_LESEN": {
+   "comment": [
+    "Status der I/O Ports lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "STAT_PORT_A",
+     "type": "int",
+     "comment": [
+      "Byte des Ports A"
+     ]
+    },
+    {
+     "name": "STAT_PORT_B",
+     "type": "int",
+     "comment": [
+      "Byte des Ports B"
+     ]
+    },
+    {
+     "name": "STAT_PORT_C",
+     "type": "int",
+     "comment": [
+      "Byte des Ports C"
+     ]
+    },
+    {
+     "name": "STAT_PORT_E",
+     "type": "int",
+     "comment": [
+      "Byte des Ports E"
+     ]
+    },
+    {
+     "name": "STAT_TASTER",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_ANHAENGER_JA",
+     "type": "int",
+     "comment": [
+      "1: Anhaenger vorhanden"
+     ]
+    },
+    {
+     "name": "STAT_RGANG_EIN",
+     "type": "int",
+     "comment": [
+      "1: Rueckwaertsgang eingelegt"
+     ]
+    },
+    {
+     "name": "STAT_DIAG_TON_HINTEN",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SPG_WANDLER",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_DIAG_TON_VORNE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_DIAG_FUNKTIONSANZEIGE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_KLEMME_15",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STATUS_MESSWERTE_LESEN": {
+   "comment": [
+    "Messwerte direkt und indirekt lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HL_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten links"
+     ]
+    },
+    {
+     "name": "STAT_HL_HML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt hinten links -> hinten mitte links"
+     ]
+    },
+    {
+     "name": "STAT_HML_HL_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt hinten mitte links -> hinten links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten in der Mitte links"
+     ]
+    },
+    {
+     "name": "STAT_HML_HMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt hinten mitte links -> hinten mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_HMR_HML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt hinten mitte rechts -> hinten mitte links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten in der Mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_HMR_HR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt hinten mitte rechts -> hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_HR_HMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt hinten rechts -> hinten mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VL_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne links"
+     ]
+    },
+    {
+     "name": "STAT_VL_VML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt vorne links -> vorne mitte links"
+     ]
+    },
+    {
+     "name": "STAT_VML_VL_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt vorne mitte links -> vorne links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne in der Mitte links"
+     ]
+    },
+    {
+     "name": "STAT_VML_VMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt vorne mitte links -> vorne mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_VMR_VML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt vorne mitte rechts -> vorne mitte links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne in der Mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_VMR_VR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt vorne mitte rechts -> vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_VR_VMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand indirekt vorne rechts -> vorne mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit cm fuer Abstaende"
+     ]
+    }
+   ]
+  },
+  "STATUS_WEG_V_MODE_LESEN": {
+   "comment": [
+    "Status des Steuergeraets lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "STAT_V_WERT",
+     "type": "int",
+     "comment": [
+      "Geschwindigkeit des Fahrzeugs"
+     ]
+    },
+    {
+     "name": "STAT_V_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit km/h"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HL_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten in der Mitte links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_HMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand hinten in der Mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VL_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VML_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne in der Mitte links"
+     ]
+    },
+    {
+     "name": "STAT_WEG_VMR_WERT",
+     "type": "int",
+     "comment": [
+      "Abstand vorne in der Mitte rechts"
+     ]
+    },
+    {
+     "name": "STAT_WEG_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit cm fuer Abstaende"
+     ]
+    },
+    {
+     "name": "STAT_PARKHILFE_AKTIV",
+     "type": "int",
+     "comment": [
+      "1: Parkhilfe aktiv"
+     ]
+    },
+    {
+     "name": "STAT_4_WANDLER",
+     "type": "int",
+     "comment": [
+      "1: 4-Kanal PDC"
+     ]
+    },
+    {
+     "name": "STAT_4_BESTUECKUNG",
+     "type": "int",
+     "comment": [
+      "1: 4-Kanaele bestueckt"
+     ]
+    },
+    {
+     "name": "STAT_RUECKWAERTSGANG",
+     "type": "int",
+     "comment": [
+      "1: Rueckwaertsgang eingelegt"
+     ]
+    },
+    {
+     "name": "STAT_ANHAENGER",
+     "type": "int",
+     "comment": [
+      "1: Anhaengerbetrieb"
+     ]
+    },
+    {
+     "name": "STAT_SIGNAL_RUECKWAERTSGANG",
+     "type": "string",
+     "comment": [
+      "BUS oder Pin 12"
+     ]
+    },
+    {
+     "name": "STAT_SIGNAL_RUECKWAERTSGANG_NR",
+     "type": "int",
+     "comment": [
+      "Rueckwaertsgangsignal  0 -> Pin 12, 1: -> BUS"
+     ]
+    },
+    {
+     "name": "STAT_SIGNAL_ANHAENGER",
+     "type": "string",
+     "comment": [
+      "BUS oder Pin 5"
+     ]
+    },
+    {
+     "name": "STAT_SIGNAL_ANHAENGER_NR",
+     "type": "int",
+     "comment": [
+      "Anhaengersignal 0 -> Pin 5, 1 -> BUS"
+     ]
+    },
+    {
+     "name": "STAT_SIGNAL_WEGGEBER",
+     "type": "string",
+     "comment": [
+      "BUS oder Pin 3"
+     ]
+    },
+    {
+     "name": "STAT_SIGNAL_WEGGEBER_NR",
+     "type": "int",
+     "comment": [
+      "BWeggebersignal 0 -> Pin 3, 1 -> BUS"
+     ]
+    },
+    {
+     "name": "STAT_PDC_AKTIV_KL15",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "STAT_DEAKTIVIERUNG",
+     "type": "string",
+     "comment": [
+      "Rueckwaertsgang oder Weg/Geschwindigkeit"
+     ]
+    },
+    {
+     "name": "STAT_DEAKTIVIERUNG_NR",
+     "type": "int",
+     "comment": [
+      "Deaktivierung ueber 0 -> Weg/Geschwindigkeit, 1 -> Rueckwaertsgang"
+     ]
+    },
+    {
+     "name": "STAT_EINSCHALTMELDUNG",
+     "type": "string",
+     "comment": [
+      "keine / bei erstem aktivieren / bei jedem aktivieren"
+     ]
+    },
+    {
+     "name": "STAT_EINSCHALTMELDUNG_NR",
+     "type": "int",
+     "comment": [
+      "0 -> keine / 1 -> bei erstem aktivieren / 2 -> bei jedem aktivieren"
+     ]
+    },
+    {
+     "name": "STAT_ABSCHALTMELDUNG",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    },
+    {
+     "name": "STAT_TASTERMELDUNG",
+     "type": "int",
+     "comment": [
+      "0 oder 1"
+     ]
+    }
+   ]
+  },
+  "STEUERN_IO_STATUS": {
+   "comment": [
+    "Ansteuern von den I/O Stati"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "ORT",
+     "type": "string",
+     "comment": [
+      "Diagnosemode, Tongeber, Kontrollsignal, System steuern",
+      "siehe table IO_STATUS"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Continental Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0x72",
+    "LIEF_TEXT": "ASIN AWCO.LTD"
+   },
+   {
+    "LIEF_NR": "0x73",
+    "LIEF_TEXT": "Shorlock"
+   },
+   {
+    "LIEF_NR": "0x74",
+    "LIEF_TEXT": "Schrader"
+   },
+   {
+    "LIEF_NR": "0x75",
+    "LIEF_TEXT": "BERU Electronics GmbH"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTNUMPREFIX": [
+   {
+    "ROVER_NR": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "ROVER_NR": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "ROVER_NR": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "ROVER_NR": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "ROVER_NR": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "ROVER_NR": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "ROVER_NR": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "ROVER_NR": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "ROVER_NR": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "ROVER_NR": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "ROVER_NR": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "ROVER_NR": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "ROVER_NR": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "ROVER_NR": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "ROVER_NR": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "ROVER_NR": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "ROVER_NR": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "ROVER_NR": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "ROVER_NR": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "ROVER_NR": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "ROVER_NR": "0xXY",
+    "PREFIX": "???"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "Wandler hinten links"
+   },
+   {
+    "ORT": "0x11",
+    "ORTTEXT": "Wandler hinten rechts"
+   },
+   {
+    "ORT": "0x12",
+    "ORTTEXT": "Wandler hinten Mitte links"
+   },
+   {
+    "ORT": "0x13",
+    "ORTTEXT": "Wandler hinten Mitte rechts"
+   },
+   {
+    "ORT": "0x14",
+    "ORTTEXT": "Wandler vorne links"
+   },
+   {
+    "ORT": "0x15",
+    "ORTTEXT": "Wandler vorne rechts"
+   },
+   {
+    "ORT": "0x16",
+    "ORTTEXT": "Wandler vorne Mitte links"
+   },
+   {
+    "ORT": "0x17",
+    "ORTTEXT": "Wandler vorne Mitte rechts"
+   },
+   {
+    "ORT": "0x18",
+    "ORTTEXT": "Spannung Wandler allgemein"
+   },
+   {
+    "ORT": "0x20",
+    "ORTTEXT": "Tongeber hinten aus"
+   },
+   {
+    "ORT": "0x21",
+    "ORTTEXT": "Tongeber hinten ein"
+   },
+   {
+    "ORT": "0x22",
+    "ORTTEXT": "Tongeber vorne aus"
+   },
+   {
+    "ORT": "0x23",
+    "ORTTEXT": "Tongeber vorne ein"
+   },
+   {
+    "ORT": "0x24",
+    "ORTTEXT": "Funktionsanzeige aus"
+   },
+   {
+    "ORT": "0x25",
+    "ORTTEXT": "Funktionsanzeige ein"
+   },
+   {
+    "ORT": "0x26",
+    "ORTTEXT": "Weggeber"
+   },
+   {
+    "ORT": "0x27",
+    "ORTTEXT": "Taste"
+   },
+   {
+    "ORT": "0x28",
+    "ORTTEXT": "Mikrocomputer"
+   },
+   {
+    "ORT": "0xXY",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x00",
+    "ARTTEXT": "--"
+   },
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "Kurzschluss Datenleitung gegen U-Batt"
+   },
+   {
+    "ARTNR": "0x02",
+    "ARTTEXT": "Kurzschluss Versorgungs-/Datenleitung gegen Masse"
+   },
+   {
+    "ARTNR": "0x03",
+    "ARTTEXT": "Leitungsunterbrechung"
+   },
+   {
+    "ARTNR": "0x04",
+    "ARTTEXT": "Ausschwingfehler"
+   },
+   {
+    "ARTNR": "0x05",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ARTNR": "0x06",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ARTNR": "0x07",
+    "ARTTEXT": "Kurzschluss gegen U-Batt"
+   },
+   {
+    "ARTNR": "0x08",
+    "ARTTEXT": "Kurzschluss gegen Masse"
+   },
+   {
+    "ARTNR": "0x09",
+    "ARTTEXT": "Leitungsunterbrechung"
+   },
+   {
+    "ARTNR": "0x0A",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ARTNR": "0x0B",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ARTNR": "0x0C",
+    "ARTTEXT": "Fehler im RAM"
+   },
+   {
+    "ARTNR": "0x0D",
+    "ARTTEXT": "Fehler Checksumme ROM"
+   },
+   {
+    "ARTNR": "0x0E",
+    "ARTTEXT": "Fehler Checksumme EEPROM"
+   },
+   {
+    "ARTNR": "0x0F",
+    "ARTTEXT": "Fehler momentan vorhanden"
+   },
+   {
+    "ARTNR": "0x10",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "--"
+   }
+  ],
+  "FARTMATRIX": [
+   {
+    "ORT": "0x10",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x11",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x12",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x13",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x14",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x15",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x16",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x17",
+    "A1_0": "0x00",
+    "A1_1": "0x01",
+    "A2_0": "0x00",
+    "A2_1": "0x02",
+    "A3_0": "0x00",
+    "A3_1": "0x03",
+    "A4_0": "0x00",
+    "A4_1": "0x04",
+    "A5_0": "0x00",
+    "A5_1": "0x05",
+    "A6_0": "0x00",
+    "A6_1": "0x06"
+   },
+   {
+    "ORT": "0x18",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x20",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x21",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x22",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x23",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x24",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x25",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x26",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x27",
+    "A1_0": "0x00",
+    "A1_1": "0x07",
+    "A2_0": "0x00",
+    "A2_1": "0x08",
+    "A3_0": "0x00",
+    "A3_1": "0x09",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0A",
+    "A6_0": "0x00",
+    "A6_1": "0x0B"
+   },
+   {
+    "ORT": "0x28",
+    "A1_0": "0x00",
+    "A1_1": "0x0C",
+    "A2_0": "0x00",
+    "A2_1": "0x0D",
+    "A3_0": "0x00",
+    "A3_1": "0x0E",
+    "A4_0": "0xFF",
+    "A4_1": "0xFF",
+    "A5_0": "0x00",
+    "A5_1": "0x0F",
+    "A6_0": "0x00",
+    "A6_1": "0x10"
+   }
+  ],
+  "IO_STATUS": [
+   {
+    "SIGNAL": "DTAUS",
+    "BYTE": "0x01"
+   },
+   {
+    "SIGNAL": "DTVEIN",
+    "BYTE": "0x02"
+   },
+   {
+    "SIGNAL": "DTHEIN",
+    "BYTE": "0x04"
+   },
+   {
+    "SIGNAL": "DKSAUS",
+    "BYTE": "0x08"
+   },
+   {
+    "SIGNAL": "DKSEIN",
+    "BYTE": "0x10"
+   },
+   {
+    "SIGNAL": "DEIN",
+    "BYTE": "0x20"
+   },
+   {
+    "SIGNAL": "SAUS",
+    "BYTE": "0x40"
+   },
+   {
+    "SIGNAL": "SEIN",
+    "BYTE": "0x80"
+   }
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "sgbd": "D_0044",
+ "file": "D_0044.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0044"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Atell"
+  ],
+  "REVISION": [
+   "1.09"
+  ],
+  "AUTHOR": [
+   "BMW TP-421 Spoljarec"
+  ],
+  "ECUCOMMENT": [
+   "EWS, EWS3, EWS3D"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

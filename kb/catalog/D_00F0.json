@@ -1,0 +1,62 @@
+{
+ "sgbd": "D_00F0",
+ "file": "D_00F0.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_00F0"
+  ],
+  "ORIGIN": [
+   "BMW TI-43= Buboltz"
+  ],
+  "REVISION": [
+   "1.09"
+  ],
+  "AUTHOR": [
+   "BMW TI-433 Teepe, BMW TI-433 Helmich, BMW TI-433 Krueger"
+  ],
+  "ECUCOMMENT": [
+   "BORDMONI, BMBT46TN, BMBT46RN, BM_WIDE, BM46WIDE, BMBT_MIR, BMBTR50"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    "Bordmoni (E38/39), BMBT46TN, BMBT46RN, BMBT46J (E46)"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Init-Job fuer Bordmonitor"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1 wenn Okay"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

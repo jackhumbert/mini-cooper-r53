@@ -1,0 +1,7327 @@
+{
+ "sgbd": "GSF21",
+ "file": "GSF21.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "EGS AISIN WARNER"
+  ],
+  "ORIGIN": [
+   "BMW EA74 GUETER"
+  ],
+  "REVISION": [
+   "1.001"
+  ],
+  "AUTHOR": [
+   "AWTC_Europe Software_Development NAUDTS, AWTC_Europe Software_Development TRIEST"
+  ],
+  "ECUCOMMENT": [
+   ""
+  ]
+ },
+ "jobs": {
+  "AIF_LESEN": {
+   "comment": [
+    "Auslesen des Anwender Informations Feldes",
+    "Standard Flashjob",
+    "KWP 2000: $23 ReadMemoryByAddress",
+    "Modus   : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "AIF_NUMMER",
+     "type": "int",
+     "comment": [
+      "==0 : aktuelles AIF",
+      "> 0 : Nummer des zu lesenden AIF",
+      "default = 0 : aktuelles AIF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "AIF_ADRESSE_HIGH",
+     "type": "int",
+     "comment": [
+      "AIF Adresse des AIF, High-Word"
+     ]
+    },
+    {
+     "name": "AIF_ADRESSE_LOW",
+     "type": "int",
+     "comment": [
+      "AIF Adresse des AIF, Low-Word"
+     ]
+    },
+    {
+     "name": "AIF_FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer 7-stellig"
+     ]
+    },
+    {
+     "name": "AIF_FG_NR_LANG",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer 17-stellig falls vorhanden, sonst 7-stellig"
+     ]
+    },
+    {
+     "name": "AIF_DATUM",
+     "type": "string",
+     "comment": [
+      "Datum der SG-Programmierung in der Form TT.MM.JJJJ"
+     ]
+    },
+    {
+     "name": "AIF_ZB_NR",
+     "type": "string",
+     "comment": [
+      "BMW/Rover Zusammenbaunummer"
+     ]
+    },
+    {
+     "name": "AIF_SW_NR",
+     "type": "string",
+     "comment": [
+      "BMW/Rover Datensatznummer - Softwarenummer"
+     ]
+    },
+    {
+     "name": "AIF_BEHOERDEN_NR",
+     "type": "string",
+     "comment": [
+      "BMW/Rover Behoerdennummer"
+     ]
+    },
+    {
+     "name": "AIF_HAENDLER_NR",
+     "type": "string",
+     "comment": [
+      "Haendlernummer"
+     ]
+    },
+    {
+     "name": "AIF_SERIEN_NR",
+     "type": "string",
+     "comment": [
+      "Tester Seriennummer"
+     ]
+    },
+    {
+     "name": "AIF_KM",
+     "type": "long",
+     "comment": [
+      "km-Stand bei der Programmierung"
+     ]
+    },
+    {
+     "name": "AIF_PROG_NR",
+     "type": "string",
+     "comment": [
+      "Programmstandsnummer"
+     ]
+    },
+    {
+     "name": "AIF_ANZ_FREI",
+     "type": "int",
+     "comment": [
+      "Anzahl noch vorhandener AIF-Eintraege"
+     ]
+    },
+    {
+     "name": "AIF_ANZAHL_PROG",
+     "type": "int",
+     "comment": [
+      "Anzahl Programmiervorgaenge"
+     ]
+    },
+    {
+     "name": "AIF_ANZ_DATEN",
+     "type": "int",
+     "comment": [
+      "Groesse des AIF-Eintrags"
+     ]
+    },
+    {
+     "name": "AIF_GROESSE",
+     "type": "int",
+     "comment": [
+      "Groesse des AIF"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "DATEN_REFERENZ_LESEN": {
+   "comment": [
+    "Auslesen der Daten Referenz",
+    "KWP2000: $22   ReadDataByCommonIdentifier",
+    "$2504 DREF",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "DATEN_REFERENZ",
+     "type": "string",
+     "comment": [
+      "Daten Referenz",
+      "Format: ZZZPPPxVBBxhdxxxx 17 Byte ASCII",
+      "ZZZ   : Hardwarelieferant",
+      "PPP   : Hardwarerelevanz zum Programmstand",
+      "x     : nicht programmrelevante Varianten der Hardware",
+      "V     : Projektvariante",
+      "BB    : Programmstand",
+      "x     : nicht datenrelevanter Änderungsindex",
+      "h     : Programmstandersteller",
+      "d     : Datenstandersteller",
+      "xxxx  : frei aber eindeutig belegt"
+     ]
+    },
+    {
+     "name": "DATEN_REF_SG_KENNUNG",
+     "type": "string",
+     "comment": [
+      "ZZZ"
+     ]
+    },
+    {
+     "name": "DATEN_REF_PROJEKT",
+     "type": "string",
+     "comment": [
+      "PPPxV"
+     ]
+    },
+    {
+     "name": "DATEN_REF_PROGRAMM_STAND",
+     "type": "string",
+     "comment": [
+      "BBxh"
+     ]
+    },
+    {
+     "name": "DATEN_REF_DATENSATZ",
+     "type": "string",
+     "comment": [
+      "dxxxx"
+     ]
+    },
+    {
+     "name": "DATEN_REF_STATUS",
+     "type": "int",
+     "comment": [
+      "Dateninhalt bei FF noch nicht beschrieben"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSEPROTOKOLL_LESEN": {
+   "comment": [
+    "Gibt die möglichen Diagnoseprotokolle",
+    "für eine Auswahl an den Aufrufer zurück"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY oder ERROR_DIAG_PROT"
+     ]
+    },
+    {
+     "name": "DIAG_PROT_IST",
+     "type": "string",
+     "comment": [
+      "Gibt das aktuelle gewählte Protokoll aus",
+      "table KONZEPT_TABELLE KONZEPT_TEXT"
+     ]
+    },
+    {
+     "name": "DIAG_PROT_ANZAHL",
+     "type": "int",
+     "comment": [
+      "Anzahl der Diagnoseprotokolle"
+     ]
+    },
+    {
+     "name": "DIAG_PROT_NR1",
+     "type": "string",
+     "comment": [
+      "Alle möglichen Diagnose-Protokolle",
+      "Falls mehrere Protokolle möglich sind",
+      "werden die entsprechenden Results",
+      "DIAG_PROT_NRx dynamisch erzeugt"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSEPROTOKOLL_SETZEN": {
+   "comment": [
+    "Wählt ein Diagnoseprotokoll aus"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'DIAGNOSEPROTOKOLL_SETZEN'",
+   "args": [
+    {
+     "name": "DIAG_PROT",
+     "type": "string",
+     "comment": [
+      "Diagnoseprotokoll",
+      "table KONZEPT_TABELLE KONZEPT_TEXT"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Diagnosemode des SG aufrecht erhalten",
+    "KWP2000: $3E TesterPresent",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [
+    {
+     "name": "SG_ANTWORT",
+     "type": "string",
+     "comment": [
+      "\"ja\"   -> SG soll antworten",
+      "\"nein\" -> SG soll nicht antworten",
+      "table DigitalArgument TEXT",
+      "Default:  SG soll antworten"
+     ]
+    },
+    {
+     "name": "FUNKTIONAL",
+     "type": "string",
+     "comment": [
+      "\"ja\"   -> Funktionale Adresse 0xEF wird benutzt",
+      "nur in Verbindung mit SG_ANTWORT=\"nein\"",
+      "\"nein\" -> SG Adresse wird benutzt",
+      "table DigitalArgument TEXT",
+      "Default:  SG Adresse wird benutzt"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnosemode des SG beenden",
+    "KWP2000: $20 StopDiagnosticSession",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_MODE": {
+   "comment": [
+    "SG in bestimmten Diagnosemode bringen",
+    "KWP2000: $10 StartDiagnosticSession",
+    "Modus  : einstellbar mit diesem Job",
+    "",
+    "Wenn MODE = \"ECUPM\" ( ECUProgrammingMode )",
+    "muss nach dem Job die Steuergeraete-Resetzeit",
+    "abgewartet werden. Danach ist das Steuergeraet",
+    "wieder diagnosefaehig",
+    "",
+    "siehe",
+    "Job FLASH_ZEITEN_LESEN Result FLASH_RESETZEIT"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'DIAGNOSE_MODE'",
+   "args": [
+    {
+     "name": "MODE",
+     "type": "string",
+     "comment": [
+      "gewuenschter Diagnose-Modus",
+      "table DiagMode MODE MODE_TEXT",
+      "Defaultwert: DEFAULT (DefaultMode)"
+     ]
+    },
+    {
+     "name": "BAUDRATE",
+     "type": "string",
+     "comment": [
+      "optionaler Parameter fuer die gewuenschte Baudrate",
+      "table BaudRate BAUD"
+     ]
+    },
+    {
+     "name": "SPEZIFISCHE_BAUDRATE_WERT",
+     "type": "long",
+     "comment": [
+      "Parameter nur fuer BAUDRATE = 'SB' ( spezifische Baudrate )"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen (alle Fehler / Ort und Art)",
+    "KWP2000: $18 ReadDiagnosticTroubleCodesByStatus",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "F_VERSION",
+     "type": "int",
+     "comment": [
+      "Typ des Fehlerspeichers",
+      "Fuer KWP-2000 immer 2"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "long",
+     "comment": [
+      "Index fuer Fehlerort"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "table FOrtTexte ORTTEXT"
+     ]
+    },
+    {
+     "name": "F_SYMPTOM_NR",
+     "type": "int",
+     "comment": [
+      "Fehlersymptom (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_SYMPTOM_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlersymptom (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_READY_NR",
+     "type": "int",
+     "comment": [
+      "Readyness Flag (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_READY_TEXT",
+     "type": "string",
+     "comment": [
+      "Readyness Flag (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_VORHANDEN_NR",
+     "type": "int",
+     "comment": [
+      "Fehler vorhanden (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_VORHANDEN_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehler vorhanden (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_WARNUNG_NR",
+     "type": "int",
+     "comment": [
+      "Warnlampen Flag (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_WARNUNG_TEXT",
+     "type": "string",
+     "comment": [
+      "Warnlampen Flag (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN_DETAIL": {
+   "comment": [
+    "Fehlerspeicher lesen (ein Fehler / alle Details)",
+    "KWP2000: $17 ReadStatusOfDiagnosticTroubleCodes",
+    "Modus: Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [
+    {
+     "name": "F_CODE",
+     "type": "int",
+     "comment": [
+      "gewaehlter Fehlercode"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "F_VERSION",
+     "type": "int",
+     "comment": [
+      "Typ des Fehlerspeichers",
+      "Fuer KWP-2000 immer 2"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "long",
+     "comment": [
+      "Index fuer Fehlerort"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "table FOrtTexte ORTTEXT"
+     ]
+    },
+    {
+     "name": "F_SYMPTOM_NR",
+     "type": "int",
+     "comment": [
+      "Fehlersymptom (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_SYMPTOM_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlersymptom (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_READY_NR",
+     "type": "int",
+     "comment": [
+      "Readyness Flag (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_READY_TEXT",
+     "type": "string",
+     "comment": [
+      "Readyness Flag (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_VORHANDEN_NR",
+     "type": "int",
+     "comment": [
+      "Fehler vorhanden (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_VORHANDEN_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehler vorhanden (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_WARNUNG_NR",
+     "type": "int",
+     "comment": [
+      "Warnlampen Flag (Standard-Fehlerart) als Zahl"
+     ]
+    },
+    {
+     "name": "F_WARNUNG_TEXT",
+     "type": "string",
+     "comment": [
+      "Warnlampen Flag (Standard-Fehlerart) als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "F_PCODE",
+     "type": "unsigned int",
+     "comment": [
+      "optional / Pflicht fuer abgasrelevante SG",
+      "Wertebereich 0x0000 - 0xFFFF",
+      "0x0000: wenn nicht belegt"
+     ]
+    },
+    {
+     "name": "F_PCODE_STRING",
+     "type": "string",
+     "comment": [
+      "5 stelliger Text in der Form 'Pxxxx'",
+      "'--': wenn nicht belegt",
+      "'??': wenn nicht bekannt"
+     ]
+    },
+    {
+     "name": "F_PCODE_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehler als Klartext",
+      "'': wenn nicht belegt",
+      "table PCodeTexte TEXT"
+     ]
+    },
+    {
+     "name": "F_PCODE7",
+     "type": "unsigned int",
+     "comment": [
+      "optional / fuer abgasrelevante SG",
+      "Wertebereich 0x0000 - 0xFFFF",
+      "0x0000: wenn nicht belegt"
+     ]
+    },
+    {
+     "name": "F_PCODE7_STRING",
+     "type": "string",
+     "comment": [
+      "5 stelliger Text in der Form 'Pxxxx'",
+      "'--': wenn nicht belegt",
+      "'??': wenn nicht bekannt"
+     ]
+    },
+    {
+     "name": "F_PCODE7_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehler als Klartext",
+      "'': wenn nicht belegt",
+      "table PCodeTexte TEXT"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Haufigkeitszaehler als Zahl",
+      "Wertebereich 0 - 255",
+      "-1: ohne Haufigkeitszaehler"
+     ]
+    },
+    {
+     "name": "F_LZ",
+     "type": "int",
+     "comment": [
+      "Logistikzaehler als Zahl",
+      "Wertebereich 0 - 255",
+      "-1: ohne Logistikzaehler"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der zusaetzlichen Fehlerarten",
+      "Je nach dieser Anzahl i (i = 1, 2, ...)",
+      "existieren i mal folgende Results:",
+      "(long)   F_ARTi_NR   Index der i. Fehlerart",
+      "(string) F_ARTi_TEXT Text  zur i. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_UW_KM",
+     "type": "long",
+     "comment": [
+      "Umweltbedingung Kilometerstand",
+      "Wertebereich: 0 - 524280 km"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen",
+      "Je nach dieser Anzahl i (i = 1, 2, ...)",
+      "existieren i mal folgende Results:",
+      "(long)   F_UWi_NR   Index   der i. Umweltbedingung",
+      "(string) F_UWi_TEXT Text    zur i. Umweltbedingung",
+      "(real)   F_Uwi_WERT Wert    der i. Umweltbedingung",
+      "(string) F_UWi_EINH Einheit der i. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen",
+    "KWP2000: $14 ClearDiagnosticInformation",
+    "Modus  : Default"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "HARDWARE_REFERENZ_LESEN": {
+   "comment": [
+    "Auslesen der Hardware Referenz",
+    "KWP2000: $22   ReadDataByCommonIdentifier",
+    "$2502 HWREF",
+    "oder alternativ",
+    "KWP2000: $1A ReadECUIdentification",
+    "$80 ECUIdentificationDataTable",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "HARDWARE_REFERENZ",
+     "type": "string",
+     "comment": [
+      "Hardware Referenz",
+      "Format: ZZZPPPx 7 Byte ASCII",
+      "ZZZ   : Hardwarelieferant",
+      "PPP   : Hardwarerelevanz zum Programmstand",
+      "x     : nicht programmrelevante Varianten der Hardware"
+     ]
+    },
+    {
+     "name": "HW_REF_SG_KENNUNG",
+     "type": "string",
+     "comment": [
+      "ZZZ"
+     ]
+    },
+    {
+     "name": "HW_REF_PROJEKT",
+     "type": "string",
+     "comment": [
+      "PPPx"
+     ]
+    },
+    {
+     "name": "HW_REF_STATUS",
+     "type": "int",
+     "comment": [
+      "Dateninhalt bei FF noch nicht beschrieben"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Identdaten",
+    "KWP2000: $1A ReadECUIdentification",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Hardware-Versionsindex"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_VAR_INDEX",
+     "type": "int",
+     "comment": [
+      "Varianten-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum (Jahr)"
+     ]
+    },
+    {
+     "name": "ID_DATUM_MONAT",
+     "type": "int",
+     "comment": [
+      "Herstelldatum (Monat)"
+     ]
+    },
+    {
+     "name": "ID_DATUM_TAG",
+     "type": "int",
+     "comment": [
+      "Herstelldatum (Tag)"
+     ]
+    },
+    {
+     "name": "ID_DATUM",
+     "type": "string",
+     "comment": [
+      "Herstelldatum (TT.MM.JJJJ)"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Text",
+      "table Lieferanten LIEF_TEXT"
+     ]
+    },
+    {
+     "name": "ID_SW_NR_MCV",
+     "type": "string",
+     "comment": [
+      "Softwarenummer (message catalogue version)"
+     ]
+    },
+    {
+     "name": "ID_SW_NR_FSV",
+     "type": "string",
+     "comment": [
+      "Softwarenummer (functional software version)"
+     ]
+    },
+    {
+     "name": "ID_SW_NR_OSV",
+     "type": "string",
+     "comment": [
+      "Softwarenummer (operating system version)"
+     ]
+    },
+    {
+     "name": "ID_SW_NR_RES",
+     "type": "string",
+     "comment": [
+      "Softwarenummer (reserved - currently unused)"
+     ]
+    },
+    {
+     "name": "ID_SG_ADR",
+     "type": "long",
+     "comment": [
+      "Steuergeraeteadresse",
+      "bzw. LIN Master Steuergeraeteadresse"
+     ]
+    },
+    {
+     "name": "ID_LIN_SLAVE_ADR",
+     "type": "long",
+     "comment": [
+      "LIN Slave Steuergeraeteadresse"
+     ]
+    },
+    {
+     "name": "ID_EWS_SS",
+     "type": "int",
+     "comment": [
+      "Identifikation EWS-Schnittstelle",
+      "Nur fuer DS2-Bordnetz benoetigt",
+      "Fuer EWS-DME/DDE Abgleich"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "NORMALER_DATENVERKEHR": {
+   "comment": [
+    "Sperren bzw. Freigeben des normalen Datenverkehrs",
+    "KWP2000: $28 DisableNormalMessageTransmission",
+    "KWP2000: $29 EnableNormalMessageTransmission",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'NORMALER_DATENVERKEHR'",
+   "args": [
+    {
+     "name": "FREIGEBEN",
+     "type": "string",
+     "comment": [
+      "\"ja\"   -> normalen Datenverkehr freigeben",
+      "\"nein\" -> normalen Datenverkehr sperren",
+      "table DigitalArgument TEXT"
+     ]
+    },
+    {
+     "name": "SG_ANTWORT",
+     "type": "string",
+     "comment": [
+      "\"ja\"   -> SG soll antworten",
+      "\"nein\" -> SG soll nicht antworten",
+      "table DigitalArgument TEXT",
+      "Default:  SG soll antworten"
+     ]
+    },
+    {
+     "name": "FUNKTIONAL",
+     "type": "string",
+     "comment": [
+      "\"ja\"   -> Funktionale Adresse 0xEF wird benutzt",
+      "nur in Verbindung mit SG_ANTWORT=\"nein\"",
+      "\"nein\" -> SG Adresse wird benutzt",
+      "table DigitalArgument TEXT",
+      "Default:  SG Adresse wird benutzt"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "PHYSIKALISCHE_HW_NR_LESEN": {
+   "comment": [
+    "Auslesen der physikalischen Hardwarenummer",
+    "KWP2000: $1A ReadECUIdentification",
+    "$87 physicalECUHardwareNumber (PECUHN)",
+    "oder alternativ",
+    "KWP2000: $1A ReadECUIdentification",
+    "$80 ECUIdentificationDataTable",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "PHYSIKALISCHE_HW_NR",
+     "type": "string",
+     "comment": [
+      "Physikalische Hardware-Nummer"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "PRUEFCODE_LESEN": {
+   "comment": [
+    "Standard Pruefcode lesen fuer Kundendienst",
+    "KWP2000: $1A ReadECUIdentification",
+    "KWP2000: $18 ReadDiagnosticTroubleCodesByStatus",
+    "KWP2000: $17 ReadStatusOfDiagnosticTroubleCodes",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "PRUEFCODE",
+     "type": "binary",
+     "comment": [
+      "Pruefcode Daten"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels",
+    "KWP2000: $22 ReadDataByCommonIdentifier",
+    "$1000 TestStamp",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels",
+    "Es muessen immer alle drei Argumente im Bereich",
+    "von 0-255 bzw. 0x00-0xFF uebergeben werden.",
+    "KWP2000: $2E WriteDataByCommonIdentifier",
+    "$1000 TestStamp",
+    "Modus  : Default"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "Bereich: 0-255 bzw. 0x00-0xFF"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "QUICKTEST": {
+   "comment": [
+    "Anzahl Fehler / Kilometerstand",
+    "KWP2000: $31 StartRoutineByLocalIdentifier",
+    "Modus  : Default"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'QUICKTEST'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ANZAHL_FEHLER",
+     "type": "int",
+     "comment": [
+      "Anzahl Fehler im Fehlerspeicher",
+      ""
+     ]
+    },
+    {
+     "name": "KILOMETERSTAND_AKTUELL",
+     "type": "real",
+     "comment": [
+      "Kilometerstand aktuell",
+      ""
+     ]
+    },
+    {
+     "name": "KILOMETERSTAND_FS_LOESCHEN",
+     "type": "real",
+     "comment": [
+      "Kilometerstand beim letzten FS-Loeschen",
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    }
+   ]
+  },
+  "SERIENNUMMER_LESEN": {
+   "comment": [
+    "Hersteller Seriennummer lesen",
+    "KWP2000: $1A ReadECUIdentification",
+    "$89 SystemSupplierECUSerialNumber",
+    "oder alternativ",
+    "KWP2000: $1A ReadECUIdentification",
+    "$80 ECUIdentificationDataTable",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "SERIENNUMMER",
+     "type": "string",
+     "comment": [
+      "Seriennummer des Steuergeraets"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT_2",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Auslesen des Steuergeraete-Speichers",
+    "Als Argumente werden uebergeben:",
+    "Speichersegment, Start-Adresse und Anzahl der Datenbytes",
+    "KWP 2000: $23 ReadMemoryByAddress",
+    "Modus   : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "SEGMENT",
+     "type": "string",
+     "comment": [
+      "table SpeicherSegment SEG_NAME"
+     ]
+    },
+    {
+     "name": "ADRESSE",
+     "type": "unsigned long",
+     "comment": [
+      "0x000000 - 0xFFFFFF (RAM variables: refer to STATUS_RBM_Tabel)"
+     ]
+    },
+    {
+     "name": "ANZAHL",
+     "type": "int",
+     "comment": [
+      "1 - n ( 254 )"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "DATEN",
+     "type": "real",
+     "comment": [
+      "ausgelesene Daten"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_BYTE_1": {
+   "comment": [
+    "RLI = 01h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SHIFT_SOLENOID_S1_OUTPUT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SHIFT_SOLENOID_S2_OUTPUT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SHIFT_LOCK_SOLENOID_OUTPUT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_BYTE_3": {
+   "comment": [
+    "RLI = 15h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_BRAKE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TIP_ON",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TIP_PLUS",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TIP_MINUS",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_LOCKUP",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MIL_REQ",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_DISPLAY_REQ",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_WARMUP_CYCLE_ACHIEVEMENT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_BYTE_4": {
+   "comment": [
+    "RLI = 16h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_GEAR_ENGAGEMENT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TORQ_CONV_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Torque_Converter_Status WERT"
+     ]
+    },
+    {
+     "name": "STAT_TORQ_CONV_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Torque_Converter_Status TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_BYTE_5": {
+   "comment": [
+    "RLI = 17h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_STATUS_ACTUAL_GEAR_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Actual_Gear WERT"
+     ]
+    },
+    {
+     "name": "STAT_STATUS_ACTUAL_GEAR_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Actual_Gear TEXT"
+     ]
+    },
+    {
+     "name": "STAT_GEARSWITCH_ACTIVE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_GEARSHIFT_REFUSED",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_BYTE_7": {
+   "comment": [
+    "RLI = 19h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_GEAR_ERROR_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Gear_Error WERT"
+     ]
+    },
+    {
+     "name": "STAT_GEAR_ERROR_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Gear_Error TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_ENG_SPEED": {
+   "comment": [
+    "RLI = 0Ch",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_ENG_SPEED_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [RPM] bis 65535 [RPM]"
+     ]
+    },
+    {
+     "name": "STAT_ENG_SPEED_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: RPM"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_ENG_TORQUE": {
+   "comment": [
+    "RLI = 0Dh",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_ENG_TORQUE_DRIVER_REQUEST": {
+   "comment": [
+    "RLI = 0Eh",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_DRIVER_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_DRIVER_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_IG_VOLTAGE": {
+   "comment": [
+    "RLI = 0Bh",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_IG_VOLTAGE_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [Volt] bis 25.5 [Volt]"
+     ]
+    },
+    {
+     "name": "STAT_IG_VOLTAGE_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: Volt"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_OIL_TEMP_ATF": {
+   "comment": [
+    "RLI = 0Ah",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_OIL_TEMP_ATF_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von -55 [Degree C] bis 200 [Degree C]"
+     ]
+    },
+    {
+     "name": "STAT_OIL_TEMP_ATF_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: Degree C"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_RAMDATA_READABLE": {
+   "comment": [
+    "RLI = 7Fh",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SHIFT_SOLENOID_S1_OUTPUT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SHIFT_SOLENOID_S2_OUTPUT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SHIFT_LOCK_SOLENOID_OUTPUT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_SLC1_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLC1_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_SLC2_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLC2_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_SLC3_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLC3_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_SLB1_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLB1_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_SLT_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLT_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_SLU_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLU_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "STAT_REV_OUT_T_M_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [RPM] bis 7650 [RPM]"
+     ]
+    },
+    {
+     "name": "STAT_REV_OUT_T_M_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: RPM"
+     ]
+    },
+    {
+     "name": "STAT_REV_IN_T_M_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [RPM] bis 7650 [RPM]"
+     ]
+    },
+    {
+     "name": "STAT_REV_IN_T_M_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: RPM"
+     ]
+    },
+    {
+     "name": "STAT_OIL_TEMP_ATF_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von -55 [Degree C] bis 200 [Degree C]"
+     ]
+    },
+    {
+     "name": "STAT_OIL_TEMP_ATF_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: Degree C"
+     ]
+    },
+    {
+     "name": "STAT_IG_VOLTAGE_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [Volt] bis 25.5 [Volt]"
+     ]
+    },
+    {
+     "name": "STAT_IG_VOLTAGE_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: Volt"
+     ]
+    },
+    {
+     "name": "STAT_ENG_SPEED_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [RPM] bis 65535 [RPM]"
+     ]
+    },
+    {
+     "name": "STAT_ENG_SPEED_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: RPM"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_DRIVER_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_ENG_TORQUE_DRIVER_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "STAT_THROTTLE_POSITION_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_THROTTLE_POSITION_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_CONTROL_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_CONTROL_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_LIMIT_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_LIMIT_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_INCREASE_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_INCREASE_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "STAT_VEHICLE_SPEED_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [Km/H] bis 255 [Km/H]"
+     ]
+    },
+    {
+     "name": "STAT_VEHICLE_SPEED_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: Km/H"
+     ]
+    },
+    {
+     "name": "STAT_SHIFTLEV_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Shift_Lever_Position WERT"
+     ]
+    },
+    {
+     "name": "STAT_SHIFTLEV_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Shift_Lever_Position TEXT"
+     ]
+    },
+    {
+     "name": "STAT_BRAKE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TIP_ON",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TIP_PLUS",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TIP_MINUS",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_LOCKUP",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_MIL_REQ",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_DISPLAY_REQ",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_WARMUP_CYCLE_ACHIEVEMENT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_GEAR_ENGAGEMENT",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_TORQ_CONV_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Torque_Converter_Status WERT"
+     ]
+    },
+    {
+     "name": "STAT_TORQ_CONV_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Torque_Converter_Status TEXT"
+     ]
+    },
+    {
+     "name": "STAT_ACTUAL_GEAR_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Actual_Gear WERT"
+     ]
+    },
+    {
+     "name": "STAT_ACTUAL_GEAR_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Actual_Gear TEXT"
+     ]
+    },
+    {
+     "name": "STAT_GEARSWITCH_ACTIVE",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_GEARSHIFT_REFUSED",
+     "type": "int",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "STAT_GEAR_ERROR_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Gear_Error WERT"
+     ]
+    },
+    {
+     "name": "STAT_GEAR_ERROR_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Gear_Error TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_REV_IN_T_M": {
+   "comment": [
+    "RLI = 09h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_REV_IN_T_M_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [RPM] bis 7650 [RPM]"
+     ]
+    },
+    {
+     "name": "STAT_REV_IN_T_M_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: RPM"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_REV_OUT_T_M": {
+   "comment": [
+    "RLI = 08h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_REV_OUT_T_M_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [RPM] bis 7650 [RPM]"
+     ]
+    },
+    {
+     "name": "STAT_REV_OUT_T_M_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: RPM"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SHIFTLEV": {
+   "comment": [
+    "RLI = 14h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SHIFTLEV_WERT",
+     "type": "int",
+     "comment": [
+      "",
+      "table Shift_Lever_Position WERT"
+     ]
+    },
+    {
+     "name": "STAT_SHIFTLEV_TEXT",
+     "type": "string",
+     "comment": [
+      "",
+      "table Shift_Lever_Position TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SIGNAL_STELLGLIED": {
+   "comment": [
+    "Auslesen Status der Signale/Stellglieder",
+    "KWP2000: $30 InputOutputControlByLocalIdentifier",
+    "Modus  : Default"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [
+    {
+     "name": "SIGNAL",
+     "type": "string",
+     "comment": [
+      "S1,S2,SLC1,SLC2,SLC3,SLB1,SLT,SLU,SHIFTLOCK"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_LOCAL_IDENTIFIER_TEXT",
+     "type": "string",
+     "comment": [
+      "S1,S2,SLC1,SLC2,SLC3,SLB1,SLT,SLU,SHIFTLOCK"
+     ]
+    },
+    {
+     "name": "STAT_CONTROLSTATE_WERT",
+     "type": "real",
+     "comment": [
+      "Current_value"
+     ]
+    },
+    {
+     "name": "STAT_CONTROLSTATE_EINH",
+     "type": "string",
+     "comment": [
+      "mA"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SLB1_OUT_CURRENT": {
+   "comment": [
+    "RLI = 05h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SLB1_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLB1_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SLC1_OUT_CURRENT": {
+   "comment": [
+    "RLI = 02h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SLC1_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLC1_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SLC2_OUT_CURRENT": {
+   "comment": [
+    "RLI = 03h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SLC2_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLC2_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SLC3_OUT_CURRENT": {
+   "comment": [
+    "RLI = 04h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SLC3_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLC3_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SLT_OUT_CURRENT": {
+   "comment": [
+    "RLI = 06h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SLT_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLT_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_SLU_OUT_CURRENT": {
+   "comment": [
+    "RLI = 07h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_SLU_OUT_CURRENT_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [mA] bis 2550 [mA]"
+     ]
+    },
+    {
+     "name": "STAT_SLU_OUT_CURRENT_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: mA"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_THROTTLE_POSITION": {
+   "comment": [
+    "RLI = 0Fh",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_THROTTLE_POSITION_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_THROTTLE_POSITION_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_TORQUE_CONTROL_REQUEST": {
+   "comment": [
+    "RLI = 10H",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_CONTROL_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_CONTROL_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_TORQUE_INCREASE_REQUEST": {
+   "comment": [
+    "RLI =12h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_INCREASE_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_INCREASE_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_TORQUE_LIMIT_REQUEST": {
+   "comment": [
+    "RLI =11h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_LIMIT_REQUEST_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [%] bis 255 [%]"
+     ]
+    },
+    {
+     "name": "STAT_TORQUE_LIMIT_REQUEST_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: %"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STATUS_VEHICLE_SPEED": {
+   "comment": [
+    "RLI = 13h",
+    "mit dem SGBD-Generator erzeugt"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "STAT_VEHICLE_SPEED_WERT",
+     "type": "real",
+     "comment": [
+      "",
+      "Bereich von 0 [Km/H] bis 255 [Km/H]"
+     ]
+    },
+    {
+     "name": "STAT_VEHICLE_SPEED_EINH",
+     "type": "string",
+     "comment": [
+      "",
+      "Einheit: Km/H"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag von SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STEUERGERAETE_RESET": {
+   "comment": [
+    "Steuergeraete reset ausloesen",
+    "KWP2000: $11 ECUReset",
+    "$01 PowerOn",
+    "Modus  : Default",
+    "",
+    "Nach dem Job muss die Steuergeraete-Resetzeit",
+    "abgewartet werden. Danach ist das Steuergeraet",
+    "wieder diagnosefaehig",
+    "",
+    "siehe",
+    "Job FLASH_ZEITEN_LESEN Result FLASH_RESETZEIT"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'STEUERGERAETE_RESET'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STEUERN_ADAPTIONSWERTE_RUECKSETZEN": {
+   "comment": [
+    "alle Adaptionswerte ruecksetzen",
+    "KWP2000: $31 StartRoutineByLocalIdentifier",
+    "Modus  : Default"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    }
+   ]
+  },
+  "STEUERN_SIGNAL_STELLGLIED": {
+   "comment": [
+    "Status setzen der Signale/Stellglieder",
+    "KWP2000: $30 InputOutputControlByLocalIdentifier",
+    "Modus  : Default"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "SIGNAL",
+     "type": "string",
+     "comment": [
+      "S1,S2,SLC1,SLC2,SLC3,SLB1,SLT,SLU,SHIFTLOCK"
+     ]
+    },
+    {
+     "name": "ZUSTAND_STRING",
+     "type": "string",
+     "comment": [
+      "ON, OFF, AUTOMATIC, RCTECU (ReturnControlToECU)==> (default=Automatic)!!! ONLY ONE ZUSTAND ARGUMENT is permitted (String OR Value) !!!"
+     ]
+    },
+    {
+     "name": "ZUSTAND_VALUE",
+     "type": "int",
+     "comment": [
+      "from 0 mA to 1000 mA (NOT USED FOR S1 and S2 SOLENOIDS)!!! ONLY ONE ZUSTAND ARGUMENT is permitted (String OR Value) !!!"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Hex-Auftrag an SG"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "KONZEPT_TABELLE": [
+   {
+    "NR": "0x0F",
+    "KONZEPT_TEXT": "BMW-FAST"
+   },
+   {
+    "NR": "0x0D",
+    "KONZEPT_TEXT": "KWP2000*"
+   },
+   {
+    "NR": "0x0C",
+    "KONZEPT_TEXT": "KWP2000"
+   },
+   {
+    "NR": "0x06",
+    "KONZEPT_TEXT": "DS2"
+   }
+  ],
+  "JOBRESULT": [
+   {
+    "SB": "0x10",
+    "STATUS_TEXT": "ERROR_ECU_GENERAL_REJECT"
+   },
+   {
+    "SB": "0x11",
+    "STATUS_TEXT": "ERROR_ECU_SERVICE_NOT_SUPPORTED"
+   },
+   {
+    "SB": "0x12",
+    "STATUS_TEXT": "ERROR_ECU_SUBFUNCTION_NOT_SUPPORTED__INVALID_FORMAT"
+   },
+   {
+    "SB": "0x21",
+    "STATUS_TEXT": "ERROR_ECU_BUSY_REPEAT_REQUEST"
+   },
+   {
+    "SB": "0x22",
+    "STATUS_TEXT": "ERROR_ECU_CONDITIONS_NOT_CORRECT_OR_REQUEST_SEQUENCE_ERROR"
+   },
+   {
+    "SB": "0x23",
+    "STATUS_TEXT": "ERROR_ECU_ROUTINE_NOT_COMPLETE"
+   },
+   {
+    "SB": "0x31",
+    "STATUS_TEXT": "ERROR_ECU_REQUEST_OUT_OF_RANGE"
+   },
+   {
+    "SB": "0x33",
+    "STATUS_TEXT": "ERROR_ECU_SECURITY_ACCESS_DENIED__SECURITY_ACCESS_REQUESTED"
+   },
+   {
+    "SB": "0x36",
+    "STATUS_TEXT": "ERROR_ECU_EXCEED_NUMBER_OF_ATTEMPTS"
+   },
+   {
+    "SB": "0x37",
+    "STATUS_TEXT": "ERROR_ECU_REQUIRED_TIME_DELAY_NOT_EXPIRED"
+   },
+   {
+    "SB": "0x40",
+    "STATUS_TEXT": "ERROR_ECU_DOWNLOAD_NOT_ACCEPTED"
+   },
+   {
+    "SB": "0x41",
+    "STATUS_TEXT": "ERROR_ECU_IMPROPER_DOWNLOAD_TYPE"
+   },
+   {
+    "SB": "0x42",
+    "STATUS_TEXT": "ERROR_ECU_CANNOT_DOWNLOAD_TO_SPECIFIED_ADDRESS"
+   },
+   {
+    "SB": "0x43",
+    "STATUS_TEXT": "ERROR_ECU_CANNOT_DOWNLOAD_NUMBER_OF_BYTES_REQUESTED"
+   },
+   {
+    "SB": "0x50",
+    "STATUS_TEXT": "ERROR_ECU_UPLOAD_NOT_ACCEPTED"
+   },
+   {
+    "SB": "0x51",
+    "STATUS_TEXT": "ERROR_ECU_IMPROPER_UPLOAD_TYPE"
+   },
+   {
+    "SB": "0x52",
+    "STATUS_TEXT": "ERROR_ECU_CANNOT_UPLOAD_FROM_SPECIFIED_ADDRESS"
+   },
+   {
+    "SB": "0x53",
+    "STATUS_TEXT": "ERROR_ECU_CANNOT_UPLOAD_NUMBER_OF_BYTES_REQUESTED"
+   },
+   {
+    "SB": "0x71",
+    "STATUS_TEXT": "ERROR_ECU_TRANSFER_SUSPENDED"
+   },
+   {
+    "SB": "0x72",
+    "STATUS_TEXT": "ERROR_ECU_TRANSFER_ABORTED"
+   },
+   {
+    "SB": "0x74",
+    "STATUS_TEXT": "ERROR_ECU_ILLEGAL_ADDRESS_IN_BLOCK_TRANSFER"
+   },
+   {
+    "SB": "0x75",
+    "STATUS_TEXT": "ERROR_ECU_ILLEGAL_BYTE_COUNT_IN_BLOCK_TRANSFER"
+   },
+   {
+    "SB": "0x76",
+    "STATUS_TEXT": "ERROR_ECU_ILLEGAL_BLOCK_TRANSFER_TYPE"
+   },
+   {
+    "SB": "0x77",
+    "STATUS_TEXT": "ERROR_ECU_BLOCKTRANSFER_DATA_CHECKSUM_ERROR"
+   },
+   {
+    "SB": "0x78",
+    "STATUS_TEXT": "ERROR_ECU_REQUEST_CORRECTLY_RECEIVED__RESPONSE_PENDING"
+   },
+   {
+    "SB": "0x79",
+    "STATUS_TEXT": "ERROR_ECU_INCORRECT_BYTE_COUNT_DURING_BLOCK_TRANSFER"
+   },
+   {
+    "SB": "0x80",
+    "STATUS_TEXT": "ERROR_ECU_SERVICE_NOT_SUPPORTED_IN_ACTIVE_DIAGNOSTIC_MODE"
+   },
+   {
+    "SB": "?00?",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "?02?",
+    "STATUS_TEXT": "ERROR_ECU_INCORRECT_RESPONSE_ID"
+   },
+   {
+    "SB": "?03?",
+    "STATUS_TEXT": "ERROR_ECU_INCORRECT_LEN"
+   },
+   {
+    "SB": "?04?",
+    "STATUS_TEXT": "ERROR_ECU_INCORRECT_LIN_RESPONSE_ID"
+   },
+   {
+    "SB": "?05?",
+    "STATUS_TEXT": "ERROR_ECU_INCORRECT_LIN_LEN"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_F_CODE"
+   },
+   {
+    "SB": "?11?",
+    "STATUS_TEXT": "ERROR_TABLE"
+   },
+   {
+    "SB": "?12?",
+    "STATUS_TEXT": "ERROR_INTERPRETATION"
+   },
+   {
+    "SB": "?13?",
+    "STATUS_TEXT": "ERROR_F_POS"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_SEGMENT"
+   },
+   {
+    "SB": "?21?",
+    "STATUS_TEXT": "ERROR_ADDRESS"
+   },
+   {
+    "SB": "?22?",
+    "STATUS_TEXT": "ERROR_NUMBER"
+   },
+   {
+    "SB": "?30?",
+    "STATUS_TEXT": "ERROR_DATA"
+   },
+   {
+    "SB": "?40?",
+    "STATUS_TEXT": "ERROR_MODE"
+   },
+   {
+    "SB": "?41?",
+    "STATUS_TEXT": "ERROR_BAUDRATE"
+   },
+   {
+    "SB": "?50?",
+    "STATUS_TEXT": "ERROR_BYTE1"
+   },
+   {
+    "SB": "?51?",
+    "STATUS_TEXT": "ERROR_BYTE2"
+   },
+   {
+    "SB": "?52?",
+    "STATUS_TEXT": "ERROR_BYTE3"
+   },
+   {
+    "SB": "?60?",
+    "STATUS_TEXT": "ERROR_DATA_OUT_OF_RANGE"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "?73?",
+    "STATUS_TEXT": "ERROR_NO_BIN_BUFFER"
+   },
+   {
+    "SB": "?74?",
+    "STATUS_TEXT": "ERROR_BIN_BUFFER"
+   },
+   {
+    "SB": "?75?",
+    "STATUS_TEXT": "ERROR_DATA_TYPE"
+   },
+   {
+    "SB": "?76?",
+    "STATUS_TEXT": "ERROR_CHECKSUM"
+   },
+   {
+    "SB": "?80?",
+    "STATUS_TEXT": "ERROR_FLASH_SIGNATURE_CHECK"
+   },
+   {
+    "SB": "?81?",
+    "STATUS_TEXT": "ERROR_VIHICLE_IDENTFICATON_NR"
+   },
+   {
+    "SB": "?82?",
+    "STATUS_TEXT": "ERROR_PROGRAMMING_DATE"
+   },
+   {
+    "SB": "?83?",
+    "STATUS_TEXT": "ERROR_ASSEMBLY_NR"
+   },
+   {
+    "SB": "?84?",
+    "STATUS_TEXT": "ERROR_CALIBRATION_DATASET_NR"
+   },
+   {
+    "SB": "?85?",
+    "STATUS_TEXT": "ERROR_EXHAUST_REGULATION_OR_TYPE_APPROVAL_NR"
+   },
+   {
+    "SB": "?86?",
+    "STATUS_TEXT": "ERROR_REPAIR_SHOP_NR"
+   },
+   {
+    "SB": "?87?",
+    "STATUS_TEXT": "ERROR_TESTER_SERIAL_NR"
+   },
+   {
+    "SB": "?88?",
+    "STATUS_TEXT": "ERROR_MILAGE"
+   },
+   {
+    "SB": "?89?",
+    "STATUS_TEXT": "ERROR_PROGRAMMING_REFERENCE"
+   },
+   {
+    "SB": "?8A?",
+    "STATUS_TEXT": "ERROR_NO_FREE_UIF"
+   },
+   {
+    "SB": "?8B?",
+    "STATUS_TEXT": "ERROR_MAX_UIF"
+   },
+   {
+    "SB": "?8C?",
+    "STATUS_TEXT": "ERROR_SIZE_UIF"
+   },
+   {
+    "SB": "?8D?",
+    "STATUS_TEXT": "ERROR_LEVEL"
+   },
+   {
+    "SB": "?8E?",
+    "STATUS_TEXT": "ERROR_KEY"
+   },
+   {
+    "SB": "?8F?",
+    "STATUS_TEXT": "ERROR_AUTHENTICATION"
+   },
+   {
+    "SB": "?90?",
+    "STATUS_TEXT": "ERROR_NO_DREF"
+   },
+   {
+    "SB": "?91?",
+    "STATUS_TEXT": "ERROR_CHECK_PECUHN"
+   },
+   {
+    "SB": "?92?",
+    "STATUS_TEXT": "ERROR_CHECK_PRGREF"
+   },
+   {
+    "SB": "?93?",
+    "STATUS_TEXT": "ERROR_AIF_NR"
+   },
+   {
+    "SB": "?94?",
+    "STATUS_TEXT": "ERROR_CHECK_DREF"
+   },
+   {
+    "SB": "?95?",
+    "STATUS_TEXT": "ERROR_CHECK_HWREF"
+   },
+   {
+    "SB": "?96?",
+    "STATUS_TEXT": "ERROR_CHECK_HWREF"
+   },
+   {
+    "SB": "?97?",
+    "STATUS_TEXT": "ERROR_CHECK_PRGREFB"
+   },
+   {
+    "SB": "?98?",
+    "STATUS_TEXT": "ERROR_CHECK_VMECUH*NB"
+   },
+   {
+    "SB": "?99?",
+    "STATUS_TEXT": "ERROR_CHECK_PRGREFB"
+   },
+   {
+    "SB": "?9A?",
+    "STATUS_TEXT": "ERROR_CHECK_VMECUH*N"
+   },
+   {
+    "SB": "?9B?",
+    "STATUS_TEXT": "ERROR_MOST_CAN_GATEWAY_DISABLE"
+   },
+   {
+    "SB": "?9C?",
+    "STATUS_TEXT": "ERROR_NO_P2MIN"
+   },
+   {
+    "SB": "?9D?",
+    "STATUS_TEXT": "ERROR_NO_P2MAX"
+   },
+   {
+    "SB": "?9E?",
+    "STATUS_TEXT": "ERROR_NO_P3MIN"
+   },
+   {
+    "SB": "?9F?",
+    "STATUS_TEXT": "ERROR_NO_P3MAX"
+   },
+   {
+    "SB": "?A0?",
+    "STATUS_TEXT": "ERROR_NO_P4MIN"
+   },
+   {
+    "SB": "?B0?",
+    "STATUS_TEXT": "ERROR_DIAG_PROT"
+   },
+   {
+    "SB": "?B1?",
+    "STATUS_TEXT": "ERROR_SG_ADRESSE"
+   },
+   {
+    "SB": "?B2?",
+    "STATUS_TEXT": "ERROR_SG_MAXANZAHL_AIF"
+   },
+   {
+    "SB": "?B3?",
+    "STATUS_TEXT": "ERROR_SG_GROESSE_AIF"
+   },
+   {
+    "SB": "?B4?",
+    "STATUS_TEXT": "ERROR_SG_ENDEKENNUNG_AIF"
+   },
+   {
+    "SB": "?B5?",
+    "STATUS_TEXT": "ERROR_SG_AUTHENTISIERUNG"
+   },
+   {
+    "SB": "?C0?",
+    "STATUS_TEXT": "ERROR_TELEGRAM_LEN_OUT_OFF_RANGE"
+   },
+   {
+    "SB": "?F0?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "0xXY",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_NEGATIVE_RESPONSE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Continental Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x00",
+    "ARTTEXT": "kein passendes Fehlersymptom"
+   },
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "Signal oder Wert oberhalb Schwelle"
+   },
+   {
+    "ARTNR": "0x02",
+    "ARTTEXT": "Signal oder Wert unterhalb Schwelle"
+   },
+   {
+    "ARTNR": "0x04",
+    "ARTTEXT": "kein Signal oder Wert"
+   },
+   {
+    "ARTNR": "0x08",
+    "ARTTEXT": "unplausibles Signal oder Wert"
+   },
+   {
+    "ARTNR": "0x10",
+    "ARTTEXT": "Testbedingungen erfuellt"
+   },
+   {
+    "ARTNR": "0x11",
+    "ARTTEXT": "Testbedingungen noch nicht erfuellt"
+   },
+   {
+    "ARTNR": "0x20",
+    "ARTTEXT": "Fehler bisher nicht aufgetreten"
+   },
+   {
+    "ARTNR": "0x21",
+    "ARTTEXT": "Fehler momentan nicht vorhanden, aber bereits gespeichert"
+   },
+   {
+    "ARTNR": "0x22",
+    "ARTTEXT": "Fehler momentan vorhanden, aber noch nicht gespeichert (Entprellphase)"
+   },
+   {
+    "ARTNR": "0x23",
+    "ARTTEXT": "Fehler momentan vorhanden und bereits gespeichert"
+   },
+   {
+    "ARTNR": "0x30",
+    "ARTTEXT": "Fehler wuerde kein Aufleuchten einer Warnlampe verursachen"
+   },
+   {
+    "ARTNR": "0x31",
+    "ARTTEXT": "Fehler wuerde das Aufleuchten einer Warnlampe verursachen"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "unbekannte Fehlerart"
+   }
+  ],
+  "DIGITALARGUMENT": [
+   {
+    "TEXT": "ein",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "aus",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "ja",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "nein",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "auf",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "ab",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "an",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "yes",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "no",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "on",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "off",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "up",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "down",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "true",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "false",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "1",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "0",
+    "WERT": "0"
+   }
+  ],
+  "AUTHENTISIERUNG": [
+   {
+    "AUTH_NR": "0x01",
+    "AUTH_TEXT": "Simple"
+   },
+   {
+    "AUTH_NR": "0x02",
+    "AUTH_TEXT": "Symetrisch"
+   },
+   {
+    "AUTH_NR": "0x03",
+    "AUTH_TEXT": "Asymetrisch"
+   },
+   {
+    "AUTH_NR": "0xFF",
+    "AUTH_TEXT": "Keine"
+   }
+  ],
+  "DIAGMODE": [
+   {
+    "NR": "0x81",
+    "MODE": "DEFAULT",
+    "MODE_TEXT": "DefaultMode"
+   },
+   {
+    "NR": "0x82",
+    "MODE": "PT",
+    "MODE_TEXT": "PeriodicTransmissions"
+   },
+   {
+    "NR": "0x84",
+    "MODE": "EOLSSM",
+    "MODE_TEXT": "EndOfLineSystemSupplierMode"
+   },
+   {
+    "NR": "0x85",
+    "MODE": "ECUPM",
+    "MODE_TEXT": "ECUProgrammingMode"
+   },
+   {
+    "NR": "0x86",
+    "MODE": "ECUDM",
+    "MODE_TEXT": "ECUDevelopmentMode"
+   },
+   {
+    "NR": "0x87",
+    "MODE": "ECUAM",
+    "MODE_TEXT": "ECUAdjustmentMode"
+   },
+   {
+    "NR": "0x88",
+    "MODE": "ECUVCM",
+    "MODE_TEXT": "ECUVariantCodingMode"
+   },
+   {
+    "NR": "0x89",
+    "MODE": "ECUSM",
+    "MODE_TEXT": "ECUSafetyMode"
+   },
+   {
+    "NR": "0xFA",
+    "MODE": "SSS_A",
+    "MODE_TEXT": "SystemSupplierSpecific (A)"
+   },
+   {
+    "NR": "0xFB",
+    "MODE": "SSS_B",
+    "MODE_TEXT": "SystemSupplierSpecific (B)"
+   },
+   {
+    "NR": "0xFC",
+    "MODE": "SSS_C",
+    "MODE_TEXT": "SystemSupplierSpecific (C)"
+   },
+   {
+    "NR": "0xFD",
+    "MODE": "SSS_D",
+    "MODE_TEXT": "SystemSupplierSpecific (D)"
+   },
+   {
+    "NR": "0xFE",
+    "MODE": "SSS_E",
+    "MODE_TEXT": "SystemSupplierSpecific (E)"
+   },
+   {
+    "NR": "0xXY",
+    "MODE": "--",
+    "MODE_TEXT": "unbekannter Diagnose-Mode"
+   }
+  ],
+  "BAUDRATE": [
+   {
+    "NR": "0x01",
+    "BAUD": "PC9600",
+    "BAUD_TEXT": "Baudrate 9.6 kBaud"
+   },
+   {
+    "NR": "0x02",
+    "BAUD": "PC19200",
+    "BAUD_TEXT": "Baudrate 19.2 kBaud"
+   },
+   {
+    "NR": "0x03",
+    "BAUD": "PC38400",
+    "BAUD_TEXT": "Baudrate 38.4 kBaud"
+   },
+   {
+    "NR": "0x04",
+    "BAUD": "PC57600",
+    "BAUD_TEXT": "Baudrate 57.6 kBaud"
+   },
+   {
+    "NR": "0x05",
+    "BAUD": "PC115200",
+    "BAUD_TEXT": "Baudrate 115.2 kBaud"
+   },
+   {
+    "NR": "0x06",
+    "BAUD": "SB",
+    "BAUD_TEXT": "Specific Baudrate"
+   },
+   {
+    "NR": "0xXY",
+    "BAUD": "--",
+    "BAUD_TEXT": "unbekannte Baudrate"
+   }
+  ],
+  "JOBRESULTEXTENDED": [
+   {
+    "SB": "0xXY",
+    "STATUS_TEXT": "ERROR_UNKNOWN"
+   }
+  ],
+  "SG_DIAGNOSEKONZEPT": [
+   {
+    "RANG": "-",
+    "KONZEPT_TEXT": "BMW-FAST"
+   },
+   {
+    "RANG": "1",
+    "KONZEPT_TEXT": "KWP2000*"
+   },
+   {
+    "RANG": "-",
+    "KONZEPT_TEXT": "KWP2000"
+   },
+   {
+    "RANG": "-",
+    "KONZEPT_TEXT": "DS2"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x2710",
+    "ORTTEXT": "S1 SOLENOID"
+   },
+   {
+    "ORT": "0x2711",
+    "ORTTEXT": "S1 SOLENOID"
+   },
+   {
+    "ORT": "0x2720",
+    "ORTTEXT": "S2 SOLENOID"
+   },
+   {
+    "ORT": "0x2721",
+    "ORTTEXT": "S2 SOLENOID"
+   },
+   {
+    "ORT": "0x2800",
+    "ORTTEXT": "SHIFT LOCK SOLENOID"
+   },
+   {
+    "ORT": "0x2801",
+    "ORTTEXT": "SHIFT LOCK SOLENOID"
+   },
+   {
+    "ORT": "0x2900",
+    "ORTTEXT": "LINEAR SOLENOID ( SLT )"
+   },
+   {
+    "ORT": "0x2901",
+    "ORTTEXT": "LINEAR SOLENOID ( SLT )"
+   },
+   {
+    "ORT": "0x2902",
+    "ORTTEXT": "LINEAR SOLENOID ( SLT )"
+   },
+   {
+    "ORT": "0x2910",
+    "ORTTEXT": "LINEAR SOLENOID  (SLU)"
+   },
+   {
+    "ORT": "0x2911",
+    "ORTTEXT": "LINEAR SOLENOID  (SLU)"
+   },
+   {
+    "ORT": "0x2912",
+    "ORTTEXT": "LINEAR SOLENOID  (SLU)"
+   },
+   {
+    "ORT": "0x2920",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC1)"
+   },
+   {
+    "ORT": "0x2921",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC1)"
+   },
+   {
+    "ORT": "0x2922",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC1)"
+   },
+   {
+    "ORT": "0x2930",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC2)"
+   },
+   {
+    "ORT": "0x2931",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC2)"
+   },
+   {
+    "ORT": "0x2932",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC2)"
+   },
+   {
+    "ORT": "0x2940",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC3)"
+   },
+   {
+    "ORT": "0x2941",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC3)"
+   },
+   {
+    "ORT": "0x2942",
+    "ORTTEXT": "LINEAR SOLENOID  (SLC3)"
+   },
+   {
+    "ORT": "0x2950",
+    "ORTTEXT": "LINEAR SOLENOID  (SLB1)"
+   },
+   {
+    "ORT": "0x2951",
+    "ORTTEXT": "LINEAR SOLENOID  (SLB1)"
+   },
+   {
+    "ORT": "0x2952",
+    "ORTTEXT": "LINEAR SOLENOID  (SLB1)"
+   },
+   {
+    "ORT": "0x2A00",
+    "ORTTEXT": "OUTPUT REVOLUTION SENSOR"
+   },
+   {
+    "ORT": "0x2A01",
+    "ORTTEXT": "OUTPUT REVOLUTION SENSOR"
+   },
+   {
+    "ORT": "0x2A02",
+    "ORTTEXT": "OUTPUT REVOLUTION SENSOR"
+   },
+   {
+    "ORT": "0x2B00",
+    "ORTTEXT": "INPUT REVOLUTION SENSOR"
+   },
+   {
+    "ORT": "0x2B01",
+    "ORTTEXT": "INPUT REVOLUTION SENSOR"
+   },
+   {
+    "ORT": "0x2B02",
+    "ORTTEXT": "INPUT REVOLUTION SENSOR"
+   },
+   {
+    "ORT": "0x2C00",
+    "ORTTEXT": "INHIBITOR SWITCH"
+   },
+   {
+    "ORT": "0x2C01",
+    "ORTTEXT": "INHIBITOR SWITCH"
+   },
+   {
+    "ORT": "0x2C10",
+    "ORTTEXT": "MANUAL SWITCH"
+   },
+   {
+    "ORT": "0x2C11",
+    "ORTTEXT": "MANUAL SWITCH"
+   },
+   {
+    "ORT": "0x2D00",
+    "ORTTEXT": "OIL TEMPERATURE SENSOR"
+   },
+   {
+    "ORT": "0x2D01",
+    "ORTTEXT": "OIL TEMPERATURE SENSOR"
+   },
+   {
+    "ORT": "0x2D02",
+    "ORTTEXT": "OIL TEMPERATURE SENSOR"
+   },
+   {
+    "ORT": "0x2E00",
+    "ORTTEXT": "Battery voltage"
+   },
+   {
+    "ORT": "0x2E01",
+    "ORTTEXT": "Battery voltage"
+   },
+   {
+    "ORT": "0x2F00",
+    "ORTTEXT": "FLASH ROM CHECK SUM"
+   },
+   {
+    "ORT": "0x2F10",
+    "ORTTEXT": "RAM"
+   },
+   {
+    "ORT": "0x2F20",
+    "ORTTEXT": "EEPROM"
+   },
+   {
+    "ORT": "0xCF0B",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0xCF14",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0xCF15",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3000",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3010",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3020",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3030",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3040",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3050",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3060",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3070",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3080",
+    "ORTTEXT": "CAN Bus"
+   },
+   {
+    "ORT": "0x3100",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3111",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3110",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3120",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3130",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3140",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3150",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3160",
+    "ORTTEXT": "GEAR RATIO"
+   },
+   {
+    "ORT": "0x3200",
+    "ORTTEXT": "Neutral Condition"
+   },
+   {
+    "ORT": "0x3210",
+    "ORTTEXT": "Neutral Condition"
+   },
+   {
+    "ORT": "0x3300",
+    "ORTTEXT": "Unusual shifting"
+   },
+   {
+    "ORT": "0x3310",
+    "ORTTEXT": "Unusual shifting"
+   },
+   {
+    "ORT": "0x3320",
+    "ORTTEXT": "Unusual shifting"
+   },
+   {
+    "ORT": "0x3330",
+    "ORTTEXT": "Unusual shifting"
+   },
+   {
+    "ORT": "0x3400",
+    "ORTTEXT": "Lock up clutch"
+   },
+   {
+    "ORT": "0x3410",
+    "ORTTEXT": "Lock up clutch"
+   },
+   {
+    "ORT": "0xFFFF",
+    "ORTTEXT": "Unkonwn error"
+   }
+  ],
+  "FDETAILSTRUKTUR": [
+   {
+    "NAME": "F_ART_IND",
+    "TYP": "ja"
+   },
+   {
+    "NAME": "F_ART_ERW",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_PCODE",
+    "TYP": "ja"
+   },
+   {
+    "NAME": "F_PCODE7",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_HFK",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_LZ",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_UWB_ERW",
+    "TYP": "ja"
+   }
+  ],
+  "FUMWELTMATRIX": [
+   {
+    "ORT": "0x2710",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Solenoid_Pattern"
+   },
+   {
+    "ORT": "0x2711",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Solenoid_Pattern"
+   },
+   {
+    "ORT": "0x2720",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Solenoid_Pattern"
+   },
+   {
+    "ORT": "0x2721",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Solenoid_Pattern"
+   },
+   {
+    "ORT": "0x2800",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Solenoid_Pattern"
+   },
+   {
+    "ORT": "0x2801",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Solenoid_Pattern"
+   },
+   {
+    "ORT": "0x2900",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2901",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2902",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2910",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2911",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2912",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2920",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2921",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2922",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2930",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2931",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2932",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2940",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2941",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2942",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2950",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2951",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2952",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x2A00",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x2A01",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x2A02",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x2B00",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x2B01",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x2B02",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x2C00",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Pin_Pattern"
+   },
+   {
+    "ORT": "0x2C01",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Pin_Pattern"
+   },
+   {
+    "ORT": "0x2C10",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Pin_Pattern"
+   },
+   {
+    "ORT": "0x2C11",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "Pin_Pattern"
+   },
+   {
+    "ORT": "0x2D00",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x2D01",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x2D02",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x2E00",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x10"
+   },
+   {
+    "ORT": "0x2E01",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x10"
+   },
+   {
+    "ORT": "0x2F00",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x2F10",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x2F20",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0xCF0B",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0xCF14",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0xCF15",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x3000",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x3010",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x3020",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x3030",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x3040",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x11"
+   },
+   {
+    "ORT": "0x3050",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3060",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3070",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3080",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3100",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3111",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3110",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3120",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3130",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3140",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3150",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3160",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3200",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3210",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3300",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3310",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3320",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3330",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x05",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x08"
+   },
+   {
+    "ORT": "0x3400",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0x3410",
+    "UW1_NR": "0x04",
+    "UW2_NR": "0x01",
+    "UW3_NR": "0x03",
+    "UW4_NR": "0x07"
+   },
+   {
+    "ORT": "0xFFFF",
+    "UW1_NR": "-",
+    "UW2_NR": "-",
+    "UW3_NR": "-",
+    "UW4_NR": "-"
+   }
+  ],
+  "FUMWELTTEXTE": [
+   {
+    "UWNR": "0x01",
+    "UWTEXT": "TM Oil Temperature",
+    "UW_EINH": "Degree C",
+    "L/H": "high",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "4",
+    "DIV": "1",
+    "ADD": "-50"
+   },
+   {
+    "UWNR": "0x02",
+    "UWTEXT": "TM Sensor Oil Temperature",
+    "UW_EINH": "Degree C",
+    "L/H": "high",
+    "UWTYP": "signed int",
+    "NAME": "-",
+    "MUL": "1",
+    "DIV": "1",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x03",
+    "UWTEXT": "Battery Voltage",
+    "UW_EINH": "Voltage",
+    "L/H": "high",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "1",
+    "DIV": "10",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x04",
+    "UWTEXT": "Gear",
+    "UW_EINH": "0-n",
+    "L/H": "-",
+    "UWTYP": "0xFF",
+    "NAME": "Gear_Information",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x05",
+    "UWTEXT": "TM Input Revolution",
+    "UW_EINH": "RPM",
+    "L/H": "high",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "30",
+    "DIV": "1",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x07",
+    "UWTEXT": "Solenoid Feedback Current",
+    "UW_EINH": "mA",
+    "L/H": "high",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "10",
+    "DIV": "1",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x08",
+    "UWTEXT": "TM Output Revolution",
+    "UW_EINH": "RPM",
+    "L/H": "high",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "30",
+    "DIV": "1",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x10",
+    "UWTEXT": "Engine Speed",
+    "UW_EINH": "RPM",
+    "L/H": "high",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "30",
+    "DIV": "1",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x11",
+    "UWTEXT": "Time Stamp",
+    "UW_EINH": "Min",
+    "L/H": "high",
+    "UWTYP": "unsigned int",
+    "NAME": "-",
+    "MUL": "6",
+    "DIV": "1",
+    "ADD": "0"
+   },
+   {
+    "UWNR": "0x12",
+    "UWTEXT": "S1 Solenoid Output State      (1=ON, 0=OFF)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x01",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x13",
+    "UWTEXT": "S2 Solenoid Output State      (1=ON, 0=OFF)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x02",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x14",
+    "UWTEXT": "Shift Lock Solenoid Output State      (1=ON, 0=OFF)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x04",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x15",
+    "UWTEXT": "PA Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x01",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x16",
+    "UWTEXT": "C Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x02",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x17",
+    "UWTEXT": "B Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x04",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x18",
+    "UWTEXT": "A Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x08",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x19",
+    "UWTEXT": "Tip+ Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x10",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x20",
+    "UWTEXT": "Tip- Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x20",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0x21",
+    "UWTEXT": "Tip ON Pin Status        (1=Low, 0=High)",
+    "UW_EINH": "0/1",
+    "L/H": "-",
+    "UWTYP": "0x40",
+    "NAME": "-",
+    "MUL": "-",
+    "DIV": "-",
+    "ADD": "-"
+   },
+   {
+    "UWNR": "0xFF",
+    "UWTEXT": "Unknown",
+    "UW_EINH": "1",
+    "L/H": "-",
+    "UWTYP": "unsigned char",
+    "NAME": "-",
+    "MUL": "1",
+    "DIV": "1",
+    "ADD": "0"
+   }
+  ],
+  "FARTTYP": [
+   {
+    "ORT": "0xFFFF",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2710",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0005"
+   },
+   {
+    "ORT": "0x2711",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0002",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2720",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0005"
+   },
+   {
+    "ORT": "0x2721",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0002",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2800",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0005"
+   },
+   {
+    "ORT": "0x2801",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0002",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2900",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0001"
+   },
+   {
+    "ORT": "0x2901",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0006",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2902",
+    "PLAUS": "0x0061",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2910",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0001"
+   },
+   {
+    "ORT": "0x2911",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0006",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2912",
+    "PLAUS": "0x0061",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2920",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0001"
+   },
+   {
+    "ORT": "0x2921",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0006",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2922",
+    "PLAUS": "0x0061",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2930",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0001"
+   },
+   {
+    "ORT": "0x2931",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0006",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2932",
+    "PLAUS": "0x0061",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2940",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0001"
+   },
+   {
+    "ORT": "0x2941",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0006",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2942",
+    "PLAUS": "0x0061",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2950",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0001"
+   },
+   {
+    "ORT": "0x2951",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0006",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2952",
+    "PLAUS": "0x0061",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2A00",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0026",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2A01",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0008",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2A02",
+    "PLAUS": "0x0028",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2B00",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0026",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2B01",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0008",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2B02",
+    "PLAUS": "0x0028",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2C00",
+    "PLAUS": "0x0019",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2C01",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x001A",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2C10",
+    "PLAUS": "0x001B",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2C11",
+    "PLAUS": "0x001C",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2D00",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0005"
+   },
+   {
+    "ORT": "0x2D01",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0002",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2D02",
+    "PLAUS": "0x0004",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2E00",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0x0007"
+   },
+   {
+    "ORT": "0x2E01",
+    "PLAUS": "0xFFFF",
+    "SIG": "0xFFFF",
+    "MIN": "0x0003",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2F00",
+    "PLAUS": "0x0035",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2F10",
+    "PLAUS": "0x0036",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x2F20",
+    "PLAUS": "0x0036",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0xCF0B",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0071",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0xCF14",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0072",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0xCF15",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0073",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3000",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0074",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3010",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0075",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3020",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0076",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3030",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0077",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3040",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0078",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3050",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0079",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3060",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0080",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3070",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0081",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3080",
+    "PLAUS": "0xFFFF",
+    "SIG": "0x0082",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3100",
+    "PLAUS": "0x0083",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3111",
+    "PLAUS": "0x0084",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3110",
+    "PLAUS": "0x0085",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3120",
+    "PLAUS": "0x0086",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3130",
+    "PLAUS": "0x0087",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3140",
+    "PLAUS": "0x0088",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3150",
+    "PLAUS": "0x0089",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3160",
+    "PLAUS": "0x0090",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3200",
+    "PLAUS": "0x0091",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3210",
+    "PLAUS": "0x0092",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3300",
+    "PLAUS": "0x0093",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3310",
+    "PLAUS": "0x0094",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3320",
+    "PLAUS": "0x0095",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3330",
+    "PLAUS": "0x0096",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3400",
+    "PLAUS": "0x0097",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   },
+   {
+    "ORT": "0x3410",
+    "PLAUS": "0x0098",
+    "SIG": "0xFFFF",
+    "MIN": "0xFFFF",
+    "MAX": "0xFFFF"
+   }
+  ],
+  "FARTTEXTEINDIVIDUELL": [
+   {
+    "ARTNR": "0x0001",
+    "ARTTEXT": "+B short"
+   },
+   {
+    "ARTNR": "0x0002",
+    "ARTTEXT": "GND short"
+   },
+   {
+    "ARTNR": "0x0003",
+    "ARTTEXT": "Low voltage"
+   },
+   {
+    "ARTNR": "0x0004",
+    "ARTTEXT": "Stuck"
+   },
+   {
+    "ARTNR": "0x0005",
+    "ARTTEXT": "+B short/open"
+   },
+   {
+    "ARTNR": "0x0006",
+    "ARTTEXT": "GND short/open"
+   },
+   {
+    "ARTNR": "0x0007",
+    "ARTTEXT": "High voltage"
+   },
+   {
+    "ARTNR": "0x0008",
+    "ARTTEXT": "Electrical failure"
+   },
+   {
+    "ARTNR": "0x0019",
+    "ARTTEXT": "Multiple signal"
+   },
+   {
+    "ARTNR": "0x001A",
+    "ARTTEXT": "No signal"
+   },
+   {
+    "ARTNR": "0x001B",
+    "ARTTEXT": "Out of service M ON"
+   },
+   {
+    "ARTNR": "0x001C",
+    "ARTTEXT": "Out of service M OFF"
+   },
+   {
+    "ARTNR": "0x0026",
+    "ARTTEXT": "No pulse"
+   },
+   {
+    "ARTNR": "0x0028",
+    "ARTTEXT": "Wrong pulse"
+   },
+   {
+    "ARTNR": "0x0034",
+    "ARTTEXT": "RAM Read/Write error"
+   },
+   {
+    "ARTNR": "0x0035",
+    "ARTTEXT": "Flash Internal check sum error"
+   },
+   {
+    "ARTNR": "0x0036",
+    "ARTTEXT": "EEPROM Read/Write error"
+   },
+   {
+    "ARTNR": "0x0061",
+    "ARTTEXT": "Feed back current stuck"
+   },
+   {
+    "ARTNR": "0x0062",
+    "ARTTEXT": "OFF stuck"
+   },
+   {
+    "ARTNR": "0x0063",
+    "ARTTEXT": "ON stuck"
+   },
+   {
+    "ARTNR": "0x0066",
+    "ARTTEXT": "Gear ratio error"
+   },
+   {
+    "ARTNR": "0x0067",
+    "ARTTEXT": "Offset of speed sensor signal detected"
+   },
+   {
+    "ARTNR": "0x0068",
+    "ARTTEXT": "C1 clutch slipping"
+   },
+   {
+    "ARTNR": "0x0069",
+    "ARTTEXT": "C3 clutch slipping"
+   },
+   {
+    "ARTNR": "0x0071",
+    "ARTTEXT": "Bus off"
+   },
+   {
+    "ARTNR": "0x0072",
+    "ARTTEXT": "ECU no communication"
+   },
+   {
+    "ARTNR": "0x0073",
+    "ARTTEXT": "ABS no communication"
+   },
+   {
+    "ARTNR": "0x0074",
+    "ARTTEXT": "Invalid accelerator signal"
+   },
+   {
+    "ARTNR": "0x0075",
+    "ARTTEXT": "Invalid engine torque signal"
+   },
+   {
+    "ARTNR": "0x0076",
+    "ARTTEXT": "Invalid engine speed signal"
+   },
+   {
+    "ARTNR": "0x0077",
+    "ARTTEXT": "Invalid brake pedal signal"
+   },
+   {
+    "ARTNR": "0x0078",
+    "ARTTEXT": "Invalid engine coolant temperature signal"
+   },
+   {
+    "ARTNR": "0x0079",
+    "ARTTEXT": "Invalid rear-left wheel speed signal"
+   },
+   {
+    "ARTNR": "0x0080",
+    "ARTTEXT": "Invalid rear-right wheel speed signal"
+   },
+   {
+    "ARTNR": "0x0081",
+    "ARTTEXT": "Invalid front-left wheel speed signal"
+   },
+   {
+    "ARTNR": "0x0082",
+    "ARTTEXT": "Invalid front-right wheel speed signal"
+   },
+   {
+    "ARTNR": "0x0083",
+    "ARTTEXT": "Reverse Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0084",
+    "ARTTEXT": "1st Engine Break Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0085",
+    "ARTTEXT": "1st Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0086",
+    "ARTTEXT": "2nd Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0087",
+    "ARTTEXT": "3rd Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0088",
+    "ARTTEXT": "4th Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0089",
+    "ARTTEXT": "5th Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0090",
+    "ARTTEXT": "6th Gear Ratio"
+   },
+   {
+    "ARTNR": "0x0091",
+    "ARTTEXT": "D Range - C1 Clutch"
+   },
+   {
+    "ARTNR": "0x0092",
+    "ARTTEXT": "R Range - C3 Clutch"
+   },
+   {
+    "ARTNR": "0x0093",
+    "ARTTEXT": "Unusual Shifting"
+   },
+   {
+    "ARTNR": "0x0094",
+    "ARTTEXT": "S2 ON Stuck"
+   },
+   {
+    "ARTNR": "0x0095",
+    "ARTTEXT": "SLT OFF Stuck"
+   },
+   {
+    "ARTNR": "0x0096",
+    "ARTTEXT": "S1 ON Stuck"
+   },
+   {
+    "ARTNR": "0x0097",
+    "ARTTEXT": "Lock Up ON Stuck"
+   },
+   {
+    "ARTNR": "0x0098",
+    "ARTTEXT": "Lock Up OFFStuck"
+   },
+   {
+    "ARTNR": "0xFFFF",
+    "ARTTEXT": "Unknown error"
+   }
+  ],
+  "HORTTEXTE": [
+   {
+    "ORT": "0xFFFF",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "HDETAILSTRUKTUR": [
+   {
+    "NAME": "F_ART_IND",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_ART_ERW",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_PCODE",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_PCODE7",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_HFK",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_LZ",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_UWB_ERW",
+    "TYP": "nein"
+   }
+  ],
+  "IORTTEXTE": [
+   {
+    "ORT": "0xFFFF",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "SHIFT_LEVER_POSITION": [
+   {
+    "WERT": "0x00",
+    "UWTEXT": "No Selection active or available"
+   },
+   {
+    "WERT": "0x01",
+    "UWTEXT": "'Tip 1' range"
+   },
+   {
+    "WERT": "0x02",
+    "UWTEXT": "'Tip 2' range"
+   },
+   {
+    "WERT": "0x03",
+    "UWTEXT": "'Tip 3' range"
+   },
+   {
+    "WERT": "0x04",
+    "UWTEXT": "'Tip 4' range"
+   },
+   {
+    "WERT": "0x05",
+    "UWTEXT": "'D' range"
+   },
+   {
+    "WERT": "0x06",
+    "UWTEXT": "'N' range"
+   },
+   {
+    "WERT": "0x07",
+    "UWTEXT": "'R' range"
+   },
+   {
+    "WERT": "0x08",
+    "UWTEXT": "'P' range"
+   },
+   {
+    "WERT": "0x09",
+    "UWTEXT": "'Tip 5' range"
+   },
+   {
+    "WERT": "0x0A",
+    "UWTEXT": "'Tip 6' range"
+   },
+   {
+    "WERT": "0x0B",
+    "UWTEXT": "'L' range"
+   },
+   {
+    "WERT": "0xYY",
+    "UWTEXT": "Not defined"
+   }
+  ],
+  "TORQUE_CONVERTER_STATUS": [
+   {
+    "WERT": "0x00",
+    "UWTEXT": "No Lockup clutch applied"
+   },
+   {
+    "WERT": "0x40",
+    "UWTEXT": "Lockup clutch is slipping"
+   },
+   {
+    "WERT": "0x80",
+    "UWTEXT": "Lockup clutch applied"
+   },
+   {
+    "WERT": "0xC0",
+    "UWTEXT": "Status Unknown"
+   },
+   {
+    "WERT": "0xYY",
+    "UWTEXT": "Not defined"
+   }
+  ],
+  "ACTUAL_GEAR": [
+   {
+    "WERT": "0x00",
+    "UWTEXT": "P or N"
+   },
+   {
+    "WERT": "0x01",
+    "UWTEXT": "1st Gear"
+   },
+   {
+    "WERT": "0x02",
+    "UWTEXT": "2nd Gear"
+   },
+   {
+    "WERT": "0x03",
+    "UWTEXT": "3rd Gear"
+   },
+   {
+    "WERT": "0x04",
+    "UWTEXT": "4th Gear"
+   },
+   {
+    "WERT": "0x05",
+    "UWTEXT": "5th Gear"
+   },
+   {
+    "WERT": "0x06",
+    "UWTEXT": "6th Gear"
+   },
+   {
+    "WERT": "0x07",
+    "UWTEXT": "Reverse Gear"
+   },
+   {
+    "WERT": "0xYY",
+    "UWTEXT": "Not defined"
+   }
+  ],
+  "GEAR_ERROR": [
+   {
+    "WERT": "0x00",
+    "UWTEXT": "No Error"
+   },
+   {
+    "WERT": "0x01",
+    "UWTEXT": "Reverse Gear Error"
+   },
+   {
+    "WERT": "0x02",
+    "UWTEXT": "1st E/G Brake Gear Error"
+   },
+   {
+    "WERT": "0x03",
+    "UWTEXT": "1st Gear Error"
+   },
+   {
+    "WERT": "0x04",
+    "UWTEXT": "2nd Gear Error"
+   },
+   {
+    "WERT": "0x05",
+    "UWTEXT": "3rd Gear Error"
+   },
+   {
+    "WERT": "0x06",
+    "UWTEXT": "4th Gear Error"
+   },
+   {
+    "WERT": "0x07",
+    "UWTEXT": "5th Gear Error"
+   },
+   {
+    "WERT": "0x08",
+    "UWTEXT": "6th Gear Error"
+   },
+   {
+    "WERT": "0xYY",
+    "UWTEXT": "Not defined"
+   }
+  ],
+  "SOLENOID_PATTERN": [
+   {
+    "UW_ANZ": "3",
+    "UW1_NR": "0x12",
+    "UW2_NR": "0x13",
+    "UW3_NR": "0x14"
+   },
+   {
+    "UW_ANZ": "0xYY",
+    "UW1_NR": "",
+    "UW2_NR": "",
+    "UW3_NR": ""
+   }
+  ],
+  "PIN_PATTERN": [
+   {
+    "UW_ANZ": "7",
+    "UW1_NR": "0x15",
+    "UW2_NR": "0x16",
+    "UW3_NR": "0x17",
+    "UW4_NR": "0x18",
+    "UW5_NR": "0x19",
+    "UW6_NR": "0x20",
+    "UW7_NR": "0x21"
+   },
+   {
+    "UW_ANZ": "0xYY",
+    "UW1_NR": "",
+    "UW2_NR": "",
+    "UW3_NR": "",
+    "UW4_NR": "",
+    "UW5_NR": "",
+    "UW6_NR": "",
+    "UW7_NR": ""
+   }
+  ],
+  "GEAR_INFORMATION": [
+   {
+    "WERT": "0x01",
+    "UWTEXT": "Lockup OFF / 1-1EB"
+   },
+   {
+    "WERT": "0x02",
+    "UWTEXT": "Lockup OFF / 1-2"
+   },
+   {
+    "WERT": "0x04",
+    "UWTEXT": "Lockup OFF / 1-3"
+   },
+   {
+    "WERT": "0x05",
+    "UWTEXT": "Lockup OFF / 2-3"
+   },
+   {
+    "WERT": "0x06",
+    "UWTEXT": "Lockup OFF / 2-4"
+   },
+   {
+    "WERT": "0x07",
+    "UWTEXT": "Lockup OFF / 2-6"
+   },
+   {
+    "WERT": "0x08",
+    "UWTEXT": "Lockup OFF / 3-4"
+   },
+   {
+    "WERT": "0x03",
+    "UWTEXT": "Lockup OFF / 3-5"
+   },
+   {
+    "WERT": "0x09",
+    "UWTEXT": "Lockup OFF / 4-5"
+   },
+   {
+    "WERT": "0x0A",
+    "UWTEXT": "Lockup OFF / 4-6"
+   },
+   {
+    "WERT": "0x0B",
+    "UWTEXT": "Lockup OFF / 5-6"
+   },
+   {
+    "WERT": "0x0C",
+    "UWTEXT": "Lockup OFF / 1EB-1"
+   },
+   {
+    "WERT": "0x0D",
+    "UWTEXT": "Lockup OFF / 2-1"
+   },
+   {
+    "WERT": "0x0E",
+    "UWTEXT": "Lockup OFF / 3-1"
+   },
+   {
+    "WERT": "0x0F",
+    "UWTEXT": "Lockup OFF / 3-2"
+   },
+   {
+    "WERT": "0x10",
+    "UWTEXT": "Lockup OFF / 4-2"
+   },
+   {
+    "WERT": "0x11",
+    "UWTEXT": "Lockup OFF / 6-2"
+   },
+   {
+    "WERT": "0x12",
+    "UWTEXT": "Lockup OFF / 4-3"
+   },
+   {
+    "WERT": "0x13",
+    "UWTEXT": "Lockup OFF / 5-3"
+   },
+   {
+    "WERT": "0x14",
+    "UWTEXT": "Lockup OFF / 5-4"
+   },
+   {
+    "WERT": "0x15",
+    "UWTEXT": "Lockup OFF / 6-4"
+   },
+   {
+    "WERT": "0x16",
+    "UWTEXT": "Lockup OFF / 6-5"
+   },
+   {
+    "WERT": "0x17",
+    "UWTEXT": "Lockup OFF / R"
+   },
+   {
+    "WERT": "0x18",
+    "UWTEXT": "Lockup OFF / N"
+   },
+   {
+    "WERT": "0x19",
+    "UWTEXT": "Lockup OFF / 1st"
+   },
+   {
+    "WERT": "0x1A",
+    "UWTEXT": "Lockup OFF / 2nd"
+   },
+   {
+    "WERT": "0x1B",
+    "UWTEXT": "Lockup OFF / 3rd"
+   },
+   {
+    "WERT": "0x1C",
+    "UWTEXT": "Lockup OFF / 4th"
+   },
+   {
+    "WERT": "0x1D",
+    "UWTEXT": "Lockup OFF / 5th"
+   },
+   {
+    "WERT": "0x1E",
+    "UWTEXT": "Lockup OFF / 6th"
+   },
+   {
+    "WERT": "0x1F",
+    "UWTEXT": "Lockup OFF / NR"
+   },
+   {
+    "WERT": "0x20",
+    "UWTEXT": "Lockup OFF / ND1st"
+   },
+   {
+    "WERT": "0x21",
+    "UWTEXT": "Lockup OFF / ND2nd"
+   },
+   {
+    "WERT": "0x22",
+    "UWTEXT": "Lockup OFF / ND3rd"
+   },
+   {
+    "WERT": "0x23",
+    "UWTEXT": "Lockup OFF / ND4th"
+   },
+   {
+    "WERT": "0x24",
+    "UWTEXT": "Lockup OFF / ND5th"
+   },
+   {
+    "WERT": "0x25",
+    "UWTEXT": "Lockup OFF / ND6th"
+   },
+   {
+    "WERT": "0x65",
+    "UWTEXT": "Lockup ON / 1-1EB"
+   },
+   {
+    "WERT": "0x66",
+    "UWTEXT": "Lockup ON / 1-2"
+   },
+   {
+    "WERT": "0x67",
+    "UWTEXT": "Lockup ON / 1-3"
+   },
+   {
+    "WERT": "0x68",
+    "UWTEXT": "Lockup ON / 2-3"
+   },
+   {
+    "WERT": "0x69",
+    "UWTEXT": "Lockup ON / 2-4"
+   },
+   {
+    "WERT": "0x6A",
+    "UWTEXT": "Lockup ON / 2-6"
+   },
+   {
+    "WERT": "0x6B",
+    "UWTEXT": "Lockup ON / 3-4"
+   },
+   {
+    "WERT": "0x6C",
+    "UWTEXT": "Lockup ON / 3-5"
+   },
+   {
+    "WERT": "0x6D",
+    "UWTEXT": "Lockup ON / 4-5"
+   },
+   {
+    "WERT": "0x6E",
+    "UWTEXT": "Lockup ON / 4-6"
+   },
+   {
+    "WERT": "0x6F",
+    "UWTEXT": "Lockup ON / 5-6"
+   },
+   {
+    "WERT": "0x70",
+    "UWTEXT": "Lockup ON / 1EB-1"
+   },
+   {
+    "WERT": "0x71",
+    "UWTEXT": "Lockup ON / 2-1"
+   },
+   {
+    "WERT": "0x72",
+    "UWTEXT": "Lockup ON / 3-1"
+   },
+   {
+    "WERT": "0x73",
+    "UWTEXT": "Lockup ON / 3-2"
+   },
+   {
+    "WERT": "0x74",
+    "UWTEXT": "Lockup ON / 4-2"
+   },
+   {
+    "WERT": "0x75",
+    "UWTEXT": "Lockup ON / 6-2"
+   },
+   {
+    "WERT": "0x76",
+    "UWTEXT": "Lockup ON / 4-3"
+   },
+   {
+    "WERT": "0x77",
+    "UWTEXT": "Lockup ON / 5-3"
+   },
+   {
+    "WERT": "0x78",
+    "UWTEXT": "Lockup ON / 5-4"
+   },
+   {
+    "WERT": "0x79",
+    "UWTEXT": "Lockup ON / 6-4"
+   },
+   {
+    "WERT": "0x7A",
+    "UWTEXT": "Lockup ON / 6-5"
+   },
+   {
+    "WERT": "0x7B",
+    "UWTEXT": "Lockup ON / R"
+   },
+   {
+    "WERT": "0x7C",
+    "UWTEXT": "Lockup ON / N"
+   },
+   {
+    "WERT": "0x7D",
+    "UWTEXT": "Lockup ON / 1st"
+   },
+   {
+    "WERT": "0x7E",
+    "UWTEXT": "Lockup ON / 2nd"
+   },
+   {
+    "WERT": "0x7F",
+    "UWTEXT": "Lockup ON / 3rd"
+   },
+   {
+    "WERT": "0x80",
+    "UWTEXT": "Lockup ON / 4th"
+   },
+   {
+    "WERT": "0x81",
+    "UWTEXT": "Lockup ON / 5th"
+   },
+   {
+    "WERT": "0x82",
+    "UWTEXT": "Lockup ON / 6th"
+   },
+   {
+    "WERT": "0x83",
+    "UWTEXT": "Lockup ON / NR"
+   },
+   {
+    "WERT": "0x84",
+    "UWTEXT": "Lockup ON / ND1st"
+   },
+   {
+    "WERT": "0x85",
+    "UWTEXT": "Lockup ON / ND2nd"
+   },
+   {
+    "WERT": "0x86",
+    "UWTEXT": "Lockup ON / ND3rd"
+   },
+   {
+    "WERT": "0x87",
+    "UWTEXT": "Lockup ON / ND4th"
+   },
+   {
+    "WERT": "0x88",
+    "UWTEXT": "Lockup ON / ND5th"
+   },
+   {
+    "WERT": "0x89",
+    "UWTEXT": "Lockup ON / ND6th"
+   },
+   {
+    "WERT": "0xC9",
+    "UWTEXT": "Lockup Slip / 1-1EB"
+   },
+   {
+    "WERT": "0xCA",
+    "UWTEXT": "Lockup Slip / 1-2"
+   },
+   {
+    "WERT": "0XCB",
+    "UWTEXT": "Lockup Slip / 1-3"
+   },
+   {
+    "WERT": "0xCC",
+    "UWTEXT": "Lockup Slip / 2-3"
+   },
+   {
+    "WERT": "0xCD",
+    "UWTEXT": "Lockup Slip / 2-4"
+   },
+   {
+    "WERT": "0XCE",
+    "UWTEXT": "Lockup Slip / 2-6"
+   },
+   {
+    "WERT": "0xCF",
+    "UWTEXT": "Lockup Slip / 3-4"
+   },
+   {
+    "WERT": "0xD0",
+    "UWTEXT": "Lockup Slip / 3-5"
+   },
+   {
+    "WERT": "0xD1",
+    "UWTEXT": "Lockup Slip / 4-5"
+   },
+   {
+    "WERT": "0xD2",
+    "UWTEXT": "Lockup Slip / 4-6"
+   },
+   {
+    "WERT": "0xD3",
+    "UWTEXT": "Lockup Slip / 5-6"
+   },
+   {
+    "WERT": "0xD4",
+    "UWTEXT": "Lockup Slip / 1EB-1"
+   },
+   {
+    "WERT": "0xD5",
+    "UWTEXT": "Lockup Slip / 2-1"
+   },
+   {
+    "WERT": "0xD6",
+    "UWTEXT": "Lockup Slip / 3-1"
+   },
+   {
+    "WERT": "0xD7",
+    "UWTEXT": "Lockup Slip / 3-2"
+   },
+   {
+    "WERT": "0xD8",
+    "UWTEXT": "Lockup Slip / 4-2"
+   },
+   {
+    "WERT": "0xD9",
+    "UWTEXT": "Lockup Slip / 6-2"
+   },
+   {
+    "WERT": "0xDA",
+    "UWTEXT": "Lockup Slip / 4-3"
+   },
+   {
+    "WERT": "0xDB",
+    "UWTEXT": "Lockup Slip / 5-3"
+   },
+   {
+    "WERT": "0xDC",
+    "UWTEXT": "Lockup Slip / 5-4"
+   },
+   {
+    "WERT": "0xDD",
+    "UWTEXT": "Lockup Slip / 6-4"
+   },
+   {
+    "WERT": "0xDE",
+    "UWTEXT": "Lockup Slip / 6-5"
+   },
+   {
+    "WERT": "0xDF",
+    "UWTEXT": "Lockup Slip / R"
+   },
+   {
+    "WERT": "0xE0",
+    "UWTEXT": "Lockup Slip / N"
+   },
+   {
+    "WERT": "0xE1",
+    "UWTEXT": "Lockup Slip / 1st"
+   },
+   {
+    "WERT": "0xE2",
+    "UWTEXT": "Lockup Slip / 2nd"
+   },
+   {
+    "WERT": "0xE3",
+    "UWTEXT": "Lockup Slip / 3rd"
+   },
+   {
+    "WERT": "0xE4",
+    "UWTEXT": "Lockup Slip / 4th"
+   },
+   {
+    "WERT": "0xE5",
+    "UWTEXT": "Lockup Slip / 5th"
+   },
+   {
+    "WERT": "0xE6",
+    "UWTEXT": "Lockup Slip / 6th"
+   },
+   {
+    "WERT": "0xE7",
+    "UWTEXT": "Lockup Slip / NR"
+   },
+   {
+    "WERT": "0xE8",
+    "UWTEXT": "Lockup Slip / ND1st"
+   },
+   {
+    "WERT": "0xE9",
+    "UWTEXT": "Lockup Slip / ND2nd"
+   },
+   {
+    "WERT": "0xEA",
+    "UWTEXT": "Lockup Slip / ND3rd"
+   },
+   {
+    "WERT": "0xEB",
+    "UWTEXT": "Lockup Slip / ND4th"
+   },
+   {
+    "WERT": "0xEC",
+    "UWTEXT": "Lockup Slip / ND5th"
+   },
+   {
+    "WERT": "0xED",
+    "UWTEXT": "Lockup Slip / ND6th"
+   },
+   {
+    "WERT": "0xXY",
+    "UWTEXT": "Not Plausible Gear Conditionl"
+   }
+  ],
+  "STATUS_RBM_TABEL": [
+   {
+    "NAME": "STATUS_RBM_GEARERROR_1E_B_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79AE"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_1ST_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79B2"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_2ND_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79B6"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_3RD_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79BA"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_4TH_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79BE"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_5TH_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79C2"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_5TH_DENOMINATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79C4"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_6TH_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79C6"
+   },
+   {
+    "NAME": "STATUS_RBM_GEARERROR_6TH_DENOMINATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79C8"
+   },
+   {
+    "NAME": "STATUS_RBM_SP_NOPULSE_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79CA"
+   },
+   {
+    "NAME": "STATUS_RBM_C1_NOPULSE_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79CE"
+   },
+   {
+    "NAME": "STATUS_RBM_LUP_OFF_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79D2"
+   },
+   {
+    "NAME": "STATUS_RBM_SLC1_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79D6"
+   },
+   {
+    "NAME": "STATUS_RBM_SLC2_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79DA"
+   },
+   {
+    "NAME": "STATUS_RBM_SLC3_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79DE"
+   },
+   {
+    "NAME": "STATUS_RBM_SLB1_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79E2"
+   },
+   {
+    "NAME": "STATUS_RBM_SLT_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79E6"
+   },
+   {
+    "NAME": "STATUS_RBM_SLU_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79EA"
+   },
+   {
+    "NAME": "STATUS_RBM_OIL_STUCK_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79EE"
+   },
+   {
+    "NAME": "STATUS_RBM_C1_WRONGPULSE_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79F2"
+   },
+   {
+    "NAME": "STATUS_RBM_SP_WRONGPULSE_NUMERATOR",
+    "BYTE": "2",
+    "ADDRESS": "0xFF79F6"
+   }
+  ],
+  "CONTROLSTATEUMRECHNUNG": [
+   {
+    "CONTROLSTATE": "OFF",
+    "CS": "0x00"
+   },
+   {
+    "CONTROLSTATE": "ON",
+    "CS": "0xFF"
+   },
+   {
+    "CONTROLSTATE": "AUTOMATIC",
+    "CS": "0x03"
+   },
+   {
+    "CONTROLSTATE": "RCTECU",
+    "CS": "0x04"
+   },
+   {
+    "CONTROLSTATE": "",
+    "CS": "0x05"
+   }
+  ],
+  "IDENTIFIER_LESEN": [
+   {
+    "IDENTIFIER": "0x01",
+    "SIGNAL": "S1",
+    "0X00": "OFF",
+    "0XFF": "ON"
+   },
+   {
+    "IDENTIFIER": "0x02",
+    "SIGNAL": "S2",
+    "0X00": "OFF",
+    "0XFF": "ON"
+   },
+   {
+    "IDENTIFIER": "0x03",
+    "SIGNAL": "SLC1",
+    "0X00": "<=100mA",
+    "0XFF": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x04",
+    "SIGNAL": "SLC2",
+    "0X00": "<=100mA",
+    "0XFF": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x05",
+    "SIGNAL": "SLC3",
+    "0X00": "<=100mA",
+    "0XFF": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x06",
+    "SIGNAL": "SLB1",
+    "0X00": "<=100mA",
+    "0XFF": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x07",
+    "SIGNAL": "SLT",
+    "0X00": "<=100mA",
+    "0XFF": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x08",
+    "SIGNAL": "SLU",
+    "0X00": "<=100mA",
+    "0XFF": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x09",
+    "SIGNAL": "SHIFTLOCK",
+    "0X00": "OFF",
+    "0XFF": "ON"
+   },
+   {
+    "IDENTIFIER": "0x00",
+    "SIGNAL": "Not used",
+    "0X00": "-",
+    "0XFF": "-"
+   }
+  ],
+  "IDENTIFIER_SETZEN": [
+   {
+    "IDENTIFIER": "0x01",
+    "SIGNAL": "S1",
+    "0X00": "OFF",
+    "0X01": "-",
+    "0X02": "ON"
+   },
+   {
+    "IDENTIFIER": "0x02",
+    "SIGNAL": "S2",
+    "0X00": "OFF",
+    "0X01": "-",
+    "0X02": "ON"
+   },
+   {
+    "IDENTIFIER": "0x03",
+    "SIGNAL": "SLC1",
+    "0X00": "<=100mA",
+    "0X01": "-",
+    "0X02": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x04",
+    "SIGNAL": "SLC2",
+    "0X00": "<=100mA",
+    "0X01": "-",
+    "0X02": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x05",
+    "SIGNAL": "SLC3",
+    "0X00": "<=100mA",
+    "0X01": "-",
+    "0X02": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x06",
+    "SIGNAL": "SLB1",
+    "0X00": "<=100mA",
+    "0X01": "-",
+    "0X02": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x07",
+    "SIGNAL": "SLT",
+    "0X00": "<=100mA",
+    "0X01": "-",
+    "0X02": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x08",
+    "SIGNAL": "SLU",
+    "0X00": "<=100mA",
+    "0X01": "-",
+    "0X02": ">100mA"
+   },
+   {
+    "IDENTIFIER": "0x09",
+    "SIGNAL": "SHIFTLOCK",
+    "0X00": "OFF",
+    "0X01": "-",
+    "0X02": "ON"
+   },
+   {
+    "IDENTIFIER": "0x00",
+    "SIGNAL": "Not used",
+    "0X00": "",
+    "0X01": "",
+    "0X02": ""
+   }
+  ],
+  "SPEICHERSEGMENT": [
+   {
+    "SEG_BYTE": "0x00",
+    "SEG_NAME": "LAR",
+    "SEG_TEXT": "linearAdressRange"
+   },
+   {
+    "SEG_BYTE": "0x01",
+    "SEG_NAME": "ROMI",
+    "SEG_TEXT": "ROM / EPROM, internal"
+   },
+   {
+    "SEG_BYTE": "0x02",
+    "SEG_NAME": "ROMX",
+    "SEG_TEXT": "ROM / EPROM, external"
+   },
+   {
+    "SEG_BYTE": "0x03",
+    "SEG_NAME": "NVRAM",
+    "SEG_TEXT": "NV-RAM (characteristic zones, DTC memory"
+   },
+   {
+    "SEG_BYTE": "0x04",
+    "SEG_NAME": "RAMIS",
+    "SEG_TEXT": "RAM, internal (short MOV)"
+   },
+   {
+    "SEG_BYTE": "0x05",
+    "SEG_NAME": "RAMXX",
+    "SEG_TEXT": "RAM, external (x data MOV)"
+   },
+   {
+    "SEG_BYTE": "0x06",
+    "SEG_NAME": "FLASH",
+    "SEG_TEXT": "Flash EPROM, internal"
+   },
+   {
+    "SEG_BYTE": "0x07",
+    "SEG_NAME": "UIFM",
+    "SEG_TEXT": "User Info Field Memory"
+   },
+   {
+    "SEG_BYTE": "0x08",
+    "SEG_NAME": "VODM",
+    "SEG_TEXT": "Vehicle Order Data Memory"
+   },
+   {
+    "SEG_BYTE": "0x09",
+    "SEG_NAME": "FLASHX",
+    "SEG_TEXT": "Flash EPROM, external"
+   },
+   {
+    "SEG_BYTE": "0x0B",
+    "SEG_NAME": "RAMIL",
+    "SEG_TEXT": "RAM, internal (long MOV / Register)"
+   },
+   {
+    "SEG_BYTE": "0xFF",
+    "SEG_NAME": "???",
+    "SEG_TEXT": "unbekanntes Speichersegment"
+   }
+  ]
+ }
+}

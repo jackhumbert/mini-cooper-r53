@@ -1,0 +1,62 @@
+{
+ "sgbd": "D_0008",
+ "file": "D_0008.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0008"
+  ],
+  "ORIGIN": [
+   "BMW TI-430 Schnelle"
+  ],
+  "REVISION": [
+   "1.14"
+  ],
+  "AUTHOR": [
+   "BMW TI-430 Huber, BMW TI-430 Bendel"
+  ],
+  "ECUCOMMENT": [
+   "SHD46, SHD46_2, SD_DS2"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Ermittlung der SG Variante",
+    "Zur Gruppe gehoerende Varianten:",
+    "SHD46, SHD46_2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "Der zurueckgelieferte Name entspricht dem Namen der",
+      "Datei fuer die Varianten-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Einstellen der Kommunikationsparameter"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn i.O."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

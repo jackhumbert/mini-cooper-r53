@@ -1,0 +1,1600 @@
+{
+ "sgbd": "OC3",
+ "file": "OC3.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "OC3 Occupation Classification -3 fuer Baureihe E53/83/85 R50/52/53"
+  ],
+  "ORIGIN": [
+   "BMW EI-62 K.Henze"
+  ],
+  "REVISION": [
+   "1.05"
+  ],
+  "AUTHOR": [
+   "BERATA O.Schieferstein, BERATA M.Chafigoulline"
+  ],
+  "ECUCOMMENT": [
+   "SGBD fuer Occupation Classification -3 System"
+  ]
+ },
+ "jobs": {
+  "CODE_LESEN": {
+   "comment": [
+    "16 Byte aus Parametersatz BLOCKNR lesen",
+    "Read 16 bytes from block BLOCKNR stated"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'CODE_LESEN'",
+   "args": [
+    {
+     "name": "BLOCKNR",
+     "type": "string",
+     "comment": [
+      "(1 <= BLOCKNR <= 25) --> 16 Parameterbytes ab",
+      "Byte (16*BLOCKNR) werden angefordert",
+      "Between 1 and 25, byte 16*BLOCKNR returned"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Spezifizierte Parameterdaten",
+      "Specified parameterdata"
+     ]
+    }
+   ]
+  },
+  "C_CI_LESEN": {
+   "comment": [
+    "Codierindex lesen",
+    "Standard Codierjob"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "_TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "C_C_AUFTRAG": {
+   "comment": [
+    "Codierdaten schreiben und verifizieren",
+    "Write and check codingdata"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_C_LESEN": {
+   "comment": [
+    "Codierdaten lesen",
+    "Read codingdata"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CODIER_DATEN",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_C_SCHREIBEN": {
+   "comment": [
+    "Codierdaten schreiben",
+    "Write codingdata"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten",
+      "Codingdata"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_AUFRECHT": {
+   "comment": [
+    "Diagnosemode aufrechterhalten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_AUFRECHT'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnose beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen",
+    "Read error memory"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Hex-Fehlerdaten je Fehler",
+      "Hex format errordata"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "identisch Fehlerbytemaske",
+      "Error location number",
+      "FSR = Force Sensitive Resistor (Kraft/Druck-Abhaengiger Widerstand)",
+      "SPI = Serial Peripheral Interface"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "Error location text"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Fehlerhaeufigkeit",
+      "Error frequency (occurences)"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Fehlerarten (hier: immer 8)",
+      "Number of errortypes (always 8 here)"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Fehlerart",
+      "Index of 1st errortype"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "1. Fehlerart als Text",
+      "Text of 1st errortype"
+     ]
+    },
+    {
+     "name": "F_ART2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Fehlerart"
+     ]
+    },
+    {
+     "name": "F_ART2_TEXT",
+     "type": "string",
+     "comment": [
+      "2. Fehlerart als Text"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltbedingungen (hier: immer 2)",
+      "Number of environment conditions (always 2 here)"
+     ]
+    },
+    {
+     "name": "F_UW_SATZ",
+     "type": "int",
+     "comment": [
+      "Anzahl der Umweltsaetze (hier: immer 1)",
+      "Number of environment blocks (always 1 here)"
+     ]
+    },
+    {
+     "name": "F_UW1_NR",
+     "type": "int",
+     "comment": [
+      "Index der 1. Umweltbedingung (hier: immer 1)",
+      "Index of 1st environment condition (always 1 here)"
+     ]
+    },
+    {
+     "name": "F_UW1_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 1. Umweltbedingung (hier: immer Fehlerbeginn_std)",
+      "Text of 1st environment condition"
+     ]
+    },
+    {
+     "name": "F_UW1_WERT",
+     "type": "long",
+     "comment": [
+      "Wert der 1. Umweltbedingung",
+      "Value of 1st environment condition"
+     ]
+    },
+    {
+     "name": "F_UW1_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 1. Umweltbedingung (hier: immer Std.)",
+      "Unit of 1st environment condition"
+     ]
+    },
+    {
+     "name": "F_UW2_NR",
+     "type": "int",
+     "comment": [
+      "Index der 2. Umweltbedingung (hier: immer 2)"
+     ]
+    },
+    {
+     "name": "F_UW2_TEXT",
+     "type": "string",
+     "comment": [
+      "Text zur 2. Umweltbedingung (hier: immer Fehlerbeginn_min)"
+     ]
+    },
+    {
+     "name": "F_UW2_WERT",
+     "type": "long",
+     "comment": [
+      "Wert der 2. Umweltbedingung"
+     ]
+    },
+    {
+     "name": "F_UW2_EINH",
+     "type": "string",
+     "comment": [
+      "Einheit der 2. Umweltbedingung (hier: immer Min.)"
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    }
+   ]
+  },
+  "FS_QUICK_LESEN": {
+   "comment": [
+    "Error memory quicktest",
+    "High-Konzept nach Lastenheft"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_QUICK_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "F_ANZ",
+     "type": "int",
+     "comment": [
+      "Anzahl Fehler",
+      "Number of errors"
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Identdaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Initialisierung und Kommunikationsparameter DS2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, wenn Okay"
+     ]
+    }
+   ]
+  },
+  "OC3_DATEN_SCHREIBEN": {
+   "comment": [
+    "Codierung der Haenddlernummer und Freigabe des OC-3 Systems",
+    ""
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "HAENDLERNUMMER",
+     "type": "string",
+     "comment": [
+      "Haenddlernummer",
+      "BCD-String"
+     ]
+    },
+    {
+     "name": "PRUEFDATUM",
+     "type": "string",
+     "comment": [
+      "Freigabe",
+      "BCD-String"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "SERIENNUMMER_LESEN": {
+   "comment": [
+    "Hersteller Seriennummer lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "Status der Kommunikation"
+     ]
+    },
+    {
+     "name": "SERIENNUMMER",
+     "type": "string",
+     "comment": [
+      "Seriennummer des Steuergeraets",
+      "BCD-codiert"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "SG_LOGIN": {
+   "comment": [
+    "Berechtigung fuer EEPROM-Zugriffe",
+    "Login to ECU"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SG_LOGIN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    }
+   ]
+  },
+  "SPEICHER_LESEN": {
+   "comment": [
+    "Speicher lesen",
+    "Read memory"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "H_ADR",
+     "type": "string",
+     "comment": [
+      "Startadresse High-Byte"
+     ]
+    },
+    {
+     "name": "M_ADR",
+     "type": "string",
+     "comment": [
+      "Startadresse Mitte-Byte"
+     ]
+    },
+    {
+     "name": "L_ADR",
+     "type": "string",
+     "comment": [
+      "Startadresse Low-Byte"
+     ]
+    },
+    {
+     "name": "ANZ_BYTE",
+     "type": "string",
+     "comment": [
+      "Anzahl der zu lesenden Bytes (1 - 32)",
+      "Number of bytes to read (1 - 32)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, FEHLER"
+     ]
+    },
+    {
+     "name": "DATEN",
+     "type": "binary",
+     "comment": [
+      "Speicherinhalt"
+     ]
+    }
+   ]
+  },
+  "STATUS_LESEN": {
+   "comment": [
+    "Status des OC-3 lesen",
+    "Read status of OC-3"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "normalerweise OKAY"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG",
+      "Hex answer from ECU"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE",
+     "type": "int",
+     "comment": [
+      "OC3 Gewichtsklasse (Gueltig fuer R50/51 ab 01/05, E83 ab 03/05 und E85 ab 01/06)",
+      "0: Gewichtsklasse \"0\" (Leerer Sitz)",
+      "1: Gewichtsklasse \"1\" (Kindersitz)",
+      "2: Gewichtsklasse \"2\" (>=5% Frau / 45kg)",
+      "-1: n.v.",
+      "",
+      "Hinweis:",
+      "Switch von Klasse 0 auf Belegungsstatus erfolgt sofort",
+      "Switch von Belegungsstatus auf Klasse 0 erfolgt mit einer Verzoegerung von 6 Sekunden."
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_LEERER_SITZ",
+     "type": "int",
+     "comment": [
+      "OC3 Gewichtsklasse 0: (Leerer Sitz)",
+      "siehe Hinweis bei Result \"STAT_GEWICHTSKLASSE\"!"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_KINDERSITZ",
+     "type": "int",
+     "comment": [
+      "OC3 Gewichtsklasse 1: (Kindersitz)",
+      "siehe Hinweis bei Result \"STAT_GEWICHTSKLASSE\"!"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_SITZ_BELEGT",
+     "type": "int",
+     "comment": [
+      "OC3 Gewichtsklasse 2: (>=5% Frau / 45kg)",
+      "siehe Hinweis bei Result \"STAT_GEWICHTSKLASSE\"!"
+     ]
+    },
+    {
+     "name": "STAT_GEWICHTSKLASSE_UNDEFINIERT",
+     "type": "int",
+     "comment": [
+      "OC3 Gewichtsklasse nicht definiert"
+     ]
+    },
+    {
+     "name": "STAT_RAW_HA",
+     "type": "int",
+     "comment": [
+      "RAW aktivierte Flaeche"
+     ]
+    },
+    {
+     "name": "STAT_RAW_IW",
+     "type": "int",
+     "comment": [
+      "RAW Abstand der Sitzbeinhoecker"
+     ]
+    },
+    {
+     "name": "STAT_RAW_CP",
+     "type": "int",
+     "comment": [
+      "RAW Anzahl leerer Zellen im Druckbild (Hinweis auf Kindersitz)"
+     ]
+    },
+    {
+     "name": "STAT_RAW_AW",
+     "type": "int",
+     "comment": [
+      "RAW geschaetztes Gewicht"
+     ]
+    },
+    {
+     "name": "STAT_COG_X",
+     "type": "int",
+     "comment": [
+      "Schwerpunkt in x Richtung"
+     ]
+    },
+    {
+     "name": "STAT_COG_Y",
+     "type": "int",
+     "comment": [
+      "Schwerpunkt in y Richtung"
+     ]
+    },
+    {
+     "name": "STAT_DOM_1",
+     "type": "int",
+     "comment": [
+      "Wahrscheinlichkeit Kl.1"
+     ]
+    },
+    {
+     "name": "STAT_DOM_2",
+     "type": "int",
+     "comment": [
+      "Wahrscheinlichkeit Kl.2"
+     ]
+    },
+    {
+     "name": "STAT_DOM_3",
+     "type": "int",
+     "comment": [
+      "Wahrscheinlichkeit Kl.3"
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Continental Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0x72",
+    "LIEF_TEXT": "ASIN AWCO.LTD"
+   },
+   {
+    "LIEF_NR": "0x73",
+    "LIEF_TEXT": "Shorlock"
+   },
+   {
+    "LIEF_NR": "0x74",
+    "LIEF_TEXT": "Schrader"
+   },
+   {
+    "LIEF_NR": "0x75",
+    "LIEF_TEXT": "BERU Electronics GmbH"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTNUMPREFIX": [
+   {
+    "ROVER_NR": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "ROVER_NR": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "ROVER_NR": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "ROVER_NR": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "ROVER_NR": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "ROVER_NR": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "ROVER_NR": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "ROVER_NR": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "ROVER_NR": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "ROVER_NR": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "ROVER_NR": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "ROVER_NR": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "ROVER_NR": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "ROVER_NR": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "ROVER_NR": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "ROVER_NR": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "ROVER_NR": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "ROVER_NR": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "ROVER_NR": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "ROVER_NR": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "ROVER_NR": "0xXY",
+    "PREFIX": "???"
+   }
+  ],
+  "JOBRESULTEXTENDED": [
+   {
+    "SB": "0xXY",
+    "STATUS_TEXT": "ERROR_UNKNOWN"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "A/D-Wandler Fehler"
+   },
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "HW EEPROM Pruefsummenfehler"
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "Algo EEPROM Parameterfehler oder Pruefsummenfehler"
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "Batteriespannung zu niedrig"
+   },
+   {
+    "ORT": "0x04",
+    "ORTTEXT": "ADC Spannungsteiler Ubat nicht ok"
+   },
+   {
+    "ORT": "0x05",
+    "ORTTEXT": "ADC Spannungsteiler Umref nicht ok"
+   },
+   {
+    "ORT": "0x06",
+    "ORTTEXT": "Reihen-Abschlusswiderstand defekt (dynamische Messung)"
+   },
+   {
+    "ORT": "0x07",
+    "ORTTEXT": "Spalten-Abschlusswiderstand defekt (dynamische Messung)"
+   },
+   {
+    "ORT": "0x08",
+    "ORTTEXT": "SPI Ueberlauf (Kommunikation ASIC / FRAM)"
+   },
+   {
+    "ORT": "0x09",
+    "ORTTEXT": "SPI Paritaetsfehler (Kommunikation ASIC / FRAM)"
+   },
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "Falsche Register-Page (ASIC-Fehler)"
+   },
+   {
+    "ORT": "0x0B",
+    "ORTTEXT": "FSR Mattenueberlastung"
+   },
+   {
+    "ORT": "0x0D",
+    "ORTTEXT": "FSR Fehlerstrom auf unbenutzten Reihen/Spalten"
+   },
+   {
+    "ORT": "0x0E",
+    "ORTTEXT": "FSR Kurzschluss zwischen Spalten"
+   },
+   {
+    "ORT": "0x0F",
+    "ORTTEXT": "FSR Kurzschluss zwischen Reihen"
+   },
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "FSR Fehlerstrom nach Masse"
+   },
+   {
+    "ORT": "0x11",
+    "ORTTEXT": "FSR Fehlerstrom nach Ubat"
+   },
+   {
+    "ORT": "0x14",
+    "ORTTEXT": "FSR Kalibrationswiderstand K14/R4 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x15",
+    "ORTTEXT": "FSR Kalibrationswiderstand K14/R5 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x16",
+    "ORTTEXT": "FSR Kalibrationswiderstand K14/R8 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x17",
+    "ORTTEXT": "FSR Kalibrationswiderstand K14/R9 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x18",
+    "ORTTEXT": "FSR Kalibrationswiderstand K14/R10 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x19",
+    "ORTTEXT": "FSR Referenzwiderstand K14/R2 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x1A",
+    "ORTTEXT": "FSR Referenzwiderstand K14/R3 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x1B",
+    "ORTTEXT": "FSR Referenzwiderstand K14/R6 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x1C",
+    "ORTTEXT": "FSR Referenzwiderstand K14/R7 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x1D",
+    "ORTTEXT": "FSR Widerstand K14/R1 oder K1/R9 ausserhalb Toleranz"
+   },
+   {
+    "ORT": "0x1E",
+    "ORTTEXT": "FSR Umref zu niedrig"
+   },
+   {
+    "ORT": "0x1F",
+    "ORTTEXT": "FSR /Max-Delta - Min-Delta/ oder Referenzwiderstaende ausserhalb der Grenzen"
+   },
+   {
+    "ORT": "0x21",
+    "ORTTEXT": "FSR Thermistor 1 ausserhalb der Grenzen"
+   },
+   {
+    "ORT": "0x22",
+    "ORTTEXT": "FSR Thermistor 2 ausserhalb der Grenzen"
+   },
+   {
+    "ORT": "0x23",
+    "ORTTEXT": "FSR Delta Thermistor /Thermistor 1 - Thermistor 2/ ausserhalb der Grenzen"
+   },
+   {
+    "ORT": "0x24",
+    "ORTTEXT": "Crash-Daten-Speicher voll"
+   },
+   {
+    "ORT": "0x27",
+    "ORTTEXT": "FRAM Fehler"
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Unbekannter Fehler"
+   }
+  ],
+  "FARTMATRIX": [
+   {
+    "ORT": "0xFF",
+    "A2_0": "0x01",
+    "A2_1": "0x02",
+    "A1_0": "0x08",
+    "A1_1": "0x09"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ARTNR": "0x01",
+    "ARTTEXT": "Fehler nicht vorhanden"
+   },
+   {
+    "ARTNR": "0x02",
+    "ARTTEXT": "Fehler aktuell vorhanden"
+   },
+   {
+    "ARTNR": "0x08",
+    "ARTTEXT": "Fehler nicht sporadisch"
+   },
+   {
+    "ARTNR": "0x09",
+    "ARTTEXT": "Fehler sporadisch"
+   },
+   {
+    "ARTNR": "0xFF",
+    "ARTTEXT": "--"
+   }
+  ],
+  "FUMWELTMATRIX": [
+   {
+    "ORT": "default",
+    "UW_ANZ": "0x02",
+    "UW_SATZ": "0x01",
+    "UW1_NR": "0x01",
+    "UW2_NR": "0x02"
+   }
+  ],
+  "FUMWELTTEXTE": [
+   {
+    "UWNR": "0x01",
+    "UWTEXT": "Fehlerbeginn_std",
+    "UW_EINH": "Std.",
+    "L/H": "--",
+    "UWTYP": "long",
+    "NAME": "--",
+    "MUL": "--",
+    "DIV": "--",
+    "ADD": "--"
+   },
+   {
+    "UWNR": "0x02",
+    "UWTEXT": "Fehlerbeginn_min",
+    "UW_EINH": "Min.",
+    "L/H": "--",
+    "UWTYP": "long",
+    "NAME": "--",
+    "MUL": "--",
+    "DIV": "--",
+    "ADD": "--"
+   }
+  ],
+  "DIGITALARGUMENT": [
+   {
+    "TEXT": "ein",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "aus",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "ja",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "nein",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "auf",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "ab",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "an",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "yes",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "no",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "on",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "off",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "up",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "down",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "true",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "false",
+    "WERT": "0"
+   },
+   {
+    "TEXT": "1",
+    "WERT": "1"
+   },
+   {
+    "TEXT": "0",
+    "WERT": "0"
+   }
+  ]
+ }
+}

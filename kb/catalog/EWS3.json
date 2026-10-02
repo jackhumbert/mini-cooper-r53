@@ -1,0 +1,3150 @@
+{
+ "sgbd": "EWS3",
+ "file": "ews3.prg",
+ "kind": "variant",
+ "header": {
+  "ECU": [
+   "Elektronische Wegfahrsperre Entwicklungs SGBD"
+  ],
+  "ORIGIN": [
+   "BMW EI-61 Christian Röhrig"
+  ],
+  "REVISION": [
+   "2.000"
+  ],
+  "AUTHOR": [
+   "BMW EI-61 Christian Roehrig"
+  ],
+  "ECUCOMMENT": [
+   ""
+  ]
+ },
+ "jobs": {
+  "COD_EWS_DME3_SCHREIBEN": {
+   "comment": [
+    "Schreiben der Schaerfzeit der WS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "COD_LESEN": {
+   "comment": [
+    "Auslesen der Codierdaten der EWS3"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "COD_DATEN",
+     "type": "string",
+     "comment": [
+      "5 Codierbytes"
+     ]
+    },
+    {
+     "name": "COD_GETRIEBE",
+     "type": "string",
+     "comment": [
+      "Schaltgetriebe oder Automatik"
+     ]
+    },
+    {
+     "name": "COD_DME_SS",
+     "type": "int",
+     "comment": [
+      "2 oder 3"
+     ]
+    },
+    {
+     "name": "COD_START_K_BUS",
+     "type": "string",
+     "comment": [
+      "Freischaltung ueber K-BUS ohne Schluesselabfrage nicht moeglich"
+     ]
+    },
+    {
+     "name": "COD_ABSCHALTDREHZAHL",
+     "type": "real",
+     "comment": [
+      "(5 bis 254)/0.3 1/s"
+     ]
+    },
+    {
+     "name": "COD_ABSCHALTZEIT",
+     "type": "int",
+     "comment": [
+      "(1 bis 255)*2 s"
+     ]
+    },
+    {
+     "name": "COD_ZEIT_WS_SCHAERFEN",
+     "type": "int",
+     "comment": [
+      "0 bis 255 s"
+     ]
+    },
+    {
+     "name": "COD_WEITERSCHALTSCHWELLE",
+     "type": "string",
+     "comment": [
+      "0 bis 255 (Dummyergebnis bei DME-Schnittstelle 2)"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "COD_ZEIT_WS_SCHREIBEN": {
+   "comment": [
+    "Schreiben der Schaerfzeit der WS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "ZEIT_WS",
+     "type": "int",
+     "comment": [
+      "Schaerfzeit der WS in Sekunden"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "C_AZCS_AUFTRAG": {
+   "comment": [
+    "Write the Rover Additional ZCS into customer-data block"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "AGM",
+     "type": "string",
+     "comment": [
+      "Additional Zentralcode C1 - Not used",
+      "(9 chars = 8 chars + 1 char csum)"
+     ]
+    },
+    {
+     "name": "ASA",
+     "type": "string",
+     "comment": [
+      "Additional Zentralcode C2",
+      "= 17-chars = 6 chars(unused) + 10  FEATURES chars + 1 char csum(unused)"
+     ]
+    },
+    {
+     "name": "AVN",
+     "type": "string",
+     "comment": [
+      "Additional Zentralcode C3",
+      "= 11-chars = 6 chars(unused) + 4  MARKET chars + 1 char csum(unused)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_AZCS_LESEN": {
+   "comment": [
+    "Read out ADDITIONAL ZCS data from Customer-data area"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "AGM",
+     "type": "string",
+     "comment": [
+      "Additional Zentralcode C1 - Not used",
+      "= 8 chars (no csum)"
+     ]
+    },
+    {
+     "name": "ASA",
+     "type": "string",
+     "comment": [
+      "Additional Zentralcode C2",
+      "= 16-chars = 6 chars(unused) + 10  FEATURES chars + (no csum)"
+     ]
+    },
+    {
+     "name": "AVN",
+     "type": "string",
+     "comment": [
+      "Additional Zentralcode C3",
+      "= 10-chars = 6 chars(unused) + 4  MARKET chars + (no csum)"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "C_C_AUFTRAG": {
+   "comment": [
+    "Codierdaten schreiben und verifizieren"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_C_LESEN": {
+   "comment": [
+    "Codierdaten lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BINAER_BUFFER",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "CODIER_DATEN",
+     "type": "binary",
+     "comment": [
+      "Codierdaten"
+     ]
+    },
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_FG_AUFTRAG": {
+   "comment": [
+    "Schreiben der 17-stelligen Fahrgestellnummer (incl. Pruefziffer)"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer (18-stellig)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "C_FG_LESEN": {
+   "comment": [
+    "Auslesen der Fahrgestellnummer aus der EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "C_ZCS_AUFTRAG": {
+   "comment": [
+    "Schreiben des Zentralen Codierschluessels in die KD-Daten"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'C_.*_AUFTRAG'",
+   "args": [
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung"
+     ]
+    },
+    {
+     "name": "VN",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "C_ZCS_LESEN": {
+   "comment": [
+    "Auslesen des Zentralen Codierschluessels aus KD-Daten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung"
+     ]
+    },
+    {
+     "name": "VN",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_ENDE": {
+   "comment": [
+    "Diagnose beenden"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_ENDE'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "DIAGNOSE_FORTSETZEN": {
+   "comment": [
+    "Diagnose mit EWS3 aufrecht erhalten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'DIAGNOSE_FORTSETZEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "FGNR_K_SCHREIBEN": {
+   "comment": [
+    "Schreiben der 7-stelligen Fahrgestellnummer"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer (7-stellig)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "FGNR_LESEN": {
+   "comment": [
+    "Auslesen der Fahrgestellnummer aus der EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer"
+     ]
+    },
+    {
+     "name": "FG_PZ",
+     "type": "string",
+     "comment": [
+      "Pruefziffer der Fahrgestellnummer inkl. FP nach Modulo 36 berechnet"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "FGNR_SCHREIBEN": {
+   "comment": [
+    "Schreiben der 17-stelligen Fahrgestellnummer inkl. PZ"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "FG_NR",
+     "type": "string",
+     "comment": [
+      "Fahrgestellnummer (17-stellig)"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "FS_LESEN": {
+   "comment": [
+    "Fehlerspeicher lesen",
+    "Low-Konzept nach Lastenheft Codierung/Diagnose"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'FS_LESEN.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "F_HEX_CODE",
+     "type": "binary",
+     "comment": [
+      "Fehlerdaten pro Fehler als Hexcode"
+     ]
+    },
+    {
+     "name": "F_ORT_NR",
+     "type": "int",
+     "comment": [
+      "momentan identisch Fehlerbyte"
+     ]
+    },
+    {
+     "name": "F_ORT_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerort als Text",
+      "table FOrtTexte ORTTEXT"
+     ]
+    },
+    {
+     "name": "F_HFK",
+     "type": "int",
+     "comment": [
+      "Wertebereich 0 - 31"
+     ]
+    },
+    {
+     "name": "F_ART_ANZ",
+     "type": "int",
+     "comment": [
+      "immer 1"
+     ]
+    },
+    {
+     "name": "F_UW_ANZ",
+     "type": "int",
+     "comment": [
+      "immer 0"
+     ]
+    },
+    {
+     "name": "F_ART1_NR",
+     "type": "int",
+     "comment": [
+      "momentan identisch Art-Bit"
+     ]
+    },
+    {
+     "name": "F_ART1_TEXT",
+     "type": "string",
+     "comment": [
+      "Fehlerart als Text",
+      "table FArtTexte ARTTEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT0",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "FS_LOESCHEN": {
+   "comment": [
+    "Fehlerspeicher loeschen"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'FS_LOESCHEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "HERSTELLDATEN_LESEN": {
+   "comment": [
+    "Auslesen der Herstelldaten der EWS3"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE4",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "HERSTELLDATEN_SCHREIBEN": {
+   "comment": [
+    "Beschreiben der Herstellerdaten"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE4",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "IDENT": {
+   "comment": [
+    "Identdaten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei"
+     ]
+    },
+    {
+     "name": "ID_BMW_NR",
+     "type": "string",
+     "comment": [
+      "BMW-Teilenummer"
+     ]
+    },
+    {
+     "name": "ID_HW_NR",
+     "type": "int",
+     "comment": [
+      "BMW-Hardwarenummer"
+     ]
+    },
+    {
+     "name": "ID_COD_INDEX",
+     "type": "int",
+     "comment": [
+      "Codier-Index"
+     ]
+    },
+    {
+     "name": "ID_DIAG_INDEX",
+     "type": "int",
+     "comment": [
+      "Diagnose-Index"
+     ]
+    },
+    {
+     "name": "ID_BUS_INDEX",
+     "type": "int",
+     "comment": [
+      "Bus-Index"
+     ]
+    },
+    {
+     "name": "ID_DATUM_KW",
+     "type": "int",
+     "comment": [
+      "Herstelldatum KW"
+     ]
+    },
+    {
+     "name": "ID_DATUM_JAHR",
+     "type": "int",
+     "comment": [
+      "Herstelldatum Jahr"
+     ]
+    },
+    {
+     "name": "ID_LIEF_NR",
+     "type": "int",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_LIEF_TEXT",
+     "type": "string",
+     "comment": [
+      "Lieferanten-Nummer"
+     ]
+    },
+    {
+     "name": "ID_SW_NR",
+     "type": "int",
+     "comment": [
+      "Softwarenummer"
+     ]
+    },
+    {
+     "name": "TELEGRAMM",
+     "type": "binary",
+     "comment": [
+      "Antworttelegramm"
+     ]
+    }
+   ]
+  },
+  "INFO": {
+   "comment": [
+    "Information SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INFO'",
+   "args": [],
+   "results": [
+    {
+     "name": "ECU",
+     "type": "string",
+     "comment": [
+      "Steuergerät im Klartext"
+     ]
+    },
+    {
+     "name": "ORIGIN",
+     "type": "string",
+     "comment": [
+      "Steuergeräte-Verantwortlicher"
+     ]
+    },
+    {
+     "name": "REVISION",
+     "type": "string",
+     "comment": [
+      "Versions-Nummer"
+     ]
+    },
+    {
+     "name": "AUTHOR",
+     "type": "string",
+     "comment": [
+      "Namen aller Autoren"
+     ]
+    },
+    {
+     "name": "COMMENT",
+     "type": "string",
+     "comment": [
+      "wichtige Hinweise"
+     ]
+    },
+    {
+     "name": "PACKAGE",
+     "type": "string",
+     "comment": [
+      "Include-Paket-Nummer"
+     ]
+    },
+    {
+     "name": "SPRACHE",
+     "type": "string",
+     "comment": [
+      "deutsch, english"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Init-Job fuer EWS3",
+    "automatischer Aufruf beim ersten Zugriff auf SGBD"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1 wenn Okay"
+     ]
+    }
+   ]
+  },
+  "ISN_LESEN": {
+   "comment": [
+    "Auslesen der ISN-Nummer aus der EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'ISN_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "ISN",
+     "type": "string",
+     "comment": [
+      "16 Bit"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "ISN_SCHREIBEN": {
+   "comment": [
+    "Schreiben der ISN-Nummer in die EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "ISN",
+     "type": "string",
+     "comment": [
+      "16 Bit"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "KD_DATEN_LESEN": {
+   "comment": [
+    "Auslesen der Kundendienstdaten aus der EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "int",
+     "comment": [
+      "0 bis 11"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "KD_BLOCK",
+     "type": "int",
+     "comment": [
+      "0 bis 11"
+     ]
+    },
+    {
+     "name": "KD_DATEN",
+     "type": "binary",
+     "comment": [
+      "16 Byte"
+     ]
+    },
+    {
+     "name": "KD_DATEN_TEXT",
+     "type": "string",
+     "comment": [
+      "16 Byte"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "KD_DATEN_SCHREIBEN": {
+   "comment": [
+    "Schreiben der Kundendienst in die EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "KD_BLOCK",
+     "type": "int",
+     "comment": [
+      "0 bis 11"
+     ]
+    },
+    {
+     "name": "KD_DATEN",
+     "type": "string",
+     "comment": [
+      "16 Byte"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "KD_INIT": {
+   "comment": [
+    "Schreiben der VK-Daten in das EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'KD_INIT.*'",
+   "args": [
+    {
+     "name": "VK_STRING",
+     "type": "string",
+     "comment": [
+      "VK-Daten-String bis zu 222 Byte Laenge, es erfolgt derzeit keine Bearbeitung"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "KD_INIT_R50": {
+   "comment": [
+    "Schreiben der VK-Daten in das EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'KD_INIT.*'",
+   "args": [
+    {
+     "name": "VK_STRING",
+     "type": "string",
+     "comment": [
+      "VK-Daten-String bis zu 222 Byte Laenge, es erfolgt derzeit keine Bearbeitung"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    }
+   ]
+  },
+  "KD_POLSTER_LACK_SCHREIBEN": {
+   "comment": [
+    "Schreiben der Kundendienstdaten POLSTER und LACK in die EWS3"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "POLSTER",
+     "type": "string",
+     "comment": [
+      "Polstercode"
+     ]
+    },
+    {
+     "name": "LACK",
+     "type": "string",
+     "comment": [
+      "Lackcode"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "PASSWORT_LESEN": {
+   "comment": [
+    "Auslesen des Passworts aus der EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'PASSWORT_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "PASSWORT",
+     "type": "binary",
+     "comment": [
+      "6 Byte"
+     ]
+    },
+    {
+     "name": "PASSWORT_TEXT",
+     "type": "string",
+     "comment": [
+      "6 Byte"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "PASSWORT_SCHREIBEN": {
+   "comment": [
+    "Schreiben des Passworts in die EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "PASSWORT",
+     "type": "string",
+     "comment": [
+      "6 Byte"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_LESEN": {
+   "comment": [
+    "Auslesen des Pruefstempels"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "PRUEFSTEMPEL_SCHREIBEN": {
+   "comment": [
+    "Beschreiben des Pruefstempels"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "BYTE1",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE2",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    },
+    {
+     "name": "BYTE3",
+     "type": "int",
+     "comment": [
+      "kann beliebig verwendet werden"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "SCHLUESSEL_DATEN_0_BIS_3_LESEN": {
+   "comment": [
+    "Auslesen der Schluesseldaten aus der EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SCHLUESSEL_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "SCHL0_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 - 3"
+     ]
+    },
+    {
+     "name": "SCHL0_FREIGABE_TEXT",
+     "type": "string",
+     "comment": [
+      "gesperrt oder freigeschaltet"
+     ]
+    },
+    {
+     "name": "SCHL1_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 - 3"
+     ]
+    },
+    {
+     "name": "SCHL1_FREIGABE_TEXT",
+     "type": "string",
+     "comment": [
+      "gesperrt oder freigeschaltet"
+     ]
+    },
+    {
+     "name": "SCHL2_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 - 3"
+     ]
+    },
+    {
+     "name": "SCHL2_FREIGABE_TEXT",
+     "type": "string",
+     "comment": [
+      "gesperrt oder freigeschaltet"
+     ]
+    },
+    {
+     "name": "SCHL3_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 - 3"
+     ]
+    },
+    {
+     "name": "SCHL3_FREIGABE_TEXT",
+     "type": "string",
+     "comment": [
+      "gesperrt oder freigeschaltet"
+     ]
+    }
+   ]
+  },
+  "SCHL_DATEN_LESEN": {
+   "comment": [
+    "Auslesen der Schluesseldaten aus der EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SCHL_.*'",
+   "args": [
+    {
+     "name": "NUMMER",
+     "type": "int",
+     "comment": [
+      "0 bis 9"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "SCHL_NUMMER",
+     "type": "int",
+     "comment": [
+      "0 bis 9"
+     ]
+    },
+    {
+     "name": "SCHL_IDENT",
+     "type": "binary",
+     "comment": [
+      "8 Byte"
+     ]
+    },
+    {
+     "name": "SCHL_IDENT_TEXT",
+     "type": "string",
+     "comment": [
+      "8 Byte"
+     ]
+    },
+    {
+     "name": "SCHL_FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 - 3"
+     ]
+    },
+    {
+     "name": "SCHL_FREIGABE_TEXT",
+     "type": "string",
+     "comment": [
+      "gesperrt oder freigeschaltet"
+     ]
+    },
+    {
+     "name": "SCHL_SELBSTINIT_ERFOLGT",
+     "type": "int",
+     "comment": [
+      "1->Selbstprogrammierung des Schluessels ist erfolgt"
+     ]
+    },
+    {
+     "name": "SCHL_SELBSTINIT",
+     "type": "int",
+     "comment": [
+      "0->false, 1->Selbstprogrammierung des Schluessels durch das SG"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "SCHL_DATEN_SCHREIBEN": {
+   "comment": [
+    "Schreiben der Schluesseldaten in die EWS"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern '.*SCHREIBEN.*'",
+   "args": [
+    {
+     "name": "SCHL_NUMMER",
+     "type": "int",
+     "comment": [
+      "0 bis 9"
+     ]
+    },
+    {
+     "name": "SCHL_IDENT",
+     "type": "string",
+     "comment": [
+      "8 Byte"
+     ]
+    },
+    {
+     "name": "SCHL_FREIGABE",
+     "type": "int",
+     "comment": [
+      "Bit 1 : freischalten / Bit 2 K-Bus-Telegramm / Bit 7 selbstinit"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "SCHL_SPERREN_FREIGEBEN": {
+   "comment": [
+    "Schluessel freischalten und sperren"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'SCHL_SPERREN_FREIGEBEN'",
+   "args": [
+    {
+     "name": "NUMMER",
+     "type": "int",
+     "comment": [
+      "0 bis 9"
+     ]
+    },
+    {
+     "name": "FREIGABE",
+     "type": "int",
+     "comment": [
+      "0 : sperren / >0 : freischalten"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STATUS_EWS": {
+   "comment": [
+    "Informationen über das EWS4 Steuergerät anzeigen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "STAT_EWS3_CAPABLE",
+     "type": "int",
+     "comment": [
+      "0 Das SG beherrscht kein EWS3",
+      "1 Das SG beherrscht EWS3"
+     ]
+    },
+    {
+     "name": "STAT_EWS4_CAPABLE",
+     "type": "int",
+     "comment": [
+      "0 Das SG beherrscht kein EWS4",
+      "1 Das SG beherrscht EWS4"
+     ]
+    },
+    {
+     "name": "STAT_EWS3_ACTIVE",
+     "type": "int",
+     "comment": [
+      "0 EWS3 ist nicht aktiv",
+      "1 EWS3 ist aktiv (oder lässt sich aktivieren)"
+     ]
+    },
+    {
+     "name": "STAT_EWS4_ACTIVE",
+     "type": "int",
+     "comment": [
+      "0 EWS4 ist nicht aktiv",
+      "1 EWS4 ist aktiv (oder lässt sich aktivieren)"
+     ]
+    },
+    {
+     "name": "STAT_EWS4_SERVER_SK_LOCKED",
+     "type": "int",
+     "comment": [
+      "0 SecretKey lässt sich noch direkt schreiben/lesen",
+      "1 SecretKey lässt sich nicht mehr schreiben/lesen (z.B. SecretKey bereits verriegelt oder EWS3-SG)"
+     ]
+    }
+   ]
+  },
+  "STATUS_EWS4_SK": {
+   "comment": [
+    "EWS4.4 Steuergeraet SK lesen"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      "Request to ECU"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Result from ECU"
+     ]
+    },
+    {
+     "name": "STAT_EWS4_SERVER_SK",
+     "type": "binary",
+     "comment": [
+      "EWS4 SK"
+     ]
+    }
+   ]
+  },
+  "STATUS_LESEN": {
+   "comment": [
+    "Stati der EWS"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "STAT_ANLASSER_FREIGESCHALTET",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_ANLASSER_AUS_DREHZAHL",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_ANLASSER_AUS_P_N",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_ANLASSER_AUS_ZV",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_ANLASSER_AUS_BC",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_WEITERE_SELBSTINIT_KEYS",
+     "type": "int",
+     "comment": [
+      "1, noch nicht alle zur Selbstinitialisierung freigeschalteten Schluessel initialisiert"
+     ]
+    },
+    {
+     "name": "STAT_DME_LEITUNG_FREI",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_EWS_JUNGFRAEULICH",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_P_N_EINGANG",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_KL_R_EINGANG",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_KL_R_EINGANG_KBUS",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_ZV_GESICHERT",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_BC_CODE",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_KBUS_FREI_OHNE_KEY",
+     "type": "int",
+     "comment": [
+      "1, Freischaltung ueber KBUS ohne Schluessel moeglich"
+     ]
+    },
+    {
+     "name": "STAT_FREI_KBUS_UND_KEY",
+     "type": "int",
+     "comment": [
+      "1, Freischaltung nur mit Schluessel und KBUS-Telegramm"
+     ]
+    },
+    {
+     "name": "STAT_MOTORDREHZAHL_KBUS",
+     "type": "real",
+     "comment": [
+      "(5 bis 254)/0.3 1/s"
+     ]
+    },
+    {
+     "name": "STAT_AKTUELLE_SCHLUESSELNUMMER",
+     "type": "int",
+     "comment": [
+      "0 bis 9"
+     ]
+    },
+    {
+     "name": "STAT_SCHLUESSEL_SENDET",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, Datenformat stimmt, Schluessel wird identifiziert"
+     ]
+    },
+    {
+     "name": "STAT_SCHLUESSEL_GESPERRT",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_SCHLUESSEL_NIO_ID",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_SCHLUESSEL_NIO_PW",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_SCHLUESSEL_NIO_WC",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_KBUS_NOTWENDIG",
+     "type": "int",
+     "comment": [
+      "1, zusaetzliche K-Bus-Freischaltung fuer diesen Schluessel notwendig"
+     ]
+    },
+    {
+     "name": "STAT_AKTUELLE_SCHLUESSEL_ID",
+     "type": "binary",
+     "comment": [
+      "10 Bytes vom Block 3 im Schluessel"
+     ]
+    },
+    {
+     "name": "STAT_AKTUELLE_SCHLUESSEL_ID_TEXT",
+     "type": "string",
+     "comment": [
+      "8 Byte"
+     ]
+    },
+    {
+     "name": "STAT_AKTUELLER_WC",
+     "type": "binary",
+     "comment": [
+      "12 Byte"
+     ]
+    },
+    {
+     "name": "STAT_AKTUELLER_WC_TEXT",
+     "type": "string",
+     "comment": [
+      "12 Byte"
+     ]
+    },
+    {
+     "name": "STAT_VORGABE_DME",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_VORGABE_ANLASSERRELAIS",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_VORGABE_DME_AUSFUEHREN",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "STAT_VORGABE_ANLASSERRELAIS_AUSFUEHREN",
+     "type": "int",
+     "comment": [
+      "0, wenn FALSE / 1, wenn TRUE"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STATUS_SW_VERSION": {
+   "comment": [
+    "Ermittlung der internen SG-SW"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'STATUS_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "BETRIEBSSYSTEM",
+     "type": "string",
+     "comment": [
+      "Betriebssystemversion"
+     ]
+    },
+    {
+     "name": "EEPROM_TREIBER",
+     "type": "string",
+     "comment": [
+      "EEPROM-Treiber-Verion"
+     ]
+    },
+    {
+     "name": "K_BUS_HANDLER",
+     "type": "string",
+     "comment": [
+      "K-BUS-Handler-Version"
+     ]
+    }
+   ]
+  },
+  "STEUERN_DIGITAL": {
+   "comment": [
+    "Ansteuern / Vorgeben digitaler Stati der EWS3"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "ORT1",
+     "type": "string",
+     "comment": [
+      "1. Signal",
+      "table BITS NAME ART TEXT"
+     ]
+    },
+    {
+     "name": "ORT2",
+     "type": "string",
+     "comment": [
+      "2. Signal"
+     ]
+    },
+    {
+     "name": "ORT3",
+     "type": "string",
+     "comment": [
+      "3. Signal"
+     ]
+    },
+    {
+     "name": "ORT4",
+     "type": "string",
+     "comment": [
+      "4. Signal"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_AN_SG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "STEUERN_EWS4_SK": {
+   "comment": [
+    "",
+    "SK in das EWS4.3 Steuergeraet schreiben"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'STEUERN_EWS4_SK'",
+   "args": [
+    {
+     "name": "MODE",
+     "type": "string",
+     "comment": [
+      "",
+      "WRITE_SERVER_SK  or",
+      "LOCK_SERVER_SK"
+     ]
+    },
+    {
+     "name": "DATA",
+     "type": "string",
+     "comment": [
+      "Byte1...16 separated by blanks or commas",
+      "16 Byte Daten (SecretKey), if MODE = WRITE_SERVER_SK/WRITE_CLIENT_SK",
+      "no DATA necessary if MODE = LOCK_SERVER_SK/LOCK_CLIENT_SK"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, wenn fehlerfrei",
+      "table JobResult STATUS_TEXT"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      "Hex-Antwort von SG"
+     ]
+    }
+   ]
+  },
+  "STEUERN_SELBSTTEST": {
+   "comment": [
+    "Schreibzugriff auf den Transponder via EWS-SG"
+   ],
+   "tier": "confirm",
+   "tier_reason": "matches confirm pattern 'STEUERN_.*'",
+   "args": [
+    {
+     "name": "BLOCK",
+     "type": "int",
+     "comment": [
+      "0 bis 7, Transponderblocknummer"
+     ]
+    },
+    {
+     "name": "POSITION",
+     "type": "int",
+     "comment": [
+      "0 bis 15, Byteposition innerhalb des Blocks"
+     ]
+    },
+    {
+     "name": "DATENBYTE",
+     "type": "int",
+     "comment": [
+      "Datenbyte fuer den Transponder"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "TRANSP_DATEN",
+     "type": "binary",
+     "comment": [
+      "16 Byte"
+     ]
+    },
+    {
+     "name": "TRANSP_DATEN_TEXT",
+     "type": "string",
+     "comment": [
+      "16 Byte"
+     ]
+    },
+    {
+     "name": "_TEL_AUFTRAG",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "WECHSELCODE_SYNC_DME": {
+   "comment": [
+    "Wechselcodesynchronisation EWS 3 - DME anstossen"
+   ],
+   "tier": "blocked",
+   "tier_reason": "matches blocked pattern 'WECHSELCODE_.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  },
+  "ZCS_LESEN": {
+   "comment": [
+    "Auslesen des Zentralen Codierschluessels aus KD-Daten"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern '.*_LESEN'",
+   "args": [],
+   "results": [
+    {
+     "name": "JOB_STATUS",
+     "type": "string",
+     "comment": [
+      "OKAY, ERROR_.."
+     ]
+    },
+    {
+     "name": "GM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C1 - Grundmerkmal"
+     ]
+    },
+    {
+     "name": "SA",
+     "type": "string",
+     "comment": [
+      "Zentralcode C2 - Sonderausstattung"
+     ]
+    },
+    {
+     "name": "VM",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - Versionsmerkmal"
+     ]
+    },
+    {
+     "name": "C3",
+     "type": "string",
+     "comment": [
+      "Zentralcode C3 - ohne Prefix"
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT1",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    },
+    {
+     "name": "_TEL_ANTWORT2",
+     "type": "binary",
+     "comment": [
+      ""
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {
+  "JOBRESULT": [
+   {
+    "SB": "0xA0",
+    "STATUS_TEXT": "OKAY"
+   },
+   {
+    "SB": "0xA1",
+    "STATUS_TEXT": "BUSY"
+   },
+   {
+    "SB": "0xA2",
+    "STATUS_TEXT": "ERROR_ECU_REJECTED"
+   },
+   {
+    "SB": "0xB0",
+    "STATUS_TEXT": "ERROR_ECU_PARAMETER"
+   },
+   {
+    "SB": "0xB1",
+    "STATUS_TEXT": "ERROR_ECU_FUNCTION"
+   },
+   {
+    "SB": "0xB2",
+    "STATUS_TEXT": "ERROR_ECU_NUMBER"
+   },
+   {
+    "SB": "0xFF",
+    "STATUS_TEXT": "ERROR_ECU_NACK"
+   },
+   {
+    "SB": "?10?",
+    "STATUS_TEXT": "ERROR_ARGUMENT"
+   },
+   {
+    "SB": "?20?",
+    "STATUS_TEXT": "ERROR_FEHLERANZAHL"
+   },
+   {
+    "SB": "?70?",
+    "STATUS_TEXT": "ERROR_NUMBER_ARGUMENT"
+   },
+   {
+    "SB": "?71?",
+    "STATUS_TEXT": "ERROR_RANGE_ARGUMENT"
+   },
+   {
+    "SB": "?72?",
+    "STATUS_TEXT": "ERROR_VERIFY"
+   },
+   {
+    "SB": "0x??",
+    "STATUS_TEXT": "ERROR_ECU_UNKNOWN_STATUSBYTE"
+   }
+  ],
+  "LIEFERANTEN": [
+   {
+    "LIEF_NR": "0x01",
+    "LIEF_TEXT": "Reinshagen => Delphi"
+   },
+   {
+    "LIEF_NR": "0x02",
+    "LIEF_TEXT": "Kostal"
+   },
+   {
+    "LIEF_NR": "0x03",
+    "LIEF_TEXT": "Hella"
+   },
+   {
+    "LIEF_NR": "0x04",
+    "LIEF_TEXT": "Siemens"
+   },
+   {
+    "LIEF_NR": "0x05",
+    "LIEF_TEXT": "Eaton"
+   },
+   {
+    "LIEF_NR": "0x06",
+    "LIEF_TEXT": "UTA"
+   },
+   {
+    "LIEF_NR": "0x07",
+    "LIEF_TEXT": "Helbako"
+   },
+   {
+    "LIEF_NR": "0x08",
+    "LIEF_TEXT": "Bosch"
+   },
+   {
+    "LIEF_NR": "0x09",
+    "LIEF_TEXT": "Loewe => Lear"
+   },
+   {
+    "LIEF_NR": "0x10",
+    "LIEF_TEXT": "VDO"
+   },
+   {
+    "LIEF_NR": "0x11",
+    "LIEF_TEXT": "Valeo"
+   },
+   {
+    "LIEF_NR": "0x12",
+    "LIEF_TEXT": "MBB"
+   },
+   {
+    "LIEF_NR": "0x13",
+    "LIEF_TEXT": "Kammerer"
+   },
+   {
+    "LIEF_NR": "0x14",
+    "LIEF_TEXT": "SWF"
+   },
+   {
+    "LIEF_NR": "0x15",
+    "LIEF_TEXT": "Blaupunkt"
+   },
+   {
+    "LIEF_NR": "0x16",
+    "LIEF_TEXT": "Philips"
+   },
+   {
+    "LIEF_NR": "0x17",
+    "LIEF_TEXT": "Alpine"
+   },
+   {
+    "LIEF_NR": "0x18",
+    "LIEF_TEXT": "Continental Teves"
+   },
+   {
+    "LIEF_NR": "0x19",
+    "LIEF_TEXT": "Elektromatik Suedafrika"
+   },
+   {
+    "LIEF_NR": "0x20",
+    "LIEF_TEXT": "Becker"
+   },
+   {
+    "LIEF_NR": "0x21",
+    "LIEF_TEXT": "Preh"
+   },
+   {
+    "LIEF_NR": "0x22",
+    "LIEF_TEXT": "Alps"
+   },
+   {
+    "LIEF_NR": "0x23",
+    "LIEF_TEXT": "Motorola"
+   },
+   {
+    "LIEF_NR": "0x24",
+    "LIEF_TEXT": "Temic"
+   },
+   {
+    "LIEF_NR": "0x25",
+    "LIEF_TEXT": "Webasto"
+   },
+   {
+    "LIEF_NR": "0x26",
+    "LIEF_TEXT": "MotoMeter"
+   },
+   {
+    "LIEF_NR": "0x27",
+    "LIEF_TEXT": "Delphi PHI"
+   },
+   {
+    "LIEF_NR": "0x28",
+    "LIEF_TEXT": "DODUCO => BERU"
+   },
+   {
+    "LIEF_NR": "0x29",
+    "LIEF_TEXT": "DENSO"
+   },
+   {
+    "LIEF_NR": "0x30",
+    "LIEF_TEXT": "NEC"
+   },
+   {
+    "LIEF_NR": "0x31",
+    "LIEF_TEXT": "DASA"
+   },
+   {
+    "LIEF_NR": "0x32",
+    "LIEF_TEXT": "Pioneer"
+   },
+   {
+    "LIEF_NR": "0x33",
+    "LIEF_TEXT": "Jatco"
+   },
+   {
+    "LIEF_NR": "0x34",
+    "LIEF_TEXT": "Fuba"
+   },
+   {
+    "LIEF_NR": "0x35",
+    "LIEF_TEXT": "UK-NSI"
+   },
+   {
+    "LIEF_NR": "0x36",
+    "LIEF_TEXT": "AABG"
+   },
+   {
+    "LIEF_NR": "0x37",
+    "LIEF_TEXT": "Dunlop"
+   },
+   {
+    "LIEF_NR": "0x38",
+    "LIEF_TEXT": "Sachs"
+   },
+   {
+    "LIEF_NR": "0x39",
+    "LIEF_TEXT": "ITT"
+   },
+   {
+    "LIEF_NR": "0x40",
+    "LIEF_TEXT": "FTE"
+   },
+   {
+    "LIEF_NR": "0x41",
+    "LIEF_TEXT": "Megamos"
+   },
+   {
+    "LIEF_NR": "0x42",
+    "LIEF_TEXT": "TRW"
+   },
+   {
+    "LIEF_NR": "0x43",
+    "LIEF_TEXT": "Wabco"
+   },
+   {
+    "LIEF_NR": "0x44",
+    "LIEF_TEXT": "ISAD Electronic Systems"
+   },
+   {
+    "LIEF_NR": "0x45",
+    "LIEF_TEXT": "HEC (Hella Electronics Corporation)"
+   },
+   {
+    "LIEF_NR": "0x46",
+    "LIEF_TEXT": "Gemel"
+   },
+   {
+    "LIEF_NR": "0x47",
+    "LIEF_TEXT": "ZF"
+   },
+   {
+    "LIEF_NR": "0x48",
+    "LIEF_TEXT": "GMPT"
+   },
+   {
+    "LIEF_NR": "0x49",
+    "LIEF_TEXT": "Harman Kardon"
+   },
+   {
+    "LIEF_NR": "0x50",
+    "LIEF_TEXT": "Remes"
+   },
+   {
+    "LIEF_NR": "0x51",
+    "LIEF_TEXT": "ZF Lenksysteme"
+   },
+   {
+    "LIEF_NR": "0x52",
+    "LIEF_TEXT": "Magneti Marelli"
+   },
+   {
+    "LIEF_NR": "0x53",
+    "LIEF_TEXT": "Borg Instruments"
+   },
+   {
+    "LIEF_NR": "0x54",
+    "LIEF_TEXT": "GETRAG"
+   },
+   {
+    "LIEF_NR": "0x55",
+    "LIEF_TEXT": "BHTC (Behr Hella Thermocontrol)"
+   },
+   {
+    "LIEF_NR": "0x56",
+    "LIEF_TEXT": "Siemens VDO Automotive"
+   },
+   {
+    "LIEF_NR": "0x57",
+    "LIEF_TEXT": "Visteon"
+   },
+   {
+    "LIEF_NR": "0x58",
+    "LIEF_TEXT": "Autoliv"
+   },
+   {
+    "LIEF_NR": "0x59",
+    "LIEF_TEXT": "Haberl"
+   },
+   {
+    "LIEF_NR": "0x60",
+    "LIEF_TEXT": "Magna Steyr"
+   },
+   {
+    "LIEF_NR": "0x61",
+    "LIEF_TEXT": "Marquardt"
+   },
+   {
+    "LIEF_NR": "0x62",
+    "LIEF_TEXT": "AB-Elektronik"
+   },
+   {
+    "LIEF_NR": "0x63",
+    "LIEF_TEXT": "Siemens VDO Borg"
+   },
+   {
+    "LIEF_NR": "0x64",
+    "LIEF_TEXT": "Hirschmann Electronics"
+   },
+   {
+    "LIEF_NR": "0x65",
+    "LIEF_TEXT": "Hoerbiger Electronics"
+   },
+   {
+    "LIEF_NR": "0x66",
+    "LIEF_TEXT": "Thyssen Krupp Automotive Mechatronics"
+   },
+   {
+    "LIEF_NR": "0x67",
+    "LIEF_TEXT": "Gentex GmbH"
+   },
+   {
+    "LIEF_NR": "0x68",
+    "LIEF_TEXT": "Atena GmbH"
+   },
+   {
+    "LIEF_NR": "0x69",
+    "LIEF_TEXT": "Magna-Donelly"
+   },
+   {
+    "LIEF_NR": "0x70",
+    "LIEF_TEXT": "Koyo Steering Europe"
+   },
+   {
+    "LIEF_NR": "0x71",
+    "LIEF_TEXT": "NSI B.V"
+   },
+   {
+    "LIEF_NR": "0x72",
+    "LIEF_TEXT": "ASIN AWCO.LTD"
+   },
+   {
+    "LIEF_NR": "0x73",
+    "LIEF_TEXT": "Shorlock"
+   },
+   {
+    "LIEF_NR": "0x74",
+    "LIEF_TEXT": "Schrader"
+   },
+   {
+    "LIEF_NR": "0x75",
+    "LIEF_TEXT": "BERU Electronics GmbH"
+   },
+   {
+    "LIEF_NR": "0x76",
+    "LIEF_TEXT": "CEL"
+   },
+   {
+    "LIEF_NR": "0xFF",
+    "LIEF_TEXT": "unbekannter Hersteller"
+   }
+  ],
+  "ROVERPARTNUMPREFIX": [
+   {
+    "ROVER_NR": "0xA0",
+    "PREFIX": "AMR"
+   },
+   {
+    "ROVER_NR": "0xA1",
+    "PREFIX": "HHF"
+   },
+   {
+    "ROVER_NR": "0xA2",
+    "PREFIX": "JFC"
+   },
+   {
+    "ROVER_NR": "0xA3",
+    "PREFIX": "MKC"
+   },
+   {
+    "ROVER_NR": "0xA4",
+    "PREFIX": "SCB"
+   },
+   {
+    "ROVER_NR": "0xA5",
+    "PREFIX": "SRB"
+   },
+   {
+    "ROVER_NR": "0xA6",
+    "PREFIX": "XQC"
+   },
+   {
+    "ROVER_NR": "0xA7",
+    "PREFIX": "XQD"
+   },
+   {
+    "ROVER_NR": "0xA8",
+    "PREFIX": "XQE"
+   },
+   {
+    "ROVER_NR": "0xA9",
+    "PREFIX": "XVD"
+   },
+   {
+    "ROVER_NR": "0xAA",
+    "PREFIX": "YAC"
+   },
+   {
+    "ROVER_NR": "0xAB",
+    "PREFIX": "YDB"
+   },
+   {
+    "ROVER_NR": "0xAC",
+    "PREFIX": "YFC"
+   },
+   {
+    "ROVER_NR": "0xAD",
+    "PREFIX": "YUB"
+   },
+   {
+    "ROVER_NR": "0xAE",
+    "PREFIX": "YWC"
+   },
+   {
+    "ROVER_NR": "0xAF",
+    "PREFIX": "YWQ"
+   },
+   {
+    "ROVER_NR": "0xB0",
+    "PREFIX": "EGQ"
+   },
+   {
+    "ROVER_NR": "0xB1",
+    "PREFIX": "YIB"
+   },
+   {
+    "ROVER_NR": "0xB2",
+    "PREFIX": "YIC"
+   },
+   {
+    "ROVER_NR": "0xB3",
+    "PREFIX": "YIE"
+   },
+   {
+    "ROVER_NR": "0xXY",
+    "PREFIX": "???"
+   }
+  ],
+  "JOBRESULTEXTENDED": [
+   {
+    "SB": "0xXY",
+    "STATUS_TEXT": "ERROR_UNKNOWN"
+   }
+  ],
+  "FDETAILSTRUKTUR": [
+   {
+    "NAME": "F_UWB_ERW",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "SAE_CODE",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_HLZ",
+    "TYP": "nein"
+   }
+  ],
+  "HDETAILSTRUKTUR": [
+   {
+    "NAME": "F_UWB_ERW",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "SAE_CODE",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_HLZ",
+    "TYP": "nein"
+   }
+  ],
+  "IDETAILSTRUKTUR": [
+   {
+    "NAME": "F_UWB_ERW",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "SAE_CODE",
+    "TYP": "nein"
+   },
+   {
+    "NAME": "F_HLZ",
+    "TYP": "nein"
+   }
+  ],
+  "FORTTEXTE": [
+   {
+    "ORT": "0x00",
+    "ORTTEXT": "Schluessel Nr.0 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x10",
+    "ORTTEXT": "Schluessel Nr.1 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x20",
+    "ORTTEXT": "Schluessel Nr.2 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x30",
+    "ORTTEXT": "Schluessel Nr.3 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x40",
+    "ORTTEXT": "Schluessel Nr.4 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x50",
+    "ORTTEXT": "Schluessel Nr.5 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x60",
+    "ORTTEXT": "Schluessel Nr.6 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x70",
+    "ORTTEXT": "Schluessel Nr.7 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x80",
+    "ORTTEXT": "Schluessel Nr.8 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x90",
+    "ORTTEXT": "Schluessel Nr.9 ungueltig wegen fehlerhafter Identifikation"
+   },
+   {
+    "ORT": "0x01",
+    "ORTTEXT": "Schluessel Nr.0 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x11",
+    "ORTTEXT": "Schluessel Nr.1 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x21",
+    "ORTTEXT": "Schluessel Nr.2 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x31",
+    "ORTTEXT": "Schluessel Nr.3 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x41",
+    "ORTTEXT": "Schluessel Nr.4 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x51",
+    "ORTTEXT": "Schluessel Nr.5 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x61",
+    "ORTTEXT": "Schluessel Nr.6 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x71",
+    "ORTTEXT": "Schluessel Nr.7 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x81",
+    "ORTTEXT": "Schluessel Nr.8 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x91",
+    "ORTTEXT": "Schluessel Nr.9 ungueltig wegen fehlerhaftem Passwort"
+   },
+   {
+    "ORT": "0x02",
+    "ORTTEXT": "Schluessel Nr.0 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x12",
+    "ORTTEXT": "Schluessel Nr.1 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x22",
+    "ORTTEXT": "Schluessel Nr.2 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x32",
+    "ORTTEXT": "Schluessel Nr.3 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x42",
+    "ORTTEXT": "Schluessel Nr.4 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x52",
+    "ORTTEXT": "Schluessel Nr.5 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x62",
+    "ORTTEXT": "Schluessel Nr.6 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x72",
+    "ORTTEXT": "Schluessel Nr.7 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x82",
+    "ORTTEXT": "Schluessel Nr.8 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x92",
+    "ORTTEXT": "Schluessel Nr.9 ungueltig wegen fehlerhaftem Wechselcode"
+   },
+   {
+    "ORT": "0x03",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 0"
+   },
+   {
+    "ORT": "0x13",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 1"
+   },
+   {
+    "ORT": "0x23",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 2"
+   },
+   {
+    "ORT": "0x33",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 3"
+   },
+   {
+    "ORT": "0x43",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 4"
+   },
+   {
+    "ORT": "0x53",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 5"
+   },
+   {
+    "ORT": "0x63",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 6"
+   },
+   {
+    "ORT": "0x73",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 7"
+   },
+   {
+    "ORT": "0x83",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 8"
+   },
+   {
+    "ORT": "0x93",
+    "ORTTEXT": "WC-Toleranz erhoeht bei Schluessel Nummer 9"
+   },
+   {
+    "ORT": "0xFF",
+    "ORTTEXT": "Reset allgemein"
+   },
+   {
+    "ORT": "0x0F",
+    "ORTTEXT": "Power-On-Reset"
+   },
+   {
+    "ORT": "0x1F",
+    "ORTTEXT": "Clock-Monitor-Reset"
+   },
+   {
+    "ORT": "0x2F",
+    "ORTTEXT": "Watchdog-Reset"
+   },
+   {
+    "ORT": "0x3F",
+    "ORTTEXT": "Illegal-Opcode-Trap"
+   },
+   {
+    "ORT": "0x7F",
+    "ORTTEXT": "Software-Interrupt"
+   },
+   {
+    "ORT": "0x0E",
+    "ORTTEXT": "DME-Wechselcode XOR-Fehler"
+   },
+   {
+    "ORT": "0x1E",
+    "ORTTEXT": "DME-Wechselcode verloren"
+   },
+   {
+    "ORT": "0xXY",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "HORTTEXTE": [
+   {
+    "ORT": "0xFFFF",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "IORTTEXTE": [
+   {
+    "ORT": "0x0A",
+    "ORTTEXT": "Kein Motorstart bei laufendem Anlasser"
+   },
+   {
+    "ORT": "0x1A",
+    "ORTTEXT": "Keine Anlasserfreigabe durch EWS-Steuergeraet"
+   },
+   {
+    "ORT": "0x2A",
+    "ORTTEXT": "Fangbereichszaehler fuer Weiterschaltung erhoeht"
+   },
+   {
+    "ORT": "0x3A",
+    "ORTTEXT": "Automatische Konfiguration eines Schluessels schlug fehl"
+   },
+   {
+    "ORT": "0xEA",
+    "ORTTEXT": "Übertraungsfehler auf Datenleitung zur DME D_EWS"
+   },
+   {
+    "ORT": "0xFFFF",
+    "ORTTEXT": "unbekannter Fehlerort"
+   },
+   {
+    "ORT": "0xXY",
+    "ORTTEXT": "unbekannter Fehlerort"
+   }
+  ],
+  "FARTTEXTE": [
+   {
+    "ART": "0x00",
+    "ARTTEXT": "sporadischer Fehler"
+   },
+   {
+    "ART": "0x01",
+    "ARTTEXT": "statischer Fehler"
+   }
+  ],
+  "BITS": [
+   {
+    "NAME": "DME_V",
+    "MASK": "0x01",
+    "TEXT": "Vorgabe DME-Leitung"
+   },
+   {
+    "NAME": "ANL_V",
+    "MASK": "0x02",
+    "TEXT": "Vorgabe Anlasserrelais"
+   },
+   {
+    "NAME": "TRP_V",
+    "MASK": "0x04",
+    "TEXT": "Vorgabe Transponder"
+   },
+   {
+    "NAME": "USE_V",
+    "MASK": "0x08",
+    "TEXT": "Vorgabe Gebrauchen"
+   },
+   {
+    "NAME": "DME_A",
+    "MASK": "0x10",
+    "TEXT": "Vorgabe DME-Leitung ausfuehren"
+   },
+   {
+    "NAME": "ANL_A",
+    "MASK": "0x20",
+    "TEXT": "Vorgabe Anlasserrelais ausfuehren"
+   },
+   {
+    "NAME": "TRP_A",
+    "MASK": "0x40",
+    "TEXT": "Vorgabe Transponder ausfuehren"
+   },
+   {
+    "NAME": "USE_A",
+    "MASK": "0x80",
+    "TEXT": "Vorgabe Gebrauchen ausfuehren"
+   },
+   {
+    "NAME": "XY",
+    "MASK": "0xXY",
+    "TEXT": "nicht definiertes Signal"
+   }
+  ]
+ }
+}

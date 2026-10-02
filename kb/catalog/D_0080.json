@@ -1,0 +1,75 @@
+{
+ "sgbd": "D_0080",
+ "file": "D_0080.grp",
+ "kind": "group",
+ "header": {
+  "ECU": [
+   "D_0080"
+  ],
+  "ORIGIN": [
+   "BMW TI-431 Nau"
+  ],
+  "REVISION": [
+   "1.61"
+  ],
+  "AUTHOR": [
+   "BMW TP-422 Teepe, BMW TP-422 Boehmig, BMW TP-421 Drexel, BMW TP-422 Zender, BMW TI-431 Dennert, BMW TI-435 Crichton"
+  ],
+  "ECUCOMMENT": [
+   "KOMBI36C, IKE, IKI, KOMBI39, KOMBI39C, KOMBI46, KOMBI52, KOMBIR30, KOMBIR40, KOMBIL30, KOMBIL50, KOMBIR50, KOMBI50F, KOMBI85, KOMBI46R"
+  ]
+ },
+ "jobs": {
+  "IDENTIFIKATION": {
+   "comment": [
+    "Determination of the ECU version",
+    "To the group belonging versions",
+    "IKE     : Kombi E38/E53, Concepts DS1, DS2",
+    "IKI     : Integrated IKE from 03/97, Concept DS2",
+    "KOMBI36C: Low-Kombi E36 with CAN, Concept DS2",
+    "KOMBI39 : Low-Kombi E39, Concept DS2",
+    "KOMBI39C: Low-Kombi E39/E53 with CAN, Concept DS2",
+    "KOMBI46 : Kombi E46, Concept DS2",
+    "KOMBI52 : Kombi E52, Concept DS2",
+    "KOMBI85 : Kombi E83/E85, Concept DS2",
+    "KOMBIR50: Kombi R50, Concept DS2",
+    "KOMBI50F: Kombi R50 with error memory, Concept DS2",
+    "KOMBIR40: Kombi R40/R41, Concept DS2",
+    "KOMBIL30: Kombi L30, Concept DS2",
+    "KOMBIR30: Kombi R30, Concept DS2",
+    "KOMBIL50: Kombi L50, Concept DS2"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'IDENT.*'",
+   "args": [],
+   "results": [
+    {
+     "name": "VARIANTE",
+     "type": "string",
+     "comment": [
+      "The name sent back corresponds to the name of the",
+      "file for the Version-SGBD"
+     ]
+    }
+   ]
+  },
+  "INITIALISIERUNG": {
+   "comment": [
+    "Setting of communication parameters"
+   ],
+   "tier": "read",
+   "tier_reason": "matches read pattern 'INITIALISIERUNG'",
+   "args": [],
+   "results": [
+    {
+     "name": "DONE",
+     "type": "int",
+     "comment": [
+      "1, if O.K."
+     ]
+    }
+   ]
+  }
+ },
+ "tables": {}
+}

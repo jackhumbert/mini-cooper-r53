@@ -1,0 +1,24 @@
+# Python / editor cruft
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Recorded diagnostic sessions are car data: keep them local, and copy the ones that
+# matter into car-manager (vehicles/2006-mini-cooper-s/attachments/diag/).
+sessions/
+*.trace/
+*.csv
+
+# Research material we can't redistribute (BMW TIS PDFs / text, decoded raw SGBD dumps,
+# third-party GPL/proprietary sources). Our own summaries live in kb/reference/.
+research/tis/
+research/sgbd_desc/
+research/third_party/
+research/dtc/

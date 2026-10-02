@@ -15,6 +15,7 @@ Thumbs.db
 sessions/
 *.trace/
 *.csv
+!kb/baselines/*.csv
 
 # Research material we can't redistribute (BMW TIS PDFs / text, decoded raw SGBD dumps,
 # third-party GPL/proprietary sources). Our own summaries live in kb/reference/.

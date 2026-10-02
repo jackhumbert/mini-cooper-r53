@@ -26,12 +26,23 @@ the protocol work. What this adds:
 
 ## Requirements
 
-- Windows with **BMW EDIABAS 7.x** at `C:\EDIABAS`.
-  - `EDIABAS.INI`: `Interface = STD:OBD`.
-  - `obd.ini`: `Port` set to the cable's COM port.
-  - The SGBDs in `C:\EDIABAS\Ecu`. INPA/NCS installs ship all of these.
-- Python **3.11+**, either 32- or 64-bit. 64-bit uses EDIABAS's `api64.dll` proxy. No
-  third-party packages are needed.
+- Windows, Python **3.11+** (32- or 64-bit), no third-party packages.
+- **The SGBD files** (`.prg`/`.grp`) for the R50/R53 modules. INPA/NCS installs ship these
+  in `C:\EDIABAS\Ecu`. They are BMW's and aren't included here.
+- **One of two interchangeable backends:**
+  - **BMW EDIABAS 7.x** at `C:\EDIABAS` (`--backend ediabas`, the default):
+    - `EDIABAS.INI` must have `Interface = STD:OBD`.
+    - `obd.ini` must set `Port` to the cable's COM port.
+    - 64-bit Python goes through EDIABAS's `api64.dll` proxy.
+  - **[EdiabasLib](https://github.com/uholeschak/ediabaslib)** (`--backend ediabaslib`):
+    - an open-source (GPL-3) reimplementation of EDIABAS that runs the same SGBDs and drives
+      the cable directly;
+    - install it with `python tools/install_ediabaslib.py` (downloads into the gitignored
+      `vendor/`);
+    - needs .NET Framework 4.7.2+, which Windows 10/11 has built in;
+    - takes the COM port and SGBD folder from an existing `obd.ini`/`EDIABAS.INI`, or from
+      `R53_COM_PORT` / `R53_ECU_PATH`. With those set, no BMW EDIABAS install is needed.
+  - Pick a backend per command with `--backend`, or set `R53_BACKEND`.
 - An FTDI-based **K+DCAN cable** set to bridge **OBD pins 7+8**. That setting is needed to
   reach the body modules on pre-2007 cars; see [`kb/hardware.md`](kb/hardware.md).
 

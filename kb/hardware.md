@@ -23,7 +23,7 @@ our own reasoning, not yet verified.
 | Type | "K+DCAN" USB cable, FTDI FT232R (`VID_0403 PID_6001`, serial `AH01BRM5`) | [local] |
 | Windows port | **COM6** | [local] |
 | FTDI driver | 2.12.36.4 | [local] |
-| FTDI latency timer | **1 ms** (Device Manager → Ports → USB Serial Port (COM6) → Port Settings → Advanced) | [local] |
+| FTDI latency timer | **Should be 1 ms; measured 16 ms on 2026-10-02** (the FTDI default; the April inventory reading of 1 ms was wrong or has since been reset). Set it in Device Manager → Ports → USB Serial Port (COM6) → Port Settings → Advanced. `r53 doctor` checks it | [local] |
 | Switch | Multi-position switch, **undocumented** (see §3) | [car] |
 
 Why the latency matters: the K-line protocols time their gaps between bytes and between messages
@@ -212,3 +212,22 @@ errors. `API-` codes are caller errors. `BIP-` codes come from the SGBD interpre
    indicators, and the MFL volume buttons should change the radio volume. `[TIS-BUS]`
 6. **Intermittent IFH-0010 / IFH-0009**: voltage, the connector, or electrical noise (alternator).
    Capture an `IfhTrace`.
+
+
+## 8. Software backends: BMW EDIABAS or EdiabasLib
+
+`r53` talks to the cable through the EDIABAS C API. It can use either of two implementations
+of that API, and both run the same SGBD files from `C:\EDIABAS\Ecu`:
+
+| | BMW EDIABAS 7.3 (`--backend ediabas`) | EdiabasLib (`--backend ediabaslib`) |
+|---|---|---|
+| Source | BMW, proprietary | <https://github.com/uholeschak/ediabaslib>, GPL-3 |
+| DLL | `C:\EDIABAS\Bin\api64.dll`, which proxies to the 32-bit `api64.exe` | `vendor/ediabaslib/Api64.dll`, a mixed-mode .NET 4.x DLL loaded in-process |
+| Config | `EDIABAS.INI` and `obd.ini` | The `apiInitExt` string built by `r53diag/config.py` (COM port and ECU path read from those same INIs, or `R53_COM_PORT` / `R53_ECU_PATH`) |
+| Traces (`--trace`) | `api.trc`, `ifh.trc` (IFH level 2). BMW truncates `TracePath` to 64 characters, so the tool stages traces in `C:\EDIABAS\TRACE\r53` and moves them into the session | `api.trc`, `ifh.trc` at IFH level 3: more detail, including the raw K-line bytes |
+| Install | INPA / EDIABAS package | `python tools/install_ediabaslib.py` |
+| Verified on this car | yes, 2026-10-02 | **not yet**. Offline it loads, resolves SGBDs and runs their init bytecode (2026-10-02). It hasn't been tested on the R50's DS2-via-KOMBI path |
+
+`COM6` can be replaced by `FTDI0` with EdiabasLib. That uses FTDI's D2XX driver directly
+instead of the virtual COM port, which upstream says is faster and more robust, and the
+latency timer no longer matters. (Untested here.)

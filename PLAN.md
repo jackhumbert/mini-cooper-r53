@@ -180,6 +180,16 @@ Notes from phase 0:
 - [ ] Push to GitHub, add as a car-manager submodule, add the car-manager `AGENTS.md`
       section, and optionally the `/r53` skill.
 
+### Done since: EdiabasLib backend (2026-10-02)
+- [x] `--backend ediabaslib` uses EdiabasLib's open-source drop-in `Api64.dll`, installed by
+      `tools/install_ediabaslib.py` into a gitignored `vendor/`. It runs the same SGBDs and cable
+      as BMW's runtime, configured through the `apiInitExt` string.
+- [x] Works offline (loads, resolves SGBDs, runs init bytecode).
+- [ ] **Verify on the car:** `doctor`, then `scan`, run with `--backend ediabaslib --trace`. Compare
+      against the BMW-backend results from 2026-10-02.
+- [x] Fixed `--trace` on the BMW backend. BMW truncates `TracePath` to 64 characters, so traces
+      are now staged in `C:\EDIABAS\TRACE53`.
+
 ### Later / maybe
 - EdiabasLib backend for byte-level traces, if EDIABAS errors get opaque.
 - A passive K-bus/CAN monitor using the dashboard project's decoders.

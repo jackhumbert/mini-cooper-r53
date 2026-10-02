@@ -31,8 +31,11 @@ car-manager, run commands from this directory.
 ## The tool
 
 Output is JSON on stdout and progress on stderr. Exit codes: 0 ok · 1 comms/job failure ·
-2 refused by policy · 3 usage. Put global flags (`--trace`, `--timeout`, `--compact`,
+2 refused by policy · 3 usage. Put global flags (`--backend`, `--trace`, `--timeout`, `--compact`,
 `--replay`, `--no-record`) **after** the subcommand so permission rules match.
+`--backend ediabaslib` uses the open-source EdiabasLib instead of BMW's EDIABAS runtime.
+The jobs and results are the same. If one backend misbehaves, try the other, and say which
+one you used.
 
 | Command | Use |
 |---|---|

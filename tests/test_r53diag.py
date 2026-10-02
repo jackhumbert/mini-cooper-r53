@@ -3,14 +3,15 @@
     python -m unittest discover tests
 """
 import io
+import os
 import json
 import re
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from r53diag import cli, decode, kb, prg
-from r53diag.backends import ReplayBackend
+from r53diag import cli, config, decode, kb, prg
+from r53diag.backends import ReplayBackend, make_backend
 
 FIXTURE = Path(__file__).parent / "fixtures" / "synthetic-not-bridged.jsonl"
 HAVE_EDIABAS = Path(r"C:\EDIABAS\Ecu\EMS2K.prg").exists()
@@ -108,6 +109,39 @@ class CliReplayTests(unittest.TestCase):
         rc, res = run_cli("--replay", str(FIXTURE), "status", "dme", "STATUS_UBATT")
         self.assertEqual(rc, 0)
         self.assertEqual(res["values"][0]["value"], 12.62)
+
+
+class BackendConfigTests(unittest.TestCase):
+    def setUp(self):
+        self._env = dict(os.environ)
+
+    def tearDown(self):
+        os.environ.clear()
+        os.environ.update(self._env)
+
+    def test_ediabaslib_init_config(self):
+        os.environ["R53_COM_PORT"] = "com9"
+        os.environ["R53_ECU_PATH"] = r"D:\sgbd"
+        cfg = dict(kv.split("=", 1) for kv in config.ediabaslib_init_config(Path(r"C:\t")).split(";"))
+        self.assertEqual(cfg["ObdComPort"], "COM9")
+        self.assertEqual(cfg["EcuPath"], r"D:\sgbd")
+        self.assertEqual(cfg["Interface"], "STD:OBD")
+        self.assertEqual(cfg["TracePath"], r"C:\t")
+        self.assertEqual(cfg["IfhTrace"], "3")
+
+    def test_missing_ediabaslib_is_reported(self):
+        os.environ["R53_EDIABASLIB"] = r"C:\nonexistent\Api64.dll"
+        with self.assertRaises(FileNotFoundError):
+            make_backend("ediabaslib")
+        rc, res = run_cli("--backend", "ediabaslib", "status", "dme", "STATUS_UBATT")
+        self.assertEqual(rc, 1)
+        self.assertIn("install_ediabaslib", res["error"])
+
+    def test_backend_env_default(self):
+        os.environ["R53_BACKEND"] = "ediabaslib"
+        self.assertEqual(config.default_backend(), "ediabaslib")
+        os.environ["R53_BACKEND"] = "bogus"
+        self.assertEqual(config.default_backend(), "ediabas")
 
 
 if __name__ == "__main__":

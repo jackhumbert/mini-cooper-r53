@@ -23,3 +23,6 @@ research/tis/
 research/sgbd_desc/
 research/third_party/
 research/dtc/
+
+# EdiabasLib binaries (GPL-3) — fetched by tools/install_ediabaslib.py, not redistributed here
+vendor/

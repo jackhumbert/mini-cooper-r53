@@ -6,18 +6,16 @@ Exit codes: 0 ok · 1 communication/job failure · 2 refused by safety policy ·
 from __future__ import annotations
 
 import argparse
-import configparser
 import csv
 import datetime as dt
 import json
-import struct
 import sys
 import time
 from pathlib import Path
 
-from . import decode, kb
-from .backends import EdiabasBackend, ReplayBackend
-from .ediabas import DEFAULT_DIR, JobResult
+from . import config, decode, kb
+from .backends import ReplayBackend, make_backend
+from .ediabas import EdiabasError, JobResult
 from .session import Session, redact_sets
 
 
@@ -37,9 +35,9 @@ class Runner:
         if args.replay:
             self.backend = ReplayBackend(Path(args.replay))
         else:
-            self.backend = EdiabasBackend(self.session.trace_dir if args.trace else None)
+            self.backend = make_backend(args.backend, self.session.trace_dir if args.trace else None)
         self.timeout = args.timeout
-        self.session.write("backend", backend=self.backend.name)
+        self.session.write("backend", backend=self.backend.name, dll=str(getattr(self.backend, "dll", "")))
 
     def run(self, sgbd: str, job: str, args: str = "", confirm: bool = False) -> JobResult:
         tier, why = kb.classify(sgbd, job)
@@ -119,14 +117,6 @@ def _ftdi_latency(port: str) -> int | None:
             continue
 
 
-def _ini(path: Path) -> configparser.ConfigParser:
-    cp = configparser.ConfigParser(strict=False, inline_comment_prefixes=(";",))
-    cp.optionxform = str.lower
-    if path.exists():
-        cp.read_string(path.read_text(encoding="latin-1"))
-    return cp
-
-
 def cmd_doctor(args):
     checks = []
 
@@ -136,27 +126,40 @@ def cmd_doctor(args):
             c["fix"] = fix
         checks.append(c)
 
-    bits = struct.calcsize("P") * 8
-    dll = DEFAULT_DIR / ("api64.dll" if bits == 64 else "api32.dll")
-    check("ediabas_api", dll.exists(), f"{bits}-bit Python -> {dll}")
-    ini = _ini(DEFAULT_DIR / "EDIABAS.INI")
-    iface = ini.get("Configuration", "interface", fallback="?")
-    check("ediabas_interface", iface.upper() == "STD:OBD", f"EDIABAS.INI Interface = {iface}",
-          "set Interface = STD:OBD in C:\\EDIABAS\\Bin\\EDIABAS.INI")
-    obd = _ini(DEFAULT_DIR / "obd.ini")
-    port = obd.get("OBD", "port", fallback="").upper()
-    check("obd_ini_port", bool(port), f"obd.ini [OBD] Port = {port or '(missing)'}")
-    retry = obd.get("OBD", "retry", fallback="")
-    checks.append({"check": "obd_ini_retry", "ok": True,
-                   "detail": f"RETRY = {retry or '(default)'}; vendor doc recommends OFF (EDIABAS retries itself)"})
+    checks.append({"check": "backend", "ok": True, "detail": args.backend})
+    if args.backend == "ediabaslib":
+        dll = config.ediabaslib_dll()
+        check("ediabaslib_api", dll.exists(), f"{config.bits()}-bit Python -> {dll}",
+              "python tools/install_ediabaslib.py")
+        rel = config.dotnet_framework_release()
+        check("dotnet_framework", bool(rel and rel >= 461808), f".NET Framework 4.x release {rel}",
+              "install .NET Framework 4.8 (EdiabasLib's Api DLLs are mixed-mode .NET 4.x)")
+        ecu = config.ecu_path()
+        check("ecu_path", (ecu / "EMS2K.prg").exists(), f"SGBDs from {ecu}",
+              "set R53_ECU_PATH to a folder with the R50 .prg/.grp files (e.g. from an INPA install)")
+        port = config.com_port()
+        checks.append({"check": "com_port", "ok": True, "detail": f"{port} (from obd.ini or R53_COM_PORT)"})
+    else:
+        dll = config.ediabas_dll()
+        check("ediabas_api", dll.exists(), f"{config.bits()}-bit Python -> {dll}")
+        iface = config.ediabas_ini().get("Configuration", "interface", fallback="?")
+        check("ediabas_interface", iface.upper() == "STD:OBD", f"EDIABAS.INI Interface = {iface}",
+              "set Interface = STD:OBD in C:\\EDIABAS\\Bin\\EDIABAS.INI")
+        obd = config.obd_ini()
+        port = obd.get("OBD", "port", fallback="").upper()
+        check("obd_ini_port", bool(port), f"obd.ini [OBD] Port = {port or '(missing)'}")
+        retry = obd.get("OBD", "retry", fallback="")
+        checks.append({"check": "obd_ini_retry", "ok": True,
+                       "detail": f"RETRY = {retry or '(default)'}; vendor doc recommends OFF (EDIABAS retries itself)"})
     ports = _serial_ports()
-    present = port in ports
+    present = port in ports or port.startswith("FTDI")   # FTDIn = EdiabasLib direct D2XX access
     check("cable_present", present, f"{port} {'present' if present else 'not present'} "
           f"(ports now: {', '.join(sorted(ports)) or 'none'})",
           "plug the K+DCAN cable in; if it enumerates on a different COM port, update obd.ini Port")
     lat = _ftdi_latency(port) if port else None
-    check("ftdi_latency", lat in (1, None), f"LatencyTimer = {lat}",
-          "Device Manager > Ports > USB Serial Port > Advanced > Latency Timer = 1 ms")
+    check("ftdi_latency", lat in (1, None), f"LatencyTimer = {lat} ms",
+          "Device Manager > Ports > USB Serial Port (COMx) > Port Settings > Advanced > "
+          "Latency Timer = 1 ms (16 ms causes IFH-0003 dropouts on K-line)")
 
     car = {}
     if present and not args.offline:
@@ -489,6 +492,9 @@ def cmd_classify(args):
 def build_parser() -> argparse.ArgumentParser:
     def common(parser, defaults):
         d = (lambda v: v) if defaults else (lambda v: argparse.SUPPRESS)
+        parser.add_argument("--backend", choices=config.BACKENDS, default=d(config.default_backend()),
+                            help="ediabas = BMW EDIABAS install; ediabaslib = open-source EdiabasLib "
+                                 "(default: $R53_BACKEND or ediabas)")
         parser.add_argument("--replay", metavar="PATH", default=d(None),
                             help="answer jobs from recorded session(s) instead of the car")
         parser.add_argument("--no-record", action="store_true", default=d(False), help="don't write a session file")
@@ -595,6 +601,9 @@ def main(argv=None) -> int:
     except Refused as e:
         print(json.dumps({"ok": False, "refused": str(e)}, ensure_ascii=False))
         return 2
+    except (FileNotFoundError, EdiabasError) as e:
+        print(json.dumps({"ok": False, "error": str(e)}, ensure_ascii=False))
+        return 1
 
 
 if __name__ == "__main__":

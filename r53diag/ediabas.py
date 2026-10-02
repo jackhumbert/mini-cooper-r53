@@ -1,14 +1,17 @@
-"""Thin ctypes wrapper over BMW EDIABAS (api64.dll / api32.dll).
+"""Thin ctypes wrapper over the EDIABAS C API (api64.dll / api32.dll).
 
-api64.dll works from 64-bit Python: it proxies to a 32-bit api64.exe server, which loads
-the real EDIABAS runtime configured by C:\\EDIABAS\\Bin\\EDIABAS.INI (Interface=STD:OBD,
-COM port from obd.ini). Every exported function is __stdcall and takes the handle first.
+Works with two binary-compatible implementations of the same API:
+- BMW EDIABAS: C:\\EDIABAS\\Bin\\api64.dll proxies to a 32-bit api64.exe server, configured
+  by EDIABAS.INI / obd.ini.
+- EdiabasLib (open source, GPL-3): a drop-in Api64.dll/Api32.dll (mixed-mode .NET 4.x) that
+  interprets the same .prg SGBDs and drives the FTDI cable itself. It is configured through
+  the apiInitExt config string.
+Every exported function is __stdcall and takes the handle first.
 """
 from __future__ import annotations
 
 import ctypes
 import os
-import struct
 import time
 from ctypes import byref, c_char_p, c_double, c_int, c_long, c_uint, c_ushort, create_string_buffer
 from dataclasses import dataclass, field
@@ -17,7 +20,6 @@ from pathlib import Path
 ENC = "latin-1"
 APIBUSY, APIREADY, APIBREAK, APIERROR = 0, 1, 2, 3
 (F_CHAR, F_BYTE, F_INTEGER, F_WORD, F_LONG, F_DWORD, F_TEXT, F_BINARY, F_REAL) = range(9)
-DEFAULT_DIR = Path(os.environ.get("EDIABAS_BIN", r"C:\EDIABAS\Bin"))
 
 
 class EdiabasError(Exception):
@@ -75,9 +77,11 @@ class JobResult:
 
 
 class Ediabas:
-    def __init__(self, bin_dir: Path | str = DEFAULT_DIR, config: dict[str, str] | None = None):
-        bits = struct.calcsize("P") * 8
-        dll = Path(bin_dir) / ("api64.dll" if bits == 64 else "api32.dll")
+    def __init__(self, dll: Path | str, config: dict[str, str] | None = None, init_config: str | None = None):
+        """dll: path to api64.dll/api32.dll (BMW) or Api64.dll/Api32.dll (EdiabasLib).
+        config: apiSetConfig() pairs applied after init.
+        init_config: if given, init via apiInitExt with this "key=value;…" string."""
+        dll = Path(dll)
         if not dll.exists():
             raise FileNotFoundError(f"EDIABAS API not found: {dll}")
         os.add_dll_directory(str(dll.parent))
@@ -85,6 +89,7 @@ class Ediabas:
         self._declare()
         self.dll = dll
         self.config = config or {}
+        self.init_config = init_config
         self.h = c_uint(0)
         self._open = False
 
@@ -121,7 +126,11 @@ class Ediabas:
     def open(self) -> "Ediabas":
         if self._open:
             return self
-        if not self.f["Init"](byref(self.h)):
+        if self.init_config is not None:
+            ok = self.f["InitExt"](byref(self.h), b"", b"", b"", self.init_config.encode(ENC))
+        else:
+            ok = self.f["Init"](byref(self.h))
+        if not ok:
             raise EdiabasError(*self._error())
         self._open = True
         for k, v in self.config.items():

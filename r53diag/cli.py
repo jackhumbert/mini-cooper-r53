@@ -177,7 +177,7 @@ def cmd_doctor(args):
             if dme.ok and kmb.ok:
                 verdict = "both diagnostic lines answer — cable bridges pins 7+8"
             elif dme.ok:
-                verdict = ("pin 7 OK but the cluster (pin 8) is silent: set the cable switch to the position "
+                verdict = ("pin 7 OK but the cluster (pin 8) is silent: check the cable switch is in the labelled position "
                            "that bridges OBD pins 7+8 (see kb/hardware.md), ignition on")
             elif kmb.ok:
                 verdict = "cluster answers but DME does not: unusual — check DME power / fuse, re-run"

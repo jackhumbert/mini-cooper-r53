@@ -71,6 +71,11 @@ position usually **bridges pins 7+8** (for older K-line BMW/MINI) and another le
 
 **The position we need for this car is the one that bridges pins 7 and 8.**
 
+> **This cable, 2026-10-02:** the owner found the position that shorts pins 7 and 8 with a
+> multimeter and **labelled it on the switch**. Use the labelled position for this car.
+> `[car]` It hasn't been confirmed on the car with `r53 doctor` yet; update this note after the
+> first session.
+
 ### Definitive test: multimeter (do this first)
 
 1. Unplug the cable from the car **and** from USB.
@@ -82,8 +87,7 @@ position usually **bridges pins 7+8** (for older K-line BMW/MINI) and another le
 4. Probe 7↔8 in **each** switch position and write down the result.
    - About 0 Ω, or a beep: **bridged**. This is the position to use.
    - Open circuit (OL): **not bridged**.
-5. Record the result here and in `kb/vehicle-profile.yaml` (for example "switch position 1 =
-   bridged"). Mark the switch physically if you can.
+5. Record the result here, and mark the switch physically. Done for this cable on 2026-10-02.
 
 ### Empirical test: with the tool
 
